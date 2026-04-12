@@ -29,18 +29,78 @@ body {
   flex-direction: column;
 }
 
+/* ─── Global Button Polish ─── */
 button {
   font-family: 'Outfit', 'Pretendard Variable', 'Pretendard', sans-serif;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, filter 0.15s ease;
 }
 
+button:active:not(:disabled) {
+  transform: scale(0.97) !important;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Gold gradient CTA — hover glow */
+button[style*="linear-gradient"]:hover:not(:disabled) {
+  box-shadow: 0 0 24px rgba(197, 165, 114, 0.25), 0 4px 20px rgba(197, 165, 114, 0.12);
+  filter: brightness(1.06);
+}
+
+button[style*="linear-gradient"]:active:not(:disabled) {
+  box-shadow: 0 0 8px rgba(197, 165, 114, 0.15);
+  filter: brightness(0.96);
+}
+
+/* Outline/ghost buttons — subtle hover lift */
+button[style*="border: 1px solid"]:hover:not(:disabled),
+button[style*="border: 1.5px solid"]:hover:not(:disabled) {
+  filter: brightness(1.2);
+}
+
+/* ─── Input & Form Polish ─── */
 input, textarea, select {
   font-family: 'Outfit', 'Pretendard Variable', 'Pretendard', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+input:focus, textarea:focus, select:focus {
+  border-color: #c5a572 !important;
+  box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.1);
+}
+
+::placeholder {
+  color: #555;
+  opacity: 1;
+}
+
+input[type="checkbox"] {
+  accent-color: #c5a572;
+}
+
+/* ─── Keyboard Accessibility ─── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(197, 165, 114, 0.5);
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ─── Links ─── */
 a {
   text-decoration: none;
   color: inherit;
+  transition: color 0.15s ease;
 }
 
 img {
@@ -48,11 +108,73 @@ img {
   display: block;
 }
 
-/* Scrollbar styling */
+/* ─── Page Entrance Animation ─── */
+main {
+  animation: fadeIn 0.3s ease-out;
+}
+
+main > div {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── Card / Container Transitions ─── */
+div[style*="#111008"] {
+  transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: #2a2318; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #c5a572; }
 
-/* Selection */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2318 #0a0a0a;
+}
+
+/* ─── Selection ─── */
 ::selection { background: rgba(197, 165, 114, 0.25); color: #f5f0e8; }
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Small Screen Tweaks ─── */
+@media (max-width: 375px) {
+  h1 {
+    letter-spacing: -0.02em;
+  }
+}
