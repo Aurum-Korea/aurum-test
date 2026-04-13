@@ -36,6 +36,9 @@ function Home({ lang, navigate, prices, krwRate }) {
             <button onClick={() => navigate("why")} style={{ background: "transparent", color: "#c5a572", border: "1px solid #c5a572", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
               {lang === "ko" ? "왜 금인가?" : "Why Gold?"}
             </button>
+            <button onClick={() => navigate("agp")} style={{ background: "transparent", color: "#8a7d6b", border: "1px solid #2a2318", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
+              {lang === "ko" ? "💰 AGP 저축 플랜 시작하기" : "💰 Start AGP savings plan"}
+            </button>
           </div>
         </div>
       </div>
@@ -48,99 +51,54 @@ function Home({ lang, navigate, prices, krwRate }) {
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 20 : 26, color: "#f5f0e8" }}>{lang === "ko" ? "1온스 금 구매 시 절약 금액" : "Your Savings on 1oz Gold"}</div>
           </div>
           <div style={{ display: "flex", gap: isMobile ? 10 : 40, flexWrap: "wrap" }}>
-            {[
-              { label: lang === "ko" ? "KRX 가격" : "KRX Price", value: fKRW(krxPrice), col: "#f87171" },
-              { label: lang === "ko" ? "Aurum 가격" : "Aurum Price", value: fKRW(aurumPrice), col: "#4ade80" },
-              { label: lang === "ko" ? "절약" : "You Save", value: fKRW(savings), col: "#c5a572" },
-            ].map((s, i) => (
-              <div key={i} style={{ textAlign: isMobile ? "center" : "right" }}>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", letterSpacing: 1, textTransform: "uppercase", marginBottom: 3 }}>{s.label}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 15 : 19, color: s.col, fontWeight: 600 }}>{s.value}</div>
+            {[{ label: "KRX ~10%", val: fKRW(krxPrice), col: "#f87171" }, { label: "AURUM 3.5%", val: fKRW(aurumPrice), col: "#4ade80" }].map((x, i) => (
+              <div key={i} style={{ textAlign: "center", flex: isMobile ? 1 : "none" }}>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginBottom: 3 }}>{x.label}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 15 : 22, color: x.col, fontWeight: 600 }}>{x.val}</div>
               </div>
             ))}
+            <div style={{ textAlign: "center", flex: isMobile ? "1 1 100%" : "none", background: "rgba(74,222,128,0.07)", padding: "10px 18px", borderRadius: 8, border: "1px solid rgba(74,222,128,0.2)" }}>
+              <div style={{ fontSize: 10, color: "#4ade80", marginBottom: 3, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "절약" : "Save"}</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 17 : 22, color: "#4ade80", fontWeight: 700 }}>{fKRW(savings)}</div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Trust Signals */}
-      <div style={{ padding: isMobile ? "28px 16px" : "40px 80px", borderBottom: "1px solid #1a1510" }}>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: isMobile ? 12 : 24 }}>
+      {/* Trust Badges */}
+      <div style={{ background: "#0a0a0a", padding: isMobile ? "20px 16px" : "32px 80px", display: "flex", justifyContent: "center", gap: isMobile ? 14 : 56, flexWrap: "wrap" }}>
+        {[["🏦", "Malca-Amit"], ["📜", "LBMA"], ["🛡️", lang === "ko" ? "완전 보험" : "Insured"], ["🔐", lang === "ko" ? "완전 배분" : "Allocated"], ["🇸🇬", "Singapore FTZ"]].map(([icon, label], i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: isMobile ? 11 : 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>
+            <span style={{ fontSize: isMobile ? 16 : 20 }}>{icon}</span>{label}
+          </div>
+        ))}
+      </div>
+
+      {/* How It Works */}
+      <div style={{ background: "#111008", borderTop: "1px solid #1a1510", borderBottom: "1px solid #1a1510", padding: isMobile ? "36px 16px" : "56px 80px" }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 28 : 40 }}>
+          <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "구매 방법" : "How It Works"}</div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 24 : 32, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>{lang === "ko" ? "5단계로 완성되는 금 투자" : "5 Steps to Physical Gold Ownership"}</h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(5,1fr)", gap: isMobile ? 12 : 0 }}>
           {[
-            { icon: "🇸🇬", ko: "Malca-Amit Singapore", en: "Malca-Amit Singapore", sub: lang === "ko" ? "싱가포르 FTZ 볼트" : "Singapore FTZ Vault" },
-            { icon: "🛡️", ko: "Lloyd's of London", en: "Lloyd's of London", sub: lang === "ko" ? "100% 보험" : "100% Insured" },
-            { icon: "💳", ko: "토스페이멘트", en: "Toss Payments", sub: lang === "ko" ? "한국어 결제" : "Korean Payments" },
-            { icon: "⚡", ko: "당일 결제·즉시 승인", en: "Same-Day Settlement", sub: lang === "ko" ? "실시간 현물가 기준" : "Live Spot Pricing" },
-          ].map((t, i) => (
-            <div key={i} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: isMobile ? 14 : 22, textAlign: "center" }}>
-              <div style={{ fontSize: isMobile ? 24 : 28, marginBottom: 8 }}>{t.icon}</div>
-              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 12 : 14, color: "#f5f0e8", marginBottom: 3 }}>{lang === "ko" ? t.ko : t.en}</div>
-              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 10 : 11, color: "#8a7d6b" }}>{t.sub}</div>
+            { n: "01", icon: "👤", ko: "회원가입", en: "Sign Up" },
+            { n: "02", icon: "🥇", ko: "상품 선택", en: "Select" },
+            { n: "03", icon: "💳", ko: "결제", en: "Pay" },
+            { n: "04", icon: "✅", ko: "주문 확인", en: "Confirm" },
+            { n: "05", icon: "🏦", ko: "볼트 배정", en: "Vaulted" },
+          ].map((s, i) => (
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: isMobile ? "12px" : "20px 10px", position: "relative" }}>
+              {!isMobile && i < 4 && <div style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", width: 1, height: 40, background: "#2a2318" }} />}
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#c5a572", marginBottom: 10 }}>{s.n}</div>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 14, color: "#f5f0e8", fontWeight: 500 }}>{lang === "ko" ? s.ko : s.en}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Featured Products */}
-      <div style={{ padding: isMobile ? "28px 16px" : "44px 80px", borderBottom: "1px solid #1a1510" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: isMobile ? 16 : 24, flexWrap: "wrap", gap: 10 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 22 : 30, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>{lang === "ko" ? "인기 상품" : "Featured Products"}</h2>
-          <button onClick={() => navigate("shop")} style={{ background: "none", border: "1px solid #2a2318", color: "#c5a572", padding: "7px 18px", borderRadius: 20, cursor: "pointer", fontSize: 12, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "전체 보기 →" : "View All →"}</button>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: isMobile ? 10 : 16 }}>
-          {PRODUCTS.slice(0, 4).map(p => {
-            const price = calcPrice(p, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
-            return (
-              <div key={p.id} onClick={() => { navigate("product"); }} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 14 : 20, cursor: "pointer", transition: "border-color 0.2s" }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(197,165,114,0.4)"}
-                onMouseLeave={e => e.currentTarget.style.borderColor = "#1a1510"}>
-                <div style={{ textAlign: "center", fontSize: isMobile ? 36 : 48, marginBottom: 10 }}>{p.image}</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 12 : 13, color: "#f5f0e8", marginBottom: 4 }}>{lang === "ko" ? p.nameKo : p.name}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 13 : 16, color: "#c5a572", fontWeight: 600 }}>{fUSD(price)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#555", marginTop: 2 }}>{fKRW(price * krwRate)}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* News */}
       <NewsSection lang={lang} />
-
-      {/* AGP Banner */}
-      <div style={{ background: "linear-gradient(135deg,rgba(197,165,114,0.08),rgba(197,165,114,0.04))", borderTop: "1px solid rgba(197,165,114,0.2)", borderBottom: "1px solid rgba(197,165,114,0.2)", padding: isMobile ? "28px 16px" : "40px 80px" }}>
-        <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", gap: isMobile ? 16 : 0 }}>
-          <div style={{ maxWidth: 520 }}>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8 }}>Aurum Gold Plan (AGP)</div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 22 : 28, color: "#f5f0e8", fontWeight: 300, margin: "0 0 8px" }}>
-              {lang === "ko" ? "월 10만원부터 싱가포르 실물 금 저축" : "Save in physical gold from KRW 100,000/month"}
-            </h3>
-            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b", lineHeight: 1.65, margin: 0 }}>
-              {lang === "ko" ? "그램 단위 적립, 싱가포르 실물 백업, 100g 도달 시 늬린 바로 무료 전환." : "Accumulate by the gram, physically backed in Singapore, convert to a real bar when you hit 100g — free."}
-            </p>
-          </div>
-          <button onClick={() => navigate("agp")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "14px 32px", fontSize: 14, fontWeight: 700, fontFamily: "'Outfit',sans-serif", borderRadius: 6, cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
-            {lang === "ko" ? "AGP 알아보기 →" : "Learn About AGP →"}
-          </button>
-        </div>
-      </div>
-
-      {/* Why Aurum */}
-      <div style={{ padding: isMobile ? "32px 16px" : "56px 80px" }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 24 : 32, color: "#f5f0e8", fontWeight: 300, margin: "0 0 28px", textAlign: "center" }}>{lang === "ko" ? "염 아름을 선택하나요?" : "Why Choose Aurum?"}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: isMobile ? 12 : 20 }}>
-          {[
-            { icon: "🇸🇬", ko: "싱가포르 FTZ 볼트", en: "Singapore FTZ Vault", desc: lang === "ko" ? "Malca-Amit 1963년 설립. 한국 VAT 없이 토키었이 볼트에 보관." : "Est. 1963. Tokened in vaults without Korean VAT exposure." },
-            { icon: "💰", ko: "국제 현물가", en: "International Spot Price", desc: lang === "ko" ? "KRX 가격 대비 10~15% 저렴. 김치 프리미엄 제로." : "10–15% cheaper than KRX. Zero kimchi premium." },
-            { icon: "🇰🇷", ko: "한국어 우선 서비스", en: "Korean-First Service", desc: lang === "ko" ? "전 플랫폼 한국어, 카카오톡 고객지원, KRW 정산." : "Full Korean platform, KakaoTalk support, KRW settlement." },
-          ].map((x, i) => (
-            <div key={i} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 20 : 28 }}>
-              <div style={{ fontSize: isMobile ? 28 : 34, marginBottom: 12 }}>{x.icon}</div>
-              <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 15 : 17, color: "#f5f0e8", margin: "0 0 8px" }}>{lang === "ko" ? x.ko : x.en}</h3>
-              <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 12 : 13, color: "#8a7d6b", lineHeight: 1.65, margin: 0 }}>{x.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
@@ -150,49 +108,51 @@ function Home({ lang, navigate, prices, krwRate }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 function Shop({ lang, navigate, setProduct, prices, krwRate, addToCart, toast }) {
   const isMobile = useIsMobile();
-  const [filter, setFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("featured");
-
-  const metals = ["all", "gold", "silver", "platinum"];
-  const metalLabels = { all: lang === "ko" ? "전체" : "All", gold: lang === "ko" ? "금" : "Gold", silver: lang === "ko" ? "은" : "Silver", platinum: lang === "ko" ? "백금" : "Platinum" };
-
-  const filtered = filter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.metal === filter);
-  const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "price-asc") return calcPrice(a, prices) - calcPrice(b, prices);
-    if (sortBy === "price-desc") return calcPrice(b, prices) - calcPrice(a, prices);
-    return 0;
-  });
-
+  const [metal, setMetal] = useState("all");
+  const [type, setType] = useState("all");
+  const filtered = PRODUCTS.filter(p => (metal === "all" || p.metal === metal) && (type === "all" || p.type === type));
+  const Fb = ({ active, onClick, children }) => (
+    <button onClick={onClick} style={{ background: active ? "#c5a572" : "transparent", color: active ? "#0a0a0a" : "#8a7d6b", border: `1px solid ${active ? "#c5a572" : "#2a2318"}`, padding: isMobile ? "6px 14px" : "7px 18px", borderRadius: 4, cursor: "pointer", fontSize: 12, fontFamily: "'Outfit',sans-serif", fontWeight: active ? 600 : 400, transition: "all 0.15s" }}>{children}</button>
+  );
   return (
     <div style={{ padding: isMobile ? "24px 16px" : "40px 80px", background: "#0a0a0a", minHeight: "80vh" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>{lang === "ko" ? "굿집" : "Shop"}</h2>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {metals.map(m => (
-            <button key={m} onClick={() => setFilter(m)} style={{ background: filter === m ? "#c5a572" : "transparent", color: filter === m ? "#0a0a0a" : "#8a7d6b", border: `1px solid ${filter === m ? "#c5a572" : "#2a2318"}`, padding: "6px 16px", borderRadius: 20, cursor: "pointer", fontSize: 12, fontFamily: "'Outfit',sans-serif", fontWeight: filter === m ? 600 : 400 }}>{metalLabels[m]}</button>
-          ))}
-        </div>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 28 : 38, color: "#f5f0e8", fontWeight: 300, margin: "0 0 4px" }}>{lang === "ko" ? "귀금속 매장" : "Precious Metals Shop"}</h2>
+      <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b", margin: "0 0 24px" }}>{lang === "ko" ? "글로벌 현물가 + 투명한 프리미엄 — 실시간 가격" : "Global spot + transparent premium — live prices"}</p>
+      <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
+        <Fb active={metal === "all"} onClick={() => setMetal("all")}>{lang === "ko" ? "전체" : "All"}</Fb>
+        <Fb active={metal === "gold"} onClick={() => setMetal("gold")}>{lang === "ko" ? "금" : "Gold"}</Fb>
+        <Fb active={metal === "silver"} onClick={() => setMetal("silver")}>{lang === "ko" ? "은" : "Silver"}</Fb>
+        <div style={{ width: 1, height: 28, background: "#2a2318", alignSelf: "center", margin: "0 4px" }} />
+        <Fb active={type === "all"} onClick={() => setType("all")}>{lang === "ko" ? "전체" : "All"}</Fb>
+        <Fb active={type === "bar"} onClick={() => setType("bar")}>{lang === "ko" ? "바" : "Bars"}</Fb>
+        <Fb active={type === "coin"} onClick={() => setType("coin")}>{lang === "ko" ? "코인" : "Coins"}</Fb>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fill,minmax(240px,1fr))", gap: isMobile ? 10 : 20 }}>
-        {sorted.map(p => {
-          const price = calcPrice(p, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fill,minmax(260px,1fr))", gap: isMobile ? 12 : 20 }}>
+        {filtered.map(p => {
+          const price = calcPrice(p, prices);
           return (
-            <div key={p.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, overflow: "hidden", cursor: "pointer", transition: "border-color 0.2s" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(197,165,114,0.4)"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#1a1510"}>
-              <div onClick={() => { setProduct(p); navigate("product"); }} style={{ padding: isMobile ? 14 : 22 }}>
-                <div style={{ textAlign: "center", fontSize: isMobile ? 44 : 60, marginBottom: isMobile ? 10 : 16, padding: "10px 0" }}>{p.image}</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>{p.metal}</div>
-                <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 15, color: "#f5f0e8", margin: "0 0 4px", fontWeight: 500 }}>{lang === "ko" ? p.nameKo : p.name}</h3>
-                <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 10 : 11, color: "#8a7d6b", margin: "0 0 12px", lineHeight: 1.4 }}>{p.specs}</p>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 15 : 18, color: "#c5a572", fontWeight: 600, marginBottom: 2 }}>{fUSD(price)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#555" }}>{fKRW(price * krwRate)}</div>
+            <div key={p.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 14 : 22, cursor: "pointer", transition: "border-color 0.2s, transform 0.2s", position: "relative" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(197,165,114,0.4)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#1a1510"; e.currentTarget.style.transform = "none"; }}
+              onClick={() => { setProduct(p); navigate("product"); }}>
+              <span style={{ position: "absolute", top: 10, right: 10, background: p.metal === "gold" ? "rgba(197,165,114,0.15)" : "rgba(180,180,180,0.15)", color: p.metal === "gold" ? "#c5a572" : "#aaa", fontSize: 9, padding: "2px 7px", borderRadius: 3, fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>
+                {p.type === "bar" ? (lang === "ko" ? "바" : "BAR") : (lang === "ko" ? "코인" : "COIN")}
+              </span>
+              <div style={{ fontSize: isMobile ? 36 : 44, marginBottom: 12 }}>{p.image}</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 12 : 13, color: "#f5f0e8", fontWeight: 500, marginBottom: 2, lineHeight: 1.3 }}>{lang === "ko" ? p.nameKo : p.name}</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginBottom: 14 }}>{p.mint} · {p.purity} · {p.weight}</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 12 }}>
+                <div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 14 : 17, color: "#c5a572", fontWeight: 600 }}>{fUSD(price)}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#666" }}>{fKRW(price * krwRate)}</div>
+                </div>
+                <div style={{ fontSize: 10, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>+{(p.premium * 100).toFixed(1)}%</div>
               </div>
-              <div style={{ padding: isMobile ? "0 14px 14px" : "0 22px 18px" }}>
-                <button onClick={() => { addToCart(p); toast(lang === "ko" ? `${p.nameKo}이 장바구니에 담겼습니다.` : `${p.name} added to cart.`); }} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: isMobile ? "9px" : "11px", fontSize: 13, fontWeight: 700, fontFamily: "'Outfit',sans-serif", borderRadius: 6, cursor: "pointer" }}>
-                  {lang === "ko" ? "장바구니 담기" : "Add to Cart"}
-                </button>
-              </div>
+              <button onClick={e => { e.stopPropagation(); addToCart(p, 1, "singapore"); toast(lang === "ko" ? "장바구니에 추가되었습니다." : "Added to cart."); }} style={{ width: "100%", background: "rgba(197,165,114,0.1)", border: "1px solid rgba(197,165,114,0.3)", color: "#c5a572", padding: "8px", borderRadius: 5, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit',sans-serif", transition: "all 0.15s" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(197,165,114,0.2)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(197,165,114,0.1)"; }}>
+                {lang === "ko" ? "장바구니 담기" : "Add to Cart"}
+              </button>
             </div>
           );
         })}
@@ -201,125 +161,122 @@ function Shop({ lang, navigate, setProduct, prices, krwRate, addToCart, toast })
   );
 }
 
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // PRODUCT PAGE
 // ═══════════════════════════════════════════════════════════════════════════════
 function ProductPage({ product, lang, navigate, prices, krwRate, user, setShowLogin, addToCart, toast }) {
   const isMobile = useIsMobile();
-  const [qty, setQty] = useState(1);
   const [storage, setStorage] = useState("singapore");
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [qty, setQty] = useState(1);
+  if (!product) return null;
+  const unit = calcPrice(product, prices);
+  const duty = storage === "korea" ? unit * 0.18 : 0;
+  const total = (unit + duty) * qty;
+  const storageAnnual = unit * 0.008;
 
-  if (!product) return (
-    <div style={{ padding: "80px", textAlign: "center", background: "#0a0a0a", minHeight: "70vh" }}>
-      <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "상품을 선택해주세요." : "Please select a product."}</p>
-      <button onClick={() => navigate("shop")} style={{ marginTop: 16, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "11px 24px", borderRadius: 6, cursor: "pointer", fontFamily: "'Outfit',sans-serif", fontWeight: 700 }}>{lang === "ko" ? "상품 보기" : "Browse Products"}</button>
-    </div>
-  );
-
-  const price = calcPrice(product, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
-  const total = price * qty;
-  const storageOptions = [
-    { k: "singapore", ko: "싱가포르 FTZ 볼트", en: "Singapore FTZ Vault", desc: lang === "ko" ? "Malca-Amit · Lloyd's 100% 보험 · VAT 면제" : "Malca-Amit · Lloyd's 100% insured · No VAT", price: 0 },
-    { k: "delivery", ko: "한국 배송", en: "Korea Delivery", desc: lang === "ko" ? "13% 관세/세금 적용 • DHL/FedEx 보험" : "13% import duty/tax • DHL/FedEx insured", price: total * 0.13 + 60 },
-  ];
-  const selStorage = storageOptions.find(o => o.k === storage);
-  const grandTotal = total + (selStorage?.price || 0);
-
-  const handleBuy = () => {
+  const buyNow = () => {
     if (!user) { setShowLogin(true); return; }
     addToCart(product, qty, storage);
-    setAddedToCart(true);
-    toast(lang === "ko" ? "장바구니에 담겼습니다!" : "Added to cart!");
-    setTimeout(() => setAddedToCart(false), 2000);
+    navigate("checkout");
+  };
+  const addCart = () => {
+    if (!user) { setShowLogin(true); return; }
+    addToCart(product, qty, storage);
+    toast(lang === "ko" ? "장바구니에 추가되었습니다." : "Added to cart.");
+    navigate("cart");
   };
 
   return (
     <div style={{ padding: isMobile ? "20px 16px" : "40px 80px", background: "#0a0a0a", minHeight: "80vh" }}>
-      <button onClick={() => navigate("shop")} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", fontSize: 13, marginBottom: 20, fontFamily: "'Outfit',sans-serif" }}>← {lang === "ko" ? "상품목록" : "Back to Shop"}</button>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 48, alignItems: "start" }}>
-        {/* Left — product image + details */}
-        <div>
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 12, padding: isMobile ? 28 : 44, textAlign: "center", marginBottom: 20 }}>
-            <div style={{ fontSize: isMobile ? 80 : 120 }}>{product.image}</div>
-            <div style={{ marginTop: 16, fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 2, textTransform: "uppercase" }}>{product.metal}</div>
-          </div>
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, overflow: "hidden" }}>
-            {[
-              [lang === "ko" ? "스펙" : "Specifications", product.specs],
-              [lang === "ko" ? "순도" : "Purity", product.purity],
-              [lang === "ko" ? "인증" : "Certification", product.certification],
-              [lang === "ko" ? "고시단 시세" : "Spot Rate", `${fUSD(prices[product.metal])}/oz`],
-            ].filter(([,v]) => v).map(([l, v], i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "11px 16px", borderBottom: i < 3 ? "1px solid #1a1510" : "none" }}>
-                <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{l}</span>
-                <span style={{ fontSize: 12, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{v}</span>
-              </div>
+      <button onClick={() => navigate("shop")} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", fontSize: 13, marginBottom: 22, fontFamily: "'Outfit',sans-serif", display: "flex", alignItems: "center", gap: 6 }}>← {lang === "ko" ? "매장으로" : "Back to Shop"}</button>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 28 : 64 }}>
+        {/* Image */}
+        <div style={{ background: "#111008", borderRadius: 14, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: isMobile ? 220 : 440, border: "1px solid #1a1510", padding: 24 }}>
+          <div style={{ fontSize: isMobile ? 90 : 130, marginBottom: 20 }}>{product.image}</div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+            {[{ icon: "📜", label: "LBMA" }, { icon: "🔐", label: lang === "ko" ? "완전 배분" : "Allocated" }, { icon: "🛡️", label: lang === "ko" ? "보험" : "Insured" }].map((b, i) => (
+              <span key={i} style={{ fontSize: 11, color: "#8a7d6b", background: "#0a0a0a", border: "1px solid #2a2318", padding: "3px 10px", borderRadius: 20, fontFamily: "'Outfit',sans-serif" }}>{b.icon} {b.label}</span>
             ))}
           </div>
         </div>
+        {/* Details */}
+        <div>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>{product.mint}</div>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 400, margin: "0 0 4px" }}>{lang === "ko" ? product.nameKo : product.name}</h1>
+          <div style={{ fontSize: 12, color: "#8a7d6b", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{product.purity} · {product.weight}</div>
+          {product.descKo && <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b", lineHeight: 1.7, marginBottom: 20 }}>{lang === "ko" ? product.descKo : product.name}</p>}
 
-        {/* Right — pricing, options, buy */}
-        <div style={{ position: isMobile ? "static" : "sticky", top: 20 }}>
-          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: "0 0 6px" }}>{lang === "ko" ? product.nameKo : product.name}</h1>
-          <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", fontSize: 13, lineHeight: 1.6, margin: "0 0 22px" }}>{product.description}</p>
+          {/* Price Breakdown */}
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 16 : 22, marginBottom: 18 }}>
+            {[
+              { label: lang === "ko" ? "현물가" : "Spot Price", val: fUSD(unit / (1 + product.premium)), col: "#ddd" },
+              { label: `${lang === "ko" ? "프리미엄" : "Premium"} (${(product.premium * 100).toFixed(1)}%)`, val: `+${fUSD(unit - unit / (1 + product.premium))}`, col: "#c5a572" },
+              ...(storage === "korea" ? [{ label: lang === "ko" ? "한국 관세/VAT ~18%" : "Korea Duties ~18%", val: `+${fUSD(duty)}`, col: "#f87171" }] : []),
+            ].map((row, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{row.label}</span>
+                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: row.col }}>{row.val}</span>
+              </div>
+            ))}
+            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 14, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "단가" : "Unit Price"}</span>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 23, color: "#c5a572", fontWeight: 700 }}>{fUSD(unit + duty)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW((unit + duty) * krwRate)}</div>
+              </div>
+            </div>
+          </div>
 
-          {/* Price */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 26 : 32, color: "#c5a572", fontWeight: 600 }}>{fUSD(price)}</div>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#555", marginTop: 2 }}>{fKRW(price * krwRate)}</div>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", marginTop: 4 }}>
-              {lang === "ko" ? `현물가 ${fUSD(prices[product.metal])}/oz + ${product.premium}% 프리미엄` : `Spot ${fUSD(prices[product.metal])}/oz + ${product.premium}% premium`}
+          {/* Storage Option */}
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ fontSize: 12, color: "#8a7d6b", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "보관 옵션" : "Storage Option"}</div>
+            <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row" }}>
+              {[
+                { key: "singapore", icon: "🇸🇬", label: lang === "ko" ? "싱가포르 볼트" : "Singapore Vault", sub: lang === "ko" ? "GST 면제 · 연 0.8%" : "No GST · 0.8%/yr" },
+                { key: "korea", icon: "🇰🇷", label: lang === "ko" ? "한국 배송" : "Ship to Korea", sub: lang === "ko" ? "관세+VAT ~18% 부과" : "~18% duties apply" },
+              ].map(o => (
+                <button key={o.key} onClick={() => setStorage(o.key)} style={{ flex: 1, background: storage === o.key ? "rgba(197,165,114,0.07)" : "transparent", border: `1px solid ${storage === o.key ? "#c5a572" : "#2a2318"}`, borderRadius: 8, padding: "10px 14px", cursor: "pointer", textAlign: "left", transition: "all 0.15s" }}>
+                  <div style={{ fontSize: 13, color: "#f5f0e8", marginBottom: 2, fontFamily: "'Outfit',sans-serif" }}>{o.icon} {o.label}</div>
+                  <div style={{ fontSize: 11, color: storage === o.key ? "#4ade80" : "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{o.sub}</div>
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Qty */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18 }}>
             <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "수량" : "Qty"}</span>
-            {[1, 2, 5, 10].map(n => (
-              <button key={n} onClick={() => setQty(n)} style={{ width: 36, height: 36, borderRadius: 6, background: qty === n ? "#c5a572" : "#111008", border: `1px solid ${qty === n ? "#c5a572" : "#2a2318"}`, color: qty === n ? "#0a0a0a" : "#8a7d6b", fontSize: 13, cursor: "pointer", fontFamily: "'JetBrains Mono',monospace", fontWeight: qty === n ? 700 : 400 }}>{n}</button>
-            ))}
-          </div>
-
-          {/* Storage Options */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b", marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "보관 옵션" : "Storage Option"}</div>
-            {storageOptions.map(o => (
-              <div key={o.k} onClick={() => setStorage(o.k)} style={{ background: storage === o.k ? "rgba(197,165,114,0.06)" : "#111008", border: `1.5px solid ${storage === o.k ? "#c5a572" : "#1a1510"}`, borderRadius: 8, padding: "12px 16px", marginBottom: 8, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "border-color 0.15s" }}>
-                <div>
-                  <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#f5f0e8", fontWeight: 500 }}>{lang === "ko" ? o.ko : o.en}</div>
-                  <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", marginTop: 2 }}>{o.desc}</div>
-                </div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: o.price > 0 ? "#f87171" : "#4ade80", flexShrink: 0, marginLeft: 10 }}>{o.price > 0 ? `+${fUSD(o.price)}` : lang === "ko" ? "무료" : "Free"}</div>
-              </div>
-            ))}
+            <div style={{ display: "flex", alignItems: "center", border: "1px solid #2a2318", borderRadius: 6 }}>
+              <button onClick={() => setQty(Math.max(1, qty - 1))} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", padding: "8px 14px", fontSize: 18, lineHeight: 1 }}>−</button>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#f5f0e8", padding: "0 14px", minWidth: 40, textAlign: "center" }}>{qty}</span>
+              <button onClick={() => setQty(qty + 1)} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", padding: "8px 14px", fontSize: 18, lineHeight: 1 }}>+</button>
+            </div>
           </div>
 
           {/* Total */}
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: 16, marginBottom: 20 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b" }}>{lang === "ko" ? "바가" : "Subtotal"}</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#f5f0e8" }}>{fUSD(total)}</span>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: "14px 18px", marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <span style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
+              {storage === "singapore" && <div style={{ fontSize: 10, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginTop: 2 }}>{lang === "ko" ? `연 보관료 약 ${fUSD(storageAnnual * qty)}` : `~${fUSD(storageAnnual * qty)}/yr storage`}</div>}
             </div>
-            {selStorage?.price > 0 && (
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b" }}>{lang === "ko" ? "보관/배송" : "Storage/Shipping"}</span>
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#f87171" }}>+{fUSD(selStorage.price)}</span>
-              </div>
-            )}
-            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 8, display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(grandTotal)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#555" }}>{fKRW(grandTotal * krwRate)}</div>
-              </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 20 : 26, color: "#c5a572", fontWeight: 700 }}>{fUSD(total)}</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW(total * krwRate)}</div>
             </div>
           </div>
 
-          <button onClick={handleBuy} style={{ width: "100%", background: addedToCart ? "#1a4a2a" : "linear-gradient(135deg,#c5a572,#8a6914)", border: addedToCart ? "1px solid #4ade80" : "none", color: addedToCart ? "#4ade80" : "#0a0a0a", padding: "16px", fontSize: 16, fontWeight: 700, fontFamily: "'Outfit',sans-serif", borderRadius: 8, cursor: "pointer", transition: "all 0.2s", marginBottom: 10 }}>
-            {addedToCart ? (lang === "ko" ? "장바구니에 담겼습니다 ✓" : "Added to Cart ✓") : (lang === "ko" ? "장바구니에 담기" : "Add to Cart")}
-          </button>
-          {!user && <p style={{ textAlign: "center", fontSize: 11, color: "#555", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "구매 시 로그인이 필요합니다." : "Login required to purchase."}</p>}
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <button onClick={buyNow} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#0a0a0a", border: "none", padding: "15px", fontSize: 16, fontWeight: 700, borderRadius: 8, cursor: "pointer", letterSpacing: 0.5, fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "지금 구매하기" : "Buy Now"}
+            </button>
+            <button onClick={addCart} style={{ width: "100%", background: "transparent", color: "#c5a572", border: "1px solid #c5a572", padding: "13px", fontSize: 14, fontWeight: 600, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "장바구니 담기" : "Add to Cart"}
+            </button>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 14 }}>
+            {["💙 TossPay", "💛 카카오페이", "🏦 Wire", "💳 Card"].map((x, i) => <span key={i} style={{ fontSize: 11, color: "#555", fontFamily: "'Outfit',sans-serif" }}>{x}</span>)}
+          </div>
         </div>
       </div>
     </div>
@@ -331,64 +288,66 @@ function ProductPage({ product, lang, navigate, prices, krwRate, user, setShowLo
 // ═══════════════════════════════════════════════════════════════════════════════
 function CartPage({ lang, navigate, cart, removeFromCart, updateCartQty, prices, krwRate }) {
   const isMobile = useIsMobile();
-
   if (cart.length === 0) return (
     <div style={{ padding: isMobile ? "60px 16px" : "80px", textAlign: "center", background: "#0a0a0a", minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ fontSize: 52, marginBottom: 16 }}>🛒</div>
-      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "장바구니가 비어 있습니다" : "Your Cart is Empty"}</h2>
-      <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 28 }}>{lang === "ko" ? "아름다운 굿집에서 구경하세요." : "Explore our collection of gold and silver."}</p>
-      <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 28px", borderRadius: 6, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "상품 보기" : "Browse Shop"}</button>
+      <div style={{ fontSize: 60, marginBottom: 18 }}>🛒</div>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "장바구니가 비어 있습니다" : "Your cart is empty"}</h2>
+      <p style={{ color: "#8a7d6b", marginBottom: 28, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "매장에서 실물 귀금속을 선택하세요." : "Browse our shop for physical precious metals."}</p>
+      <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 32px", borderRadius: 6, fontSize: 15, fontWeight: 700, cursor: "pointer" }}>{lang === "ko" ? "매장 둘러보기" : "Browse Shop"}</button>
     </div>
   );
-
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const storageFee = subtotal * 0.008;
   return (
     <div style={{ padding: isMobile ? "24px 16px" : "40px 80px", background: "#0a0a0a", minHeight: "80vh" }}>
-      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: "0 0 28px" }}>{lang === "ko" ? "장바구니" : "Cart"} ({cart.reduce((s, i) => s + i.qty, 0)})</h2>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", gap: isMobile ? 20 : 32 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: "0 0 28px" }}>{lang === "ko" ? "장바구니" : "Cart"}</h2>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: isMobile ? 24 : 32 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {cart.map(item => (
             <div key={item.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 14 : 20, display: "flex", gap: isMobile ? 12 : 20, alignItems: "center" }}>
-              <div style={{ fontSize: isMobile ? 32 : 44, flexShrink: 0 }}>{item.image}</div>
+              <div style={{ fontSize: isMobile ? 36 : 48, flexShrink: 0 }}>{item.image}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 15, color: "#f5f0e8", fontWeight: 500, marginBottom: 3 }}>{lang === "ko" ? item.nameKo : item.name}</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", marginBottom: 8 }}>{lang === "ko" ? (item.storage === "singapore" ? "싱가폼르 FTZ 볼트" : "한국 배송") : (item.storage === "singapore" ? "Singapore Vault" : "Korea Delivery")}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  {[1, 2, 5, 10].map(n => (
-                    <button key={n} onClick={() => updateCartQty(item.id, n)} style={{ width: 28, height: 28, borderRadius: 4, background: item.qty === n ? "#c5a572" : "#111008", border: `1px solid ${item.qty === n ? "#c5a572" : "#2a2318"}`, color: item.qty === n ? "#0a0a0a" : "#8a7d6b", fontSize: 11, cursor: "pointer", fontFamily: "'JetBrains Mono',monospace" }}>{n}</button>
-                  ))}
-                </div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 14, color: "#f5f0e8", fontWeight: 500, marginBottom: 2 }}>{lang === "ko" ? item.nameKo : item.name}</div>
+                <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{item.storage === "singapore" ? (lang === "ko" ? "🇸🇬 싱가포르 볼트" : "🇸🇬 Singapore Vault") : (lang === "ko" ? "🇰🇷 한국 배송" : "🇰🇷 Ship to Korea")}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#c5a572", marginTop: 6 }}>{fUSD(item.price)}</div>
               </div>
-              <div style={{ textAlign: "right", flexShrink: 0 }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 14 : 18, color: "#c5a572", fontWeight: 600, marginBottom: 6 }}>{fUSD(item.price * item.qty)}</div>
-                <button onClick={() => removeFromCart(item.id)} style={{ background: "none", border: "none", color: "#555", cursor: "pointer", fontSize: 16 }}>×</button>
+              <div style={{ display: "flex", alignItems: "center", border: "1px solid #2a2318", borderRadius: 6 }}>
+                <button onClick={() => updateCartQty(item.id, Math.max(1, item.qty - 1))} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", padding: "6px 10px", fontSize: 16 }}>−</button>
+                <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#f5f0e8", padding: "0 10px", fontSize: 13 }}>{item.qty}</span>
+                <button onClick={() => updateCartQty(item.id, item.qty + 1)} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", padding: "6px 10px", fontSize: 16 }}>+</button>
+              </div>
+              <div style={{ textAlign: "right", minWidth: isMobile ? 80 : 100 }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#c5a572", fontWeight: 600 }}>{fUSD(item.price * item.qty)}</div>
+                <button onClick={() => removeFromCart(item.id)} style={{ background: "none", border: "none", color: "#f87171", fontSize: 11, cursor: "pointer", marginTop: 4, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "삭제" : "Remove"}</button>
               </div>
             </div>
           ))}
         </div>
-        <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 18 : 26, height: "fit-content" }}>
-          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#c5a572", fontWeight: 600, margin: "0 0 18px", textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "주문 요약" : "Order Summary"}</h3>
-          {cart.map((item, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>{lang === "ko" ? item.nameKo : item.name} ×{item.qty}</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#f5f0e8" }}>{fUSD(item.price * item.qty)}</span>
+        <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 18 : 24, height: "fit-content" }}>
+          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#f5f0e8", fontWeight: 600, margin: "0 0 20px" }}>{lang === "ko" ? "주문 요약" : "Order Summary"}</h3>
+          {[
+            { label: lang === "ko" ? "소계" : "Subtotal", val: fUSD(subtotal), col: "#ddd" },
+            { label: lang === "ko" ? "예상 연 보관료" : "Est. annual storage", val: fUSD(storageFee), col: "#8a7d6b" },
+          ].map((r, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+              <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{r.label}</span>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: r.col }}>{r.val}</span>
             </div>
           ))}
-          <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, marginTop: 8 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
+          <div style={{ borderTop: "1px solid #2a2318", paddingTop: 14, marginBottom: 18 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "합계" : "Total"}</span>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(total)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#555" }}>{fKRW(total * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(subtotal)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW(subtotal * krwRate)}</div>
               </div>
             </div>
           </div>
-          <button onClick={() => navigate("checkout")} style={{ width: "100%", marginTop: 16, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "14px", fontSize: 15, fontWeight: 700, fontFamily: "'Outfit',sans-serif", borderRadius: 8, cursor: "pointer" }}>
-            {lang === "ko" ? "결제하기 →" : "Proceed to Checkout →"}
+          <button onClick={() => navigate("checkout")} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "14px", fontSize: 15, fontWeight: 700, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+            {lang === "ko" ? "결제 진행" : "Proceed to Checkout"}
           </button>
-          <button onClick={() => navigate("shop")} style={{ width: "100%", marginTop: 8, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "11px", fontSize: 13, fontFamily: "'Outfit',sans-serif", borderRadius: 8, cursor: "pointer" }}>
-            {lang === "ko" ? "쇼핑 계속" : "Continue Shopping"}
+          <button onClick={() => navigate("shop")} style={{ width: "100%", marginTop: 10, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "12px", fontSize: 13, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+            {lang === "ko" ? "쇼핑 계속하기" : "Continue Shopping"}
           </button>
         </div>
       </div>
@@ -396,122 +355,275 @@ function CartPage({ lang, navigate, cart, removeFromCart, updateCartQty, prices,
   );
 }
 
+
 // ═══════════════════════════════════════════════════════════════════════════════
-// CHECKOUT
+// CHECKOUT — 5-STEP FLOW
 // ═══════════════════════════════════════════════════════════════════════════════
 function Checkout({ lang, navigate, cart, clearCart, prices, krwRate, user, addOrder, toast }) {
   const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
-  const [method, setMethod] = useState("toss");
+  const [payMethod, setPayMethod] = useState(null);
+  const [terms, setTerms] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [wireDetails, setWireDetails] = useState(null);
   const [processing, setProcessing] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const orderId = useRef(`AK-${Date.now().toString(36).toUpperCase()}`);
 
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const storageFeeY1 = subtotal * 0.008;
 
-  const paymentMethods = [
-    { k: "toss", label: "Toss Pay", desc: lang === "ko" ? "토스페이 / 커드 / 은행" : "Toss / Card / Bank Transfer", icon: "📱" },
-    { k: "wire", label: lang === "ko" ? "전신환" : "Wire Transfer", desc: lang === "ko" ? "2.5% 프리미엄 (가장 낙은)" : "2.5% premium (lowest)", icon: "🏦" },
-    { k: "crypto", label: lang === "ko" ? "크립토" : "Crypto", desc: lang === "ko" ? "USDT/USDC 2.0% 프리미엄" : "USDT/USDC 2.0% premium", icon: "🔐" },
-  ];
-
-  const handlePay = async () => {
-    setProcessing(true);
-    await new Promise(r => setTimeout(r, 1800));
-    setProcessing(false);
-    setConfirmed(true);
-    addOrder({
-      id: orderId.current,
-      date: new Date().toISOString().split("T")[0],
-      items: cart.map(i => ({ name: i.name, nameKo: i.nameKo, image: i.image, qty: i.qty, unitPrice: i.price })),
-      total,
-      paymentMethod: method,
-      status: "processing",
-    });
-    clearCart();
-    toast(lang === "ko" ? "주문이 접수되었습니다!" : "Order placed!");
-  };
-
-  if (confirmed) return (
+  if (!user) return (
     <div style={{ padding: isMobile ? "60px 16px" : "80px", textAlign: "center", background: "#0a0a0a", minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>🥇</div>
-      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 32, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "주문이 접수되었습니다" : "Order Confirmed"}</h2>
-      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#c5a572", marginBottom: 10 }}>{orderId.current}</div>
-      <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", maxWidth: 400, lineHeight: 1.6, marginBottom: 28 }}>{lang === "ko" ? "48시간 이내에 볼트 인증서와 사진을 이메일로 발송해 드립니다." : "You'll receive vault certificate and photos within 48 hours."}</p>
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-        <button onClick={() => navigate("orders")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 24px", borderRadius: 6, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "주문 확인" : "View Orders"}</button>
-        <button onClick={() => navigate("dashboard")} style={{ background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "12px 24px", borderRadius: 6, fontSize: 14, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "보유자산" : "Holdings"}</button>
-      </div>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>🔐</div>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "로그인이 필요합니다" : "Login Required"}</h2>
+      <p style={{ color: "#8a7d6b", marginBottom: 24, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "구매하려면 먼저 로그인하세요." : "Please log in to proceed with your purchase."}</p>
+      <button onClick={() => navigate("home")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 28px", borderRadius: 6, fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{lang === "ko" ? "홈으로" : "Go Home"}</button>
     </div>
   );
 
+  if (cart.length === 0 && step < 5) return (
+    <div style={{ padding: "80px", textAlign: "center", background: "#0a0a0a", minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, color: "#f5f0e8", fontWeight: 300 }}>{lang === "ko" ? "장바구니가 비어 있습니다." : "Cart is empty."}</h2>
+      <button onClick={() => navigate("shop")} style={{ marginTop: 20, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 28px", borderRadius: 6, fontSize: 14, fontWeight: 700, cursor: "pointer" }}>{lang === "ko" ? "매장으로" : "Go to Shop"}</button>
+    </div>
+  );
+
+  const placeOrder = async () => {
+    if (!terms) { toast(lang === "ko" ? "이용약관에 동의하세요." : "Please accept terms.", "error"); return; }
+    if (!payMethod) { toast(lang === "ko" ? "결제 수단을 선택하세요." : "Select a payment method.", "error"); return; }
+    setStep(4); setProcessing(true);
+    try {
+      const { id } = await API.orders.create({ items: cart, total: subtotal, paymentMethod: payMethod });
+      setOrderId(id);
+      let result;
+      if (payMethod === "toss") result = await API.payments.toss({ id, total: subtotal });
+      else if (payMethod === "kakao") result = await API.payments.kakao({ id, total: subtotal });
+      else if (payMethod === "wire") { result = await API.payments.wire({ id, total: subtotal }); setWireDetails(result.bankDetails); }
+      else result = await API.payments.card({ id, total: subtotal });
+      addOrder({ id, date: new Date().toISOString(), status: payMethod === "wire" ? "pending_payment" : "processing", items: [...cart], subtotal, total: subtotal, paymentMethod: payMethod, storageOption: "singapore" });
+      clearCart();
+      setStep(5);
+    } catch { toast(lang === "ko" ? "결제 오류가 발생했습니다. 다시 시도하세요." : "Payment error. Please try again.", "error"); setStep(3); }
+    finally { setProcessing(false); }
+  };
+
+  // Step indicator
+  const steps = [
+    { n: 1, ko: "장바구니", en: "Cart" },
+    { n: 2, ko: "결제수단", en: "Payment" },
+    { n: 3, ko: "주문확인", en: "Confirm" },
+    { n: 4, ko: "처리중", en: "Processing" },
+    { n: 5, ko: "완료", en: "Done" },
+  ];
+
+  const StepBar = () => (
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 36, overflowX: "auto", paddingBottom: 4 }}>
+      {steps.map((s, i) => (
+        <div key={s.n} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+            <div style={{ width: 32, height: 32, borderRadius: "50%", background: step >= s.n ? (step === s.n ? "#c5a572" : "#3a3028") : "#1a1510", border: step === s.n ? "2px solid #c5a572" : "2px solid transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontFamily: "'JetBrains Mono',monospace", color: step >= s.n ? (step === s.n ? "#0a0a0a" : "#c5a572") : "#555", fontWeight: 700, transition: "all 0.3s" }}>
+              {step > s.n ? "✓" : s.n}
+            </div>
+            <span style={{ fontSize: 9, color: step === s.n ? "#c5a572" : "#555", fontFamily: "'Outfit',sans-serif", whiteSpace: "nowrap" }}>{lang === "ko" ? s.ko : s.en}</span>
+          </div>
+          {i < steps.length - 1 && <div style={{ width: isMobile ? 20 : 40, height: 1, background: step > s.n ? "#c5a572" : "#2a2318", margin: "0 4px", marginBottom: 20, transition: "background 0.3s" }} />}
+        </div>
+      ))}
+    </div>
+  );
+
+  const payMethods = [
+    { key: "toss", icon: "💙", name: lang === "ko" ? "토스페이" : "TossPay", desc: lang === "ko" ? "신용·체크카드, 계좌이체" : "Credit/debit, bank transfer", sub: lang === "ko" ? "즉시 처리" : "Instant", badge: lang === "ko" ? "인기" : "Popular" },
+    { key: "kakao", icon: "💛", name: lang === "ko" ? "카카오페이" : "KakaoPay", desc: lang === "ko" ? "카카오뱅크 연동" : "Kakao Bank linked", sub: lang === "ko" ? "즉시 처리" : "Instant", badge: null },
+    { key: "wire", icon: "🏦", name: lang === "ko" ? "전신환" : "Wire Transfer", desc: lang === "ko" ? "KRW / USD 은행 이체" : "KRW / USD bank transfer", sub: lang === "ko" ? "영업일 1일" : "1 business day", badge: null },
+    { key: "card", icon: "💳", name: lang === "ko" ? "신용카드" : "Credit Card", desc: "Visa / Mastercard", sub: lang === "ko" ? "즉시 처리" : "Instant", badge: null },
+  ];
+
   return (
     <div style={{ padding: isMobile ? "24px 16px" : "40px 80px", background: "#0a0a0a", minHeight: "80vh" }}>
-      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: "0 0 28px" }}>{lang === "ko" ? "결제" : "Checkout"}</h2>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 32, color: "#f5f0e8", fontWeight: 300, margin: "0 0 28px" }}>{lang === "ko" ? "결제" : "Checkout"}</h2>
+      <StepBar />
 
+      {/* STEP 1 — Cart Review */}
       {step === 1 && (
-        <div style={{ maxWidth: 560 }}>
-          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#c5a572", margin: "0 0 16px", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 }}>{lang === "ko" ? "결제 수단 선택" : "Payment Method"}</h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
-            {paymentMethods.map(pm => (
-              <div key={pm.k} onClick={() => setMethod(pm.k)} style={{ background: method === pm.k ? "rgba(197,165,114,0.07)" : "#111008", border: `1.5px solid ${method === pm.k ? "#c5a572" : "#1a1510"}`, borderRadius: 8, padding: "14px 18px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "border-color 0.15s" }}>
-                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <span style={{ fontSize: 20 }}>{pm.icon}</span>
-                  <div>
-                    <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 500 }}>{pm.label}</div>
-                    <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b" }}>{pm.desc}</div>
-                  </div>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#c5a572", margin: "0 0 18px", fontWeight: 600 }}>{lang === "ko" ? "장바구니 확인" : "Review Your Cart"}</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}>
+            {cart.map(item => (
+              <div key={item.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: isMobile ? 14 : 18, display: "flex", gap: 14, alignItems: "center" }}>
+                <div style={{ fontSize: 36, flexShrink: 0 }}>{item.image}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 500 }}>{lang === "ko" ? item.nameKo : item.name}</div>
+                  <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>Qty: {item.qty} · {item.storage === "singapore" ? (lang === "ko" ? "싱가포르 볼트" : "Singapore Vault") : (lang === "ko" ? "한국 배송" : "Ship to Korea")}</div>
                 </div>
-                <div style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${method === pm.k ? "#c5a572" : "#2a2318"}`, background: method === pm.k ? "#c5a572" : "transparent", flexShrink: 0 }} />
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 15, color: "#c5a572", fontWeight: 600 }}>{fUSD(item.price * item.qty)}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#666" }}>{fKRW(item.price * item.qty * krwRate)}</div>
+                </div>
               </div>
             ))}
           </div>
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: 16, marginBottom: 20 }}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: 18, marginBottom: 24 }}>
+            {[[lang === "ko" ? "상품 소계" : "Subtotal", fUSD(subtotal), "#ddd"], [lang === "ko" ? "보관료 (1년, 예상)" : "Storage (1yr, est.)", fUSD(storageFeeY1), "#8a7d6b"]].map(([l, v, c], i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+                <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{l}</span>
+                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: c }}>{v}</span>
+              </div>
+            ))}
+            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, display: "flex", justifyContent: "space-between" }}>
+              <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "합계" : "Total"}</span>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 22, color: "#c5a572", fontWeight: 700 }}>{fUSD(total)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#555" }}>{fKRW(total * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(subtotal)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW(subtotal * krwRate)}</div>
               </div>
             </div>
           </div>
-          <button onClick={() => setStep(2)} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "15px", fontSize: 15, fontWeight: 700, fontFamily: "'Outfit',sans-serif", borderRadius: 8, cursor: "pointer" }}>
-            {lang === "ko" ? "확인 후 결제" : "Review & Pay"} →
-          </button>
-          <button onClick={() => navigate("cart")} style={{ width: "100%", marginTop: 8, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "11px", fontSize: 13, fontFamily: "'Outfit',sans-serif", borderRadius: 8, cursor: "pointer" }}>
-            {lang === "ko" ? "장바구니로" : "← Back to Cart"}
+          <button onClick={() => setStep(2)} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "14px", fontSize: 15, fontWeight: 700, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+            {lang === "ko" ? "결제 수단 선택 →" : "Select Payment →"}
           </button>
         </div>
       )}
 
+      {/* STEP 2 — Payment Method */}
       {step === 2 && (
-        <div style={{ maxWidth: 560 }}>
-          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#c5a572", margin: "0 0 16px", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 }}>{lang === "ko" ? "주문 확인" : "Order Review"}</h3>
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: 16, marginBottom: 16 }}>
-            {cart.map((item, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: i < cart.length - 1 ? "1px solid #1a1510" : "none" }}>
-                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  <span style={{ fontSize: 20 }}>{item.image}</span>
-                  <div>
-                    <div style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? item.nameKo : item.name}</div>
-                    <div style={{ fontSize: 10, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>x{item.qty}</div>
-                  </div>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#c5a572", margin: "0 0 18px", fontWeight: 600 }}>{lang === "ko" ? "결제 수단 선택" : "Select Payment Method"}</h3>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 12, marginBottom: 24 }}>
+            {payMethods.map(m => (
+              <button key={m.key} onClick={() => setPayMethod(m.key)} style={{ background: payMethod === m.key ? "rgba(197,165,114,0.08)" : "#111008", border: `1.5px solid ${payMethod === m.key ? "#c5a572" : "#2a2318"}`, borderRadius: 10, padding: "16px 18px", cursor: "pointer", textAlign: "left", position: "relative", transition: "all 0.15s" }}>
+                {m.badge && <span style={{ position: "absolute", top: 10, right: 10, background: "#c5a572", color: "#0a0a0a", fontSize: 9, padding: "2px 7px", borderRadius: 3, fontWeight: 700, fontFamily: "'Outfit',sans-serif" }}>{m.badge}</span>}
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                  <span style={{ fontSize: 22 }}>{m.icon}</span>
+                  <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{m.name}</span>
                 </div>
+                <div style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 2 }}>{m.desc}</div>
+                <div style={{ fontSize: 11, color: payMethod === m.key ? "#4ade80" : "#555", fontFamily: "'Outfit',sans-serif" }}>{m.sub}</div>
+              </button>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 12 }}>
+            <button onClick={() => setStep(1)} style={{ flex: 1, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "13px", fontSize: 14, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>← {lang === "ko" ? "이전" : "Back"}</button>
+            <button onClick={() => { if (!payMethod) { toast(lang === "ko" ? "결제 수단을 선택하세요." : "Select payment.", "error"); return; } setStep(3); }} style={{ flex: 2, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "13px", fontSize: 15, fontWeight: 700, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "주문 검토 →" : "Review Order →"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3 — Review & Confirm */}
+      {step === 3 && (
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#c5a572", margin: "0 0 18px", fontWeight: 600 }}>{lang === "ko" ? "최종 주문 확인" : "Review & Place Order"}</h3>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: 20, marginBottom: 14 }}>
+            <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "주문 상품" : "Items"}</div>
+            {cart.map((item, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                <span style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? item.nameKo : item.name} ×{item.qty}</span>
                 <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#c5a572" }}>{fUSD(item.price * item.qty)}</span>
               </div>
             ))}
-            <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 12, marginTop: 4, borderTop: "1px solid #2a2318" }}>
-              <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#f5f0e8", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 18, color: "#c5a572", fontWeight: 700 }}>{fUSD(total)}</span>
+          </div>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: 20, marginBottom: 14 }}>
+            <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "결제 정보" : "Payment"}</div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "결제 수단" : "Method"}</span>
+              <span style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{payMethods.find(m => m.key === payMethod)?.name}</span>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "보관" : "Storage"}</span>
+              <span style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "싱가포르 Malca-Amit FTZ" : "Singapore Malca-Amit FTZ"}</span>
+            </div>
+            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, display: "flex", justifyContent: "space-between" }}>
+              <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "결제 금액" : "Total"}</span>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(subtotal)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW(subtotal * krwRate)}</div>
+              </div>
             </div>
           </div>
-          <div style={{ background: "rgba(197,165,114,0.06)", border: "1px solid rgba(197,165,114,0.2)", borderRadius: 8, padding: "10px 14px", marginBottom: 18 }}>
-            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#c5a572", margin: 0, lineHeight: 1.6 }}>📍 {lang === "ko" ? "볼트 인증서와 사진은 48시간 이내 이메일로 발송됩니다." : "Vault certificate and photos will be emailed within 48 hours."}</p>
+          <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", marginBottom: 20, background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: 16 }}>
+            <input type="checkbox" checked={terms} onChange={e => setTerms(e.target.checked)} style={{ marginTop: 3, accentColor: "#c5a572", width: 16, height: 16 }} />
+            <span style={{ fontSize: 12, color: "#8a7d6b", lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko"
+                ? <>Aurum Korea의 <span style={{ color: "#c5a572" }}>이용약관</span>, <span style={{ color: "#c5a572" }}>개인정보처리방침</span> 및 <span style={{ color: "#c5a572" }}>귀금속 거래 위험 고지</span>에 동의합니다. 투자에는 위험이 따르며 과거 수익률이 미래를 보장하지 않습니다.</>
+                : <>I agree to Aurum Korea's <span style={{ color: "#c5a572" }}>Terms</span>, <span style={{ color: "#c5a572" }}>Privacy Policy</span>, and <span style={{ color: "#c5a572" }}>Risk Disclosure</span>. Investing involves risk.</>}
+            </span>
+          </label>
+          <div style={{ display: "flex", gap: 12 }}>
+            <button onClick={() => setStep(2)} style={{ flex: 1, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "13px", fontSize: 14, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>← {lang === "ko" ? "이전" : "Back"}</button>
+            <button onClick={placeOrder} style={{ flex: 2, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "13px", fontSize: 15, fontWeight: 700, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "주문 완료" : "Place Order"}
+            </button>
           </div>
-          <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setStep(1)} style={{ flex: 1, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "13px", borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>← {lang === "ko" ? "이전" : "Back"}</button>
-            <button onClick={handlePay} disabled={processing} style={{ flex: 2, background: processing ? "#2a2318" : "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: processing ? "#555" : "#0a0a0a", padding: "13px", fontSize: 15, fontWeight: 700, borderRadius: 8, cursor: processing ? "not-allowed" : "pointer", fontFamily: "'Outfit',sans-serif" }}>
-              {processing ? (lang === "ko" ? "처리 중..." : "Processing...") : (lang === "ko" ? "결제 확인" : "Confirm & Pay")}
+        </div>
+      )}
+
+      {/* STEP 4 — Processing */}
+      {step === 4 && (
+        <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center", padding: "60px 20px" }}>
+          {processing ? (
+            <>
+              <div style={{ fontSize: 56, marginBottom: 20, animation: "spin 2s linear infinite" }}>⚙️</div>
+              <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+              <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "결제 처리 중..." : "Processing Payment..."}</h3>
+              <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", fontSize: 14 }}>{lang === "ko" ? "잠시만 기다려 주세요." : "Please wait a moment."}</p>
+              {orderId && <div style={{ marginTop: 16, fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#c5a572" }}>{lang === "ko" ? "주문번호" : "Order ID"}: {orderId}</div>}
+            </>
+          ) : null}
+        </div>
+      )}
+
+      {/* STEP 5 — Confirmation */}
+      {step === 5 && (
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", padding: isMobile ? "20px 0 32px" : "24px 0 40px" }}>
+            <div style={{ fontSize: 60, marginBottom: 16 }}>✅</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 28 : 36, color: "#f5f0e8", fontWeight: 300, marginBottom: 8 }}>{lang === "ko" ? "주문 완료!" : "Order Confirmed!"}</h2>
+            <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", fontSize: 14 }}>{lang === "ko" ? "이메일 및 카카오 알림으로 확인서가 발송되었습니다." : "Confirmation sent via email and KakaoTalk."}</p>
+          </div>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 12, padding: isMobile ? 18 : 26, marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "주문번호" : "Order ID"}</span>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#c5a572", fontWeight: 600 }}>{orderId}</span>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "결제 수단" : "Payment"}</span>
+              <span style={{ fontSize: 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{payMethods.find(m => m.key === payMethod)?.name}</span>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "결제 금액" : "Amount"}</span>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 15, color: "#c5a572", fontWeight: 700 }}>{fUSD(subtotal)}</span>
+            </div>
+            <div style={{ background: "rgba(74,222,128,0.07)", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 8, padding: "12px 16px" }}>
+              <div style={{ fontSize: 12, color: "#4ade80", fontFamily: "'Outfit',sans-serif", fontWeight: 600, marginBottom: 4 }}>🏦 {lang === "ko" ? "볼트 배정 완료" : "Vault Allocated"}</div>
+              <div style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", lineHeight: 1.5 }}>{lang === "ko" ? "Singapore — Malca-Amit FTZ에 배정 처리 중입니다. Lloyd's of London 보험이 즉시 적용됩니다." : "Being allocated at Singapore — Malca-Amit FTZ. Lloyd's of London insurance applies immediately."}</div>
+            </div>
+          </div>
+          {/* Wire details */}
+          {payMethod === "wire" && wireDetails && (
+            <div style={{ background: "#0d1a0a", border: "1px solid #1a3a1a", borderRadius: 12, padding: isMobile ? 18 : 24, marginBottom: 16 }}>
+              <div style={{ fontSize: 13, color: "#4ade80", fontFamily: "'Outfit',sans-serif", fontWeight: 600, marginBottom: 14 }}>🏦 {lang === "ko" ? "전신환 결제 안내" : "Wire Transfer Instructions"}</div>
+              {[
+                [lang === "ko" ? "수취 은행" : "Bank", wireDetails.bank],
+                [lang === "ko" ? "계좌명" : "Account Name", wireDetails.accountName],
+                [lang === "ko" ? "계좌번호" : "Account No.", wireDetails.accountNo],
+                ["SWIFT", wireDetails.swift],
+                [lang === "ko" ? "송금 금액 (USD)" : "Amount (USD)", fUSD(wireDetails.amount)],
+                [lang === "ko" ? "참조번호 (필수)" : "Reference (required)", wireDetails.reference],
+              ].map(([l, v], i) => (
+                <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{l}</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#f5f0e8" }}>{v}</span>
+                </div>
+              ))}
+              <p style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginTop: 10, lineHeight: 1.5 }}>{lang === "ko" ? "⚠️ 참조번호를 반드시 포함하여 송금하세요. 미포함 시 처리가 지연될 수 있습니다." : "⚠️ Always include the reference number. Orders process within 1 business day of confirmed receipt."}</p>
+            </div>
+          )}
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 12 }}>
+            <button onClick={() => navigate("dashboard")} style={{ flex: 1, background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "13px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "내 보유자산 보기" : "View My Holdings"}
+            </button>
+            <button onClick={() => navigate("shop")} style={{ flex: 1, background: "transparent", border: "1px solid #2a2318", color: "#8a7d6b", padding: "13px", fontSize: 14, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "쇼핑 계속하기" : "Continue Shopping"}
             </button>
           </div>
         </div>
@@ -519,5 +631,7 @@ function Checkout({ lang, navigate, cart, clearCart, prices, krwRate, user, addO
     </div>
   );
 }
+
+
 
 export { Home, Shop, ProductPage, CartPage, Checkout };
