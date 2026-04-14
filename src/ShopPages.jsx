@@ -2,6 +2,29 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile, calcPrice, fUSD, fKRW, PRODUCTS, MOCK_ORDERS_INIT, API } from "./lib.jsx";
 import { NewsSection } from "./BaseUI.jsx";
 
+// ── A-5: Inline SVG flags for cross-browser rendering ────────────────────────
+const FlagSG = ({ size = 16 }) => (
+  <svg width={size} height={Math.round(size * 0.67)} viewBox="0 0 20 14" style={{ display: "inline-block", verticalAlign: "middle", borderRadius: 2, flexShrink: 0 }}>
+    <rect width="20" height="7" fill="#EF3340" />
+    <rect y="7" width="20" height="7" fill="#fff" />
+    <circle cx="5" cy="7" r="3" fill="#fff" />
+    <circle cx="6.2" cy="7" r="2.3" fill="#EF3340" />
+    <g fill="#fff">
+      <circle cx="9" cy="4.5" r="0.65" /><circle cx="10.3" cy="5.8" r="0.65" />
+      <circle cx="9.8" cy="7.6" r="0.65" /><circle cx="8.2" cy="7.6" r="0.65" />
+      <circle cx="7.7" cy="5.8" r="0.65" />
+    </g>
+  </svg>
+);
+const FlagKR = ({ size = 16 }) => (
+  <svg width={size} height={Math.round(size * 0.67)} viewBox="0 0 30 20" style={{ display: "inline-block", verticalAlign: "middle", borderRadius: 2, flexShrink: 0 }}>
+    <rect width="30" height="20" fill="#fff" />
+    <circle cx="15" cy="10" r="6" fill="#CD2E3A" />
+    <path d="M12 7 Q15 10 18 7" stroke="#003478" strokeWidth="1.5" fill="none" />
+    <path d="M12 13 Q15 10 18 13" stroke="#003478" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // HOME
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -45,7 +68,7 @@ function Home({ lang, navigate, prices, krwRate }) {
             <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#ffffff", border: "none", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
               {lang === "ko" ? "지금 배분 시작 →" : "Start Allocating →"}
             </button>
-<button onClick={() => navigate("agp")} style={{ background: "transparent", color: "#8a7d6b", border: "1px solid #2a2318", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
+<button onClick={() => navigate("agp-intro")} style={{ background: "transparent", color: "#8a7d6b", border: "1px solid #2a2318", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
               {lang === "ko" ? "AGP — 월 20만원부터" : "AGP — From KRW 200,000/month"}
             </button>
           </div>
@@ -110,33 +133,16 @@ function Home({ lang, navigate, prices, krwRate }) {
         </div>
       </div>
 
-      {/* ── Physical Premium Comparison — labels updated, numbers kept ── */}
-      <div style={{ background: "#0a0a0a", padding: isMobile ? "24px 16px" : "32px 80px", borderBottom: "1px solid #1a1510" }}>
+      {/* ── Physical Premium Comparison — A-1: 2-panel layout (gold LEFT, silver RIGHT), 왜 Aurum box removed ── */}
+      <div className="savings-panel-glow" style={{ background: "#0a0a0a", padding: isMobile ? "24px 16px" : "32px 80px", borderBottom: "1px solid #1a1510", position: "relative" }}>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 24 }}>
-          {/* Left panel */}
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
-              {lang === "ko" ? "실물 프리미엄 비교" : "Physical Premium Comparison"}
-            </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 20 : 26, color: "#f5f0e8", marginBottom: 22, lineHeight: 1.2 }}>
-              {lang === "ko" ? "왜 Aurum인가?" : "Why Aurum?"}
-            </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 30 : 40, color: "#f87171", fontWeight: 700, lineHeight: 1 }}>10%</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "KRX 실물 프리미엄" : "KRX Premium"}</div>
-              </div>
-              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 20, color: "#333", padding: "0 8px" }}>vs</div>
-              <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 30 : 40, color: "#4ade80", fontWeight: 700, lineHeight: 1 }}>3.5%</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "Aurum 프리미엄" : "Aurum Premium"}</div>
-              </div>
-            </div>
-          </div>
-          {/* H-04: Gold 1돈 tracker — LEFT panel */}
-          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+          {/* LEFT panel — Gold 1돈 tracker */}
+          <div className="lift-card" style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
               {lang === "ko" ? "금 1돈 구매 시 절약 금액" : "Savings on 1 Don Gold (3.75g)"}
+            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 22 : 30, color: "#f5f0e8", marginBottom: 20, lineHeight: 1.15, fontWeight: 400 }}>
+              {lang === "ko" ? "금 절약 비교" : "Gold Savings"}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
@@ -155,10 +161,13 @@ function Home({ lang, navigate, prices, krwRate }) {
             </div>
           </div>
 
-          {/* H-05: Silver 1kg tracker — RIGHT panel */}
-          <div style={{ background: "#111008", border: "1px solid rgba(197,165,114,0.15)", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
-            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+          {/* RIGHT panel — Silver 1kg tracker */}
+          <div className="lift-card" style={{ background: "#111008", border: "1px solid rgba(197,165,114,0.15)", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
               {lang === "ko" ? "은 1키로 구매시 절약 금액" : "Savings on 1kg Silver Bar"}
+            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 22 : 30, color: "#f5f0e8", marginBottom: 20, lineHeight: 1.15, fontWeight: 400 }}>
+              {lang === "ko" ? "은 절약 비교" : "Silver Savings"}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
@@ -178,13 +187,38 @@ function Home({ lang, navigate, prices, krwRate }) {
           </div>
         </div>
 
-        {/* H-06: Premium caption spanning both panels */}
-        <div style={{ marginTop: 16, padding: "12px 16px", background: "rgba(197,165,114,0.04)", border: "1px solid rgba(197,165,114,0.12)", borderRadius: 8, textAlign: "center" }}>
-          <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b", lineHeight: 1.6 }}>
+        {/* H-06: Horizontal premium comparison caption — A-1 ── */}
+        <div style={{ marginTop: 16, padding: isMobile ? "16px 14px" : "18px 24px", background: "rgba(197,165,114,0.04)", border: "1px solid rgba(197,165,114,0.12)", borderRadius: 8 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 0, alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", marginBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 22, color: "#f87171", fontWeight: 700 }}>15–20%</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", lineHeight: 1.4 }}>
+                {lang === "ko" ? "한국 평균 금 실물 프리미엄" : "Average Korea Gold Premium"}
+                <br /><span style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: 12 }}>Average Korea Gold Premium 15–20%</span>
+              </div>
+            </div>
+            <div style={{ width: isMobile ? "100%" : 1, height: isMobile ? 1 : 28, background: "rgba(197,165,114,0.15)" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 22, color: "#f87171", fontWeight: 700 }}>30%+</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", lineHeight: 1.4 }}>
+                {lang === "ko" ? "한국 평균 은 실물 프리미엄" : "Average Korea Silver Premium"}
+                <br /><span style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: 12 }}>Average Korea Silver Premium 30%+</span>
+              </div>
+            </div>
+            <div style={{ width: isMobile ? "100%" : 1, height: isMobile ? 1 : 28, background: "rgba(197,165,114,0.15)" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 22, color: "#4ade80", fontWeight: 700 }}>2.5–5.5%</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", lineHeight: 1.4 }}>
+                {lang === "ko" ? "Aurum 프리미엄" : "Aurum Premium"}
+                <br /><span style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontSize: 12 }}>Wire 2.5% · Card 5.5%</span>
+              </div>
+            </div>
+          </div>
+          <div style={{ borderTop: "1px dashed rgba(197,165,114,0.12)", paddingTop: 8, fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#555", lineHeight: 1.6 }}>
             {lang === "ko"
               ? "※ 한국 실물 시가는 KB Star 금·은 시세 기준 추정값입니다. 아름 가격은 국제 현물가 + 프리미엄 기준이며, 실시간으로 변동됩니다."
               : "※ Korean market prices are estimates based on KB Star gold & silver rates. Aurum prices are international spot + premium and update in real time."}
-          </span>
+          </div>
         </div>
       </div>
 
@@ -238,7 +272,7 @@ function Home({ lang, navigate, prices, krwRate }) {
           ["📜", "LBMA"],
           ["🛡️", lang === "ko" ? "완전 보험" : "Insured"],
           ["🔐", lang === "ko" ? "완전 배분" : "Allocated"],
-          ["🇸🇬", "Singapore FTZ"],
+          [<FlagSG size={18} />, "Singapore FTZ"],
           ["💰", lang === "ko" ? "현물가 + 투명한 프리미엄" : "Spot + Transparent Premium"],
           ["🥇🥈", lang === "ko" ? "금·은" : "Gold & Silver"],
         ].map(([icon, label], i) => (
@@ -513,8 +547,8 @@ function ProductPage({ product, lang, navigate, prices, krwRate, user, setShowLo
             <div style={{ fontSize: 12, color: "#8a7d6b", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "보관 옵션" : "Storage Option"}</div>
             <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row" }}>
               {[
-                { key: "singapore", icon: "🇸🇬", label: lang === "ko" ? "싱가포르 볼트" : "Singapore Vault", sub: lang === "ko" ? "GST 면제 · 연 0.8%" : "No GST · 0.8%/yr" },
-                { key: "korea", icon: "🇰🇷", label: lang === "ko" ? "한국 배송" : "Ship to Korea", sub: lang === "ko" ? "관세+VAT ~18% 부과" : "~18% duties apply" },
+                { key: "singapore", icon: <FlagSG size={16} />, label: lang === "ko" ? "싱가포르 볼트" : "Singapore Vault", sub: lang === "ko" ? "GST 면제 · 연 0.8%" : "No GST · 0.8%/yr" },
+                { key: "korea", icon: <FlagKR size={16} />, label: lang === "ko" ? "한국 배송" : "Ship to Korea", sub: lang === "ko" ? "관세+VAT ~18% 부과" : "~18% duties apply" },
               ].map(o => (
                 <button key={o.key} onClick={() => setStorage(o.key)} style={{ flex: 1, background: storage === o.key ? "rgba(197,165,114,0.07)" : "transparent", border: `1px solid ${storage === o.key ? "#c5a572" : "#2a2318"}`, borderRadius: 8, padding: "10px 14px", cursor: "pointer", textAlign: "left", transition: "all 0.15s" }}>
                   <div style={{ fontSize: 13, color: "#f5f0e8", marginBottom: 2, fontFamily: "'Outfit',sans-serif" }}>{o.icon} {o.label}</div>
@@ -588,7 +622,7 @@ function CartPage({ lang, navigate, cart, removeFromCart, updateCartQty, prices,
               <div style={{ fontSize: isMobile ? 36 : 48, flexShrink: 0 }}>{item.image}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 14, color: "#f5f0e8", fontWeight: 500, marginBottom: 2 }}>{lang === "ko" ? item.nameKo : item.name}</div>
-                <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{item.storage === "singapore" ? (lang === "ko" ? "🇸🇬 싱가포르 볼트" : "🇸🇬 Singapore Vault") : (lang === "ko" ? "🇰🇷 한국 배송" : "🇰🇷 Ship to Korea")}</div>
+                <div style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", display: "flex", alignItems: "center", gap: 4 }}>{item.storage === "singapore" ? <><FlagSG size={14} /> {lang === "ko" ? "싱가포르 볼트" : "Singapore Vault"}</> : <><FlagKR size={14} /> {lang === "ko" ? "한국 배송" : "Ship to Korea"}</>}</div>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#c5a572", marginTop: 6 }}>{fUSD(item.price)}</div>
               </div>
               <div style={{ display: "flex", alignItems: "center", border: "1px solid #2a2318", borderRadius: 6 }}>
