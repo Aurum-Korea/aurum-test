@@ -1,6 +1,29 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile, useInView, fUSD, fKRW, fDateLong, fDate, WHY_GOLD_REASONS, WHY_GOLD_STATS, WHY_SILVER_STATS, WHY_SILVER_REASONS, EDUCATION_ARTICLES, EDUCATION_CATEGORIES, MOCK_ORDERS_INIT, API } from "./lib.jsx";
 
+// ── A-5: Inline SVG flags ────────────────────────────────────────────────────
+const FlagSG = ({ size = 16 }) => (
+  <svg width={size} height={Math.round(size * 0.67)} viewBox="0 0 20 14" style={{ display: "inline-block", verticalAlign: "middle", borderRadius: 2, flexShrink: 0 }}>
+    <rect width="20" height="7" fill="#EF3340" />
+    <rect y="7" width="20" height="7" fill="#fff" />
+    <circle cx="5" cy="7" r="3" fill="#fff" />
+    <circle cx="6.2" cy="7" r="2.3" fill="#EF3340" />
+    <g fill="#fff">
+      <circle cx="9" cy="4.5" r="0.65" /><circle cx="10.3" cy="5.8" r="0.65" />
+      <circle cx="9.8" cy="7.6" r="0.65" /><circle cx="8.2" cy="7.6" r="0.65" />
+      <circle cx="7.7" cy="5.8" r="0.65" />
+    </g>
+  </svg>
+);
+const FlagKR = ({ size = 16 }) => (
+  <svg width={size} height={Math.round(size * 0.67)} viewBox="0 0 30 20" style={{ display: "inline-block", verticalAlign: "middle", borderRadius: 2, flexShrink: 0 }}>
+    <rect width="30" height="20" fill="#fff" />
+    <circle cx="15" cy="10" r="6" fill="#CD2E3A" />
+    <path d="M12 7 Q15 10 18 7" stroke="#003478" strokeWidth="1.5" fill="none" />
+    <path d="M12 13 Q15 10 18 13" stroke="#003478" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // ORDER HISTORY
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -463,7 +486,7 @@ function WhyGold({ lang, navigate }) {
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexDirection: isMobile ? "column" : "row", maxWidth: 480, margin: "0 auto" }}>
             <button onClick={() => navigate("shop")} style={{ flex: 1, background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#ffffff", border: "none", padding: "14px 28px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 30, cursor: "pointer" }}>{lang === "ko" ? "실물 은 구매하기 →" : "Buy Physical Silver →"}</button>
-            <button onClick={() => navigate("agp")} style={{ flex: 1, background: "transparent", color: "#c5a572", border: "1px solid rgba(197,165,114,0.4)", padding: "14px 28px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 30, cursor: "pointer" }}>{lang === "ko" ? "AGP로 은 저축 →" : "Silver in AGP →"}</button>
+            <button onClick={() => navigate("agp-intro")} style={{ flex: 1, background: "transparent", color: "#c5a572", border: "1px solid rgba(197,165,114,0.4)", padding: "14px 28px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 30, cursor: "pointer" }}>{lang === "ko" ? "AGP로 은 저축 →" : "Silver in AGP →"}</button>
           </div>
         </div>
       </div>
@@ -499,7 +522,7 @@ function SectionLabel({ children }) {
 
 function BenefitTile({ icon, title, bullets }) {
   return (
-    <div style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 10, padding: "22px 20px" }}>
+    <div className="lift-card" style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 10, padding: "22px 20px" }}>
       <div style={{ fontSize: 28, marginBottom: 10 }}>{icon}</div>
       <div style={{ fontFamily: T.serif, fontSize: 17, color: T.textPrimary, fontWeight: 400, marginBottom: 12 }}>{title}</div>
       <ul style={{ margin: 0, padding: "0 0 0 16px", listStyle: "disc" }}>
@@ -653,7 +676,7 @@ function Storage({ lang, navigate }) {
           {[
             { icon: "🏛️", label: ko ? "Malca-Amit Singapore — 1963년 설립, 세계 최고 귀금속 보관 전문 업체" : "Malca-Amit Singapore — Founded 1963, world's leading precious metals custodian" },
             { icon: "📜", label: ko ? "Lloyd's of London — 완전 가액 보험, 모든 위험 보장" : "Lloyd's of London — Full replacement value insurance, all risks covered" },
-            { icon: "🇸🇬", label: ko ? "Singapore FTZ — 자유무역지대, GST 면제, AAA 국가 신용등급" : "Singapore FTZ — Free Trade Zone, GST-exempt, AAA sovereign credit rating" },
+            { icon: <FlagSG size={18} />, label: ko ? "Singapore FTZ — 자유무역지대, GST 면제, AAA 국가 신용등급" : "Singapore FTZ — Free Trade Zone, GST-exempt, AAA sovereign credit rating" },
           ].map((chip, i) => (
             <div key={i} style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 8, padding: "10px 16px", display: "flex", alignItems: "center", gap: 8, maxWidth: isMobile ? "100%" : 340 }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>{chip.icon}</span>
@@ -774,7 +797,7 @@ function Storage({ lang, navigate }) {
             ko ? "KRX 금시장 대비 VAT 10% 절약 + 관세 3% 회피" : "Save 10% VAT and avoid 3% customs vs. taking KRX gold physical",
             ko ? "매각차익은 인출 시점까지 과세이연 (법률·세무 조언 아님 — 전문가 상담 필수)" : "Gains are tax-deferred until realized (not legal or tax advice — consult a professional)",
           ]} />
-          <BenefitTile icon="🇰🇷" title={ko ? "Korean-First Service / 한국어 우선 서비스" : "Korean-First Service"} bullets={[
+          <BenefitTile icon={<FlagKR size={22} />} title={ko ? "Korean-First Service / 한국어 우선 서비스" : "Korean-First Service"} bullets={[
             ko ? "전 플랫폼·고객지원·문서 한국어 완전 지원" : "Full Korean-language platform, support, and documentation",
             ko ? "카카오톡 상담, KST 영업시간 응대" : "KakaoTalk support during KST business hours",
             ko ? "원화(KRW) 결제·정산 지원, 분기별 원화 가치 리포트" : "KRW payment and settlement, quarterly KRW valuation reports",
@@ -957,7 +980,7 @@ function Storage({ lang, navigate }) {
       {/* ── CTA STRIP ── */}
       <div style={{ padding: isMobile ? "48px 20px" : "72px 80px", textAlign: "center", background: "linear-gradient(135deg,rgba(197,165,114,0.06),rgba(197,165,114,0.02))" }}>
         <h2 style={{ fontFamily: T.serif, fontSize: isMobile ? 24 : 34, color: T.textPrimary, fontWeight: 300, margin: "0 0 16px" }}>
-          {ko ? "싱가포르 실물 금 보관, 월 20만원 AGP로 시작하거나 첫 바를 KRW 350만원부터 구매하세요." : "Start storing physical gold in Singapore from KRW 200,000/month via AGP — or KRW 3.5M for your first full bar."}
+          {ko ? "싱가포르 실물 금 보관, 월 20만원 AGP로 시작하거나 세계 시장가로 첫 바를 구매하세요." : "Start storing physical gold in Singapore from KRW 200,000/month via AGP — or buy your first bar at international spot price."}
         </h2>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginTop: 28 }}>
           {navigate && (
@@ -965,7 +988,7 @@ function Storage({ lang, navigate }) {
               <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#0a0a0a", border: "none", padding: "15px 36px", fontSize: 15, fontWeight: 700, borderRadius: 7, cursor: "pointer", fontFamily: T.sans }}>
                 🥇 {ko ? "지금 첫 바 구매하기 / Buy your first bar now" : "Buy your first bar now"}
               </button>
-              <button onClick={() => navigate("agp")} style={{ background: "transparent", color: T.accent, border: `1px solid ${T.accent}`, padding: "15px 36px", fontSize: 15, fontWeight: 600, borderRadius: 7, cursor: "pointer", fontFamily: T.sans }}>
+              <button onClick={() => navigate("agp-intro")} style={{ background: "transparent", color: T.accent, border: `1px solid ${T.accent}`, padding: "15px 36px", fontSize: 15, fontWeight: 600, borderRadius: 7, cursor: "pointer", fontFamily: T.sans }}>
                 💰 {ko ? "AGP 저축 플랜 시작하기 / Start AGP savings plan" : "Start AGP savings plan"}
               </button>
             </>
@@ -1141,7 +1164,7 @@ function AGP({ lang, navigate }) {
           {[
             { icon: "💯", label: ko ? "100% 실물 백업 — 금, 은 & 백금 — 매일 공개 감사" : "100% physically backed — Gold, Silver & Platinum — audited daily" },
             { icon: "🥇", label: ko ? "100g 또는 1kg 도달 시 PAMP·Heraeus 바로 무료 전환 / Free conversion to PAMP or Heraeus bars at 100g or 1kg" : "Free conversion to PAMP or Heraeus bars at 100g or 1kg" },
-            { icon: "🇰🇷", label: ko ? "한국어 서비스 + 토스뱅크 자동이체 지원 / Korean-language service, Toss Bank auto-debit" : "Korean-language service, Toss Bank auto-debit" },
+            { icon: <FlagKR size={18} />, label: ko ? "한국어 서비스 + 토스뱅크 자동이체 지원 / Korean-language service, Toss Bank auto-debit" : "Korean-language service, Toss Bank auto-debit" },
           ].map((chip, i) => (
             <div key={i} style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 8, padding: "10px 16px", display: "flex", alignItems: "center", gap: 8, maxWidth: isMobile ? "100%" : 340 }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>{chip.icon}</span>
@@ -1157,7 +1180,7 @@ function AGP({ lang, navigate }) {
         </div>
       </div>
       {section(<><br/>{h2("AGP는 이렇게 작동합니다", "How Aurum Gold Plan Works")}<div style={{ display: "flex", flexDirection: "column", gap: 24 }}><StepCard num={1} icon="✍️" title={ko ? "가입 / Enroll" : "Enroll"} body={ko ? "10분 내 온라인 가입 및 한국 표준 KYC 완료" : "10-minute online signup with Korean-standard KYC"} /><StepCard num={2} icon="💰" title={ko ? "입금 / Fund" : "Fund"} body={ko ? "토스뱅크·한국 은행에서 일회 또는 월간 자동이체" : "One-time or recurring auto-debit from Toss Bank or any Korean bank"} /><StepCard num={3} icon="⚖️" title={ko ? "그램 적립 / Accumulate" : "Accumulate"} body={ko ? "입금액이 실시간 현물가 + 2.0% 프리미엄으로 AGP 그램으로 전환" : "Each deposit converts to AGP grams at live spot plus 2.0% premium"} /><StepCard num={4} icon="📊" title={ko ? "관리 / Monitor" : "Monitor"} body={ko ? "대시보드에서 그램, KRW 가치, 손익, 보관료, 전환 기준 진행률 확인" : "Dashboard shows grams, KRW value, P&L, storage fees, and progress to conversion threshold"} /><StepCard num={5} icon="🥇" title={ko ? "전환 / Convert" : "Convert"} body={ko ? "100g(또는 1kg 기준) 도달 시 실물 바로 무료 전환 또는 언제든 KRW 매도" : "At 100g (or 1kg for flagship), convert to a physical bar for free — or sell back for KRW anytime"} /></div></>)}
-      {section(<><br/>{h2("AGP vs 국내 금 투자 상품", "AGP vs Other Korean Gold Savings Options")}{lead("한국 은행과 증권사가 금 저축 상품을 출시하고 있는 것은 반가운 변화입니다. 하지만 모든 국내 상품은 한 가지 공통된 한계를 가지고 있습니다. 금이 한국 안에 있다는 것. AGP는 싱가포르 자유무역지대에 보관되는 진짜 실물 금, 국제 현물가 기준, 원하는 때 PAMP·Heraeus 바로 무료 전환 가능한 상품입니다.", "Korean banks and brokerages now offer gold savings products. But every domestic option has the same limitation: the gold sits in Korea. That means 10% VAT on withdrawal and kimchi-premium pricing. AGP is the offshore counterpart — real physical gold in Singapore's Free Trade Zone, priced at international spot.")}<div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}><thead><tr style={{ background: "#0d0b08" }}>{[ko ? "특징" : "Feature", "Aurum AGP", "Kbank / KRX", ko ? "국내 은행 적금" : "Korean Bank Passbook"].map((h, i) => <th key={i} style={{ padding: "12px 14px", textAlign: "left", color: i === 1 ? T.accent : T.textSecondary, fontSize: 10, letterSpacing: 1, textTransform: "uppercase", fontFamily: T.sans, border: `1px solid ${T.border}` }}>{h}</th>)}</tr></thead><tbody>{[[ko?"실물 백업":"Physical backing",ko?"✅ 100% 완전 배분":"✅ 100% allocated",ko?"⚠️ KRX 수탁":"⚠️ KRX custody",ko?"❌ 은행 장부상":"❌ Bank paper"],[ko?"관할":"Jurisdiction","🇸🇬 Singapore FTZ","🇰🇷 Korea","🇰🇷 Korea"],[ko?"실물 전환":"Convert to bar",ko?"✅ 100g/1kg 무료":"✅ Free @ 100g/1kg",ko?"⚠️ 10% VAT 발생":"⚠️ 10% VAT triggered",ko?"❌ 불가":"❌ Not available"],[ko?"보관료":"Storage fee","0.30%/yr","~0%/yr (paper)",ko?"은행 수수료":"Bank fees"]].map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j} style={{ padding: "11px 14px", fontFamily: T.sans, fontSize: 12, color: j===1?T.textPrimary:T.textSecondary, border: `1px solid ${T.border}`, background: j===1?"rgba(197,165,114,0.04)":T.panel, fontWeight: j===1?500:400 }}>{cell}</td>)}</tr>)}</tbody></table></div></>)}
+      {section(<><br/>{h2("AGP vs 국내 금 투자 상품", "AGP vs Other Korean Gold Savings Options")}{lead("한국 은행과 증권사가 금 저축 상품을 출시하고 있는 것은 반가운 변화입니다. 하지만 모든 국내 상품은 한 가지 공통된 한계를 가지고 있습니다. 금이 한국 안에 있다는 것. AGP는 싱가포르 자유무역지대에 보관되는 진짜 실물 금, 국제 현물가 기준, 원하는 때 PAMP·Heraeus 바로 무료 전환 가능한 상품입니다.", "Korean banks and brokerages now offer gold savings products. But every domestic option has the same limitation: the gold sits in Korea. That means 10% VAT on withdrawal and kimchi-premium pricing. AGP is the offshore counterpart — real physical gold in Singapore's Free Trade Zone, priced at international spot.")}<div style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}><thead><tr style={{ background: "#0d0b08" }}>{[ko ? "특징" : "Feature", "Aurum AGP", "Kbank / KRX", ko ? "국내 은행 적금" : "Korean Bank Passbook"].map((h, i) => <th key={i} style={{ padding: "12px 14px", textAlign: "left", color: i === 1 ? T.accent : T.textSecondary, fontSize: 10, letterSpacing: 1, textTransform: "uppercase", fontFamily: T.sans, border: `1px solid ${T.border}` }}>{h}</th>)}</tr></thead><tbody>{[[ko?"실물 백업":"Physical backing",ko?"✅ 100% 완전 배분":"✅ 100% allocated",ko?"⚠️ KRX 수탁":"⚠️ KRX custody",ko?"❌ 은행 장부상":"❌ Bank paper"],[ko?"관할":"Jurisdiction","SG Singapore FTZ","KR Korea","KR Korea"],[ko?"실물 전환":"Convert to bar",ko?"✅ 100g/1kg 무료":"✅ Free @ 100g/1kg",ko?"⚠️ 10% VAT 발생":"⚠️ 10% VAT triggered",ko?"❌ 불가":"❌ Not available"],[ko?"보관료":"Storage fee","0.30%/yr","~0%/yr (paper)",ko?"은행 수수료":"Bank fees"]].map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j} style={{ padding: "11px 14px", fontFamily: T.sans, fontSize: 12, color: j===1?T.textPrimary:T.textSecondary, border: `1px solid ${T.border}`, background: j===1?"rgba(197,165,114,0.04)":T.panel, fontWeight: j===1?500:400 }}>{cell}</td>)}</tr>)}</tbody></table></div></>)}
       {section(<><br/>{h2("고객님의 금 저축 여정", "Your Gold Savings Journey")}<div style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 12, padding: isMobile?"20px":"28px 32px" }}>{[{milestone:ko?"1개월":"Month 1",text:ko?"AGP 계정 개설, 토스뱅크 자동이체 50만원/월 설정":"Opens AGP account, sets Toss Bank auto-debit at KRW 500,000/month"},{milestone:ko?"12개월":"Month 12",text:ko?"약 28g 적립 완료. 첫 연간 스테이트먼트 수신":"~28g accumulated. Receives first annual statement"},{milestone:ko?"4년":"Year 4",text:ko?"약 114g 적립, 100g 전환 기준점 돌파":"~114g accumulated — crosses 100g conversion threshold"},{milestone:ko?"4년 마일스톤":"Year 4 milestone",text:ko?"100g를 실물 PAMP 100g 바로 전환(무료). 남은 14g는 AGP 계속 적립":"Converts 100g to a real PAMP 100g bar for free. 14g stays in AGP.",highlight:true},{milestone:ko?"10년":"Year 10",text:ko?"약 280g 실물 바 + 약 60g AGP 그램 = 총 ~340g 실물 금 보유":"~280g in allocated bars + ~60g in AGP = ~340g total gold ownership"}].map((item,i)=><div key={i} style={{ display:"flex",gap:16,padding:"14px 0",borderBottom:i<4?`1px solid ${T.border}`:"none" }}><div style={{ minWidth:isMobile?60:100,flexShrink:0 }}><span style={{ fontFamily:T.mono,fontSize:11,color:T.accent,fontWeight:600 }}>{item.milestone}</span></div><p style={{ margin:0,fontSize:13,color:item.highlight?T.textPrimary:T.textSecondary,fontFamily:T.sans,lineHeight:1.6,fontWeight:item.highlight?500:400 }}>{item.text}</p></div>)}</div></>)}
       {section(<><br/>{h2("가격과 수수료", "Pricing & Fees")}<div style={{ overflowX:"auto",marginBottom:28 }}><table style={{ width:"100%",borderCollapse:"collapse",minWidth:500 }}><thead><tr style={{ background:"#0d0b08" }}>{[ko?"상품":"Product",ko?"최소":"Minimum",ko?"프리미엄":"Premium over spot",ko?"보관료":"Storage fee"].map((h,i)=><th key={i} style={{ padding:"12px 16px",textAlign:"left",color:T.textSecondary,fontSize:10,letterSpacing:1.5,textTransform:"uppercase",fontFamily:T.sans,border:`1px solid ${T.border}` }}>{h}</th>)}</tr></thead><tbody>{[[ko?"AGP 금 그램":"AGP Gold grams","1g","2.0%","0.30%/yr"],[ko?"AGP 은 그램":"AGP Silver grams","10g","3.5%","0.50%/yr"],[ko?"AGP 백금 그램":"AGP Platinum grams","1g","2.5%","0.40%/yr"]].map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j} style={{ padding:"12px 16px",fontFamily:j===2||j===3?T.mono:T.sans,fontSize:13,color:j===2||j===3?T.accent:T.textPrimary,border:`1px solid ${T.border}`,background:T.panel }}>{cell}</td>)}</tr>)}</tbody></table></div><div style={{ background:T.panel,border:`1px solid ${T.border}`,borderRadius:10,padding:"20px 22px" }}><div style={{ fontFamily:T.sans,fontSize:14,color:T.accent,fontWeight:600,marginBottom:12 }}>{ko?"전환 기준점 (수수료 없음)":"Conversion Thresholds (free)"}</div>{[[ko?"금":"Gold",ko?"100g → PAMP/Heraeus 100g 바":"100g → PAMP/Heraeus 100g bar",ko?"1,000g → 1kg LBMA 바":"1,000g → 1kg LBMA bar"],[ko?"은":"Silver",ko?"1,000g → 1kg LBMA 바":"1,000g → 1kg LBMA bar",null],[ko?"백금":"Platinum",ko?"100g → 100g 바":"100g → 100g bar",null]].map(([metal,rule,subRule],i)=><div key={i} style={{ display:"flex",gap:14,padding:"8px 0",borderBottom:i<2?`1px solid ${T.border}`:"none" }}><span style={{ fontFamily:T.sans,fontSize:13,color:T.accent,fontWeight:600,minWidth:70,flexShrink:0 }}>{metal}</span><div style={{ fontFamily:T.sans,fontSize:13,color:T.textSecondary }}><div>{rule}</div>{subRule&&<div style={{ color:"#6b6b6b",fontSize:12,marginTop:3,paddingLeft:12 }}>↳ {subRule}</div>}</div></div>)}</div></>)}
       {section(<><br/>{h2("자주 묻는 질문", "Frequently Asked Questions")}<FAQAccordion items={faqItems} /></>)}
