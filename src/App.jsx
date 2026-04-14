@@ -3,6 +3,27 @@ import { useIsMobile, useInView, useLivePrices, useToast, calcPrice, fUSD, fKRW,
 import { ToastContainer, Ticker, Nav, LoginModal } from "./BaseUI.jsx";
 import { Home, Shop, ProductPage, CartPage, Checkout } from "./ShopPages.jsx";
 import { OrderHistoryPage, AccountPage, KYCFlowPage, WhyGold, Learn, Storage, AGP, AGPBackingReport } from "./UserPages.jsx";
+// Phase 2: Visual foundation + Phase 3: New pages
+import "./styles/aurum-motion.css";
+import { initMagneticCards } from "./lib/magnetic";
+import ShopSelectorPage from "./pages/ShopSelectorPage";
+import AGPIntroPage from "./pages/AGPIntroPage";
+import AGPEnrollPage from "./pages/AGPEnrollPage";
+
+// Inline flag SVG for holdings table
+const FlagSG = ({ size = 14 }) => (
+  <svg width={size} height={Math.round(size * 0.67)} viewBox="0 0 20 14" style={{ display: "inline-block", verticalAlign: "middle", borderRadius: 2, flexShrink: 0 }}>
+    <rect width="20" height="7" fill="#EF3340" />
+    <rect y="7" width="20" height="7" fill="#fff" />
+    <circle cx="5" cy="7" r="3" fill="#fff" />
+    <circle cx="6.2" cy="7" r="2.3" fill="#EF3340" />
+    <g fill="#fff">
+      <circle cx="9" cy="4.5" r="0.65" /><circle cx="10.3" cy="5.8" r="0.65" />
+      <circle cx="9.8" cy="7.6" r="0.65" /><circle cx="8.2" cy="7.6" r="0.65" />
+      <circle cx="7.7" cy="5.8" r="0.65" />
+    </g>
+  </svg>
+);
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VAULT DASHBOARD — Enhanced
@@ -154,7 +175,7 @@ function Dashboard({ lang, navigate, prices, krwRate, user, orders, holdings, to
                   <td style={{ padding: 14, fontFamily: "'JetBrains Mono',monospace", color: "#ddd", fontSize: 13 }}>{fUSD(h.purchasePrice)}</td>
                   <td style={{ padding: 14, fontFamily: "'JetBrains Mono',monospace", color: "#c5a572", fontSize: 13 }}>{fUSD(cur)}</td>
                   <td style={{ padding: 14, fontFamily: "'JetBrains Mono',monospace", color: pnl >= 0 ? "#4ade80" : "#f87171", fontSize: 13 }}>{pnl >= 0 ? "+" : ""}{fUSD(pnl)}</td>
-                  <td style={{ padding: 14, fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>🇸🇬 {h.zone}</td>
+                  <td style={{ padding: 14, fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", display: "flex", alignItems: "center", gap: 4 }}><FlagSG size={14} /> {h.zone}</td>
                   <td style={{ padding: 14 }}><button onClick={() => navigate("sell")} style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.3)", color: "#f87171", padding: "5px 12px", borderRadius: 4, fontSize: 11, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "매도" : "Sell"}</button></td>
                 </tr>
               );
@@ -400,7 +421,7 @@ function Footer({ lang, navigate }) {
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr 1fr 1fr", gap: isMobile ? 20 : 40, marginBottom: isMobile ? 20 : 32 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-            <div style={{ width: 24, height: 24, borderRadius: "50%", background: "linear-gradient(135deg,#c5a572,#8a6914)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "#0a0a0a" }}>Au</div>
+            <div className="aurum-logo-mark" style={{ width: 24, height: 24, border: "1px solid rgba(197, 165, 114, 0.5)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Cormorant Garamond',serif", fontSize: 10, fontWeight: 500, color: "#C5A572", letterSpacing: "0.04em" }}>AU</div>
             <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, fontWeight: 600, color: "#c5a572", letterSpacing: 2 }}>AURUM KOREA</span>
           </div>
           <p style={{ fontSize: 11, color: "#555", lineHeight: 1.65, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "Aurum Korea Pte Ltd. 싱가포르 등록 귀금속 딜러. AML/CFT 준수." : "Aurum Korea Pte Ltd. Singapore Registered Precious Metals Dealer. AML/CFT Compliant."}</p>
@@ -445,6 +466,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // Phase 2: Init magnetic card cursor tracking on every page change
+  useEffect(() => {
+    const cleanup = initMagneticCards();
+    return cleanup;
+  }, [page]);
+
   const addToCart = useCallback((product, qty = 1, storageOption = "singapore") => {
     const price = calcPrice(product, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
     setCart(prev => {
@@ -481,7 +508,9 @@ export default function App() {
 
       <main style={{ flex: 1 }}>
         {page === "home" && <Home lang={lang} navigate={navigate} prices={prices} krwRate={krwRate} />}
-        {page === "shop" && <Shop lang={lang} navigate={navigate} setProduct={setSelectedProduct} prices={prices} krwRate={krwRate} addToCart={addToCart} toast={toast} />}
+        {/* Phase 3 routing: shop → ShopSelector (new front door); shop-physical → existing listing */}
+        {page === "shop" && <ShopSelectorPage lang={lang} navigate={navigate} />}
+        {page === "shop-physical" && <Shop lang={lang} navigate={navigate} setProduct={setSelectedProduct} prices={prices} krwRate={krwRate} addToCart={addToCart} toast={toast} />}
         {page === "product" && <ProductPage product={selectedProduct} lang={lang} navigate={navigate} prices={prices} krwRate={krwRate} user={user} setShowLogin={setShowLogin} addToCart={addToCart} toast={toast} />}
         {page === "cart" && <CartPage lang={lang} navigate={navigate} cart={cart} removeFromCart={removeFromCart} updateCartQty={updateCartQty} prices={prices} krwRate={krwRate} />}
         {page === "checkout" && <Checkout lang={lang} navigate={navigate} cart={cart} clearCart={clearCart} prices={prices} krwRate={krwRate} user={user} addOrder={addOrder} toast={toast} />}
@@ -492,6 +521,9 @@ export default function App() {
         {page === "storage" && <Storage lang={lang} navigate={navigate} />}
         {page === "agp" && <AGP lang={lang} navigate={navigate} />}
         {page === "agp-report" && <AGPBackingReport lang={lang} navigate={navigate} />}
+        {/* Phase 3 new routes: AGP onboarding flow */}
+        {page === "agp-intro" && <AGPIntroPage lang={lang} navigate={navigate} />}
+        {page === "agp-enroll" && <AGPEnrollPage lang={lang} navigate={navigate} />}
         {page === "learn" && <Learn lang={lang} navigate={navigate} />}
         {page === "dashboard" && <Dashboard lang={lang} navigate={navigate} prices={prices} krwRate={krwRate} user={user} orders={orders} holdings={holdings} toast={toast} />}
         {page === "sell" && <SellFlowPage lang={lang} navigate={navigate} prices={prices} krwRate={krwRate} holdings={holdings} toast={toast} />}
