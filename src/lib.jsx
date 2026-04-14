@@ -207,15 +207,19 @@ function useInView(ref) {
   return inView;
 }
 
-// ─── A-1: Day-open baseline tracking (KST) ────────────────────────────────────
-// Stores the first price fetched each KST day as "open".
-// All subsequent API calls that day compare against open → live intraday % change.
-// Shows "—" only for the first 60 seconds of the very first visit each day.
-// On day rollover, the new open resets automatically.
+// ─── A-1: Cross-day % change tracking (KST) — CEO original spec ──────────────
+// previousClose = the last stored price from a PREVIOUS KST day.
+// Shows "—" only on the very first ever load (no prior data).
+// From the second KST day onward, shows real cross-day % change.
+// Seed: on first load, stores FALLBACK_PRICES as a synthetic previous close
+// so that from the very second API call (60s later), % change is meaningful.
 function getDailyChangeData(currentPrices, currentKrw) {
   const KST_OFFSET = 9 * 60 * 60 * 1000;
   const kstNow = new Date(Date.now() + KST_OFFSET);
   const today = kstNow.toISOString().split('T')[0];
+  // Use yesterday's string to seed the cache so the FIRST real API call
+  // already has a previousClose to compute % change against.
+  const yesterday = new Date(Date.now() + KST_OFFSET - 86400000).toISOString().split('T')[0];
 
   const CACHE_KEY = 'aurum_price_daily';
   let cache = {};
@@ -223,30 +227,44 @@ function getDailyChangeData(currentPrices, currentKrw) {
 
   const changes = {};
 
-  if (cache.date !== today) {
-    // New KST day (or first ever load): record this as today's open baseline
-    cache = { date: today, open: currentPrices, openKrw: currentKrw };
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
-    return changes; // No baseline yet — Ticker shows "—" for first 60s only
+  if (!cache.date) {
+    // Absolute first ever load — seed previousClose with FALLBACK_PRICES
+    // so next fetch (60s later) can compute a real % change vs reference.
+    cache = {
+      date: yesterday,
+      prices: FALLBACK_PRICES,
+      krw: FALLBACK_KRW,
+    };
+    // Fall through — this will immediately roll to previousClose below
   }
 
-  // Same day: compute intraday % change vs the stored open
-  if (cache.open) {
+  // If stored date is a PREVIOUS day, roll current to previousClose
+  if (cache.date !== today && cache.prices) {
+    cache.previousClose = cache.prices;
+    cache.previousKrw = cache.krw;
+  }
+
+  // Update today's rolling price
+  cache.date = today;
+  cache.prices = currentPrices;
+  cache.krw = currentKrw;
+
+  // Compute % change from previous close
+  if (cache.previousClose) {
     for (const metal of ['gold', 'silver', 'platinum']) {
-      const prev = cache.open[metal];
+      const prev = cache.previousClose[metal];
       const curr = currentPrices[metal];
       if (prev && curr) {
         changes[metal] = ((curr - prev) / prev * 100).toFixed(2);
       }
     }
-    if (cache.openKrw && currentKrw) {
-      changes.krw = ((currentKrw - cache.openKrw) / cache.openKrw * 100).toFixed(2);
+    if (cache.previousKrw && currentKrw) {
+      changes.krw = ((currentKrw - cache.previousKrw) / cache.previousKrw * 100).toFixed(2);
     }
   }
 
-  // Do NOT update cache.open — it stays fixed as the day's reference point
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
-  return changes;
+  return changes; // { gold: '+0.42', silver: '-1.15', ... } or {} on very first load
 }
 
 function useLivePrices() {
