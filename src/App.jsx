@@ -458,7 +458,7 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState(MOCK_ORDERS_INIT);
   const [holdings] = useState(MOCK_HOLDINGS);
-  const { prices, krwRate, priceError } = useLivePrices();
+  const { prices, krwRate, priceError, dailyChanges } = useLivePrices();
   const { toasts, show: toast } = useToast();
 
   const navigate = useCallback((p) => {
@@ -472,17 +472,19 @@ export default function App() {
     return cleanup;
   }, [page]);
 
+  // E-1: Composite cart key = ${productId}_${storageOption}
   const addToCart = useCallback((product, qty = 1, storageOption = "singapore") => {
     const price = calcPrice(product, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
+    const cartKey = `${product.id}_${storageOption}`;
     setCart(prev => {
-      const existing = prev.find(i => i.id === product.id && i.storage === storageOption);
-      if (existing) return prev.map(i => i.id === product.id && i.storage === storageOption ? { ...i, qty: i.qty + qty } : i);
-      return [...prev, { ...product, qty, storage: storageOption, price }];
+      const existing = prev.find(i => i.cartKey === cartKey);
+      if (existing) return prev.map(i => i.cartKey === cartKey ? { ...i, qty: i.qty + qty } : i);
+      return [...prev, { ...product, qty, storage: storageOption, price, cartKey }];
     });
   }, [prices]);
 
-  const removeFromCart = useCallback((productId) => setCart(prev => prev.filter(i => i.id !== productId)), []);
-  const updateCartQty = useCallback((productId, qty) => setCart(prev => prev.map(i => i.id === productId ? { ...i, qty } : i).filter(i => i.qty > 0)), []);
+  const removeFromCart = useCallback((cartKey) => setCart(prev => prev.filter(i => i.cartKey !== cartKey)), []);
+  const updateCartQty = useCallback((cartKey, qty) => setCart(prev => prev.map(i => i.cartKey === cartKey ? { ...i, qty } : i).filter(i => i.qty > 0)), []);
   const clearCart = useCallback(() => setCart([]), []);
   const addOrder = useCallback((order) => setOrders(prev => [order, ...prev]), []);
 
@@ -503,7 +505,7 @@ export default function App() {
         </div>
       )}
 
-      <Ticker lang={lang} prices={prices} krwRate={krwRate} />
+      <Ticker lang={lang} prices={prices} krwRate={krwRate} dailyChanges={dailyChanges} />
       <Nav page={page} navigate={navigate} lang={lang} setLang={setLang} user={user} setUser={setUser} setShowLogin={setShowLogin} cart={cart} />
 
       <main style={{ flex: 1 }}>
