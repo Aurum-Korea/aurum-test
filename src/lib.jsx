@@ -137,7 +137,7 @@ const WHY_GOLD_REASONS = [
   {
     icon: "⚖️", titleKo: "포트폴리오 분산", titleEn: "Portfolio Diversification",
     body: "금은 주식·채권과 낮은 상관관계를 가집니다. 포트폴리오의 5~15%를 금에 배분하면 변동성을 낮추면서도 장기 수익률을 개선할 수 있습니다.",
-    stat: "-0.02", statLabel: "S&P500과의 상관계수 (장기 평균)"
+    stat: "10–20%", statLabel: "Morgan Stanley 추천 자산 배분 율"
   },
   {
     icon: "🏛️", titleKo: "중앙은행의 선택", titleEn: "Central Bank Reserve",
