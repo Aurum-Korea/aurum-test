@@ -349,4 +349,33 @@ function useToast() {
 }
 
 
-export { API, FALLBACK_PRICES, FALLBACK_KRW, MARKET_FACTS, PRODUCTS, MOCK_HOLDINGS, MOCK_ORDERS_INIT, AUDIT_TRAIL_INIT, WHY_GOLD_REASONS, WHY_GOLD_STATS, EDUCATION_ARTICLES, EDUCATION_CATEGORIES, STATIC_NEWS, RSS_FEEDS, calcPrice, fUSD, fKRW, fDate, fDateLong, useIsMobile, useInView, useLivePrices, useNewsData, useToast };
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WHY SILVER — 2026 data (Silver Institute World Silver Survey 2026)
+// ═══════════════════════════════════════════════════════════════════════════════
+const WHY_SILVER_STATS = [
+  { value: "67 Moz", label: "2026 Annual Supply Deficit" },
+  { value: "6th Year", label: "Consecutive Annual Deficit" },
+  { value: ">60%", label: "Industrial & Tech Demand Share" },
+  { value: "Scarce", label: "Korean Bank Availability" },
+];
+
+const WHY_SILVER_REASONS = [
+  {
+    icon: "⚡", titleKo: "산업의 필수 금속", titleEn: "Industrial Backbone",
+    body: "Solar panels, EVs, 5G electronics, AI data centres, and defence systems all depend on silver. This demand is structural and accelerating — unlike gold, silver cannot be replaced.",
+    stat: ">60%", statLabel: "Global demand from industry/tech (2026)"
+  },
+  {
+    icon: "📉", titleKo: "구조적 공급 부족", titleEn: "Structural Supply Deficit",
+    body: "The silver market enters its 6th consecutive year of deficit in 2026, with a projected shortfall of 67 million oz. China export controls tightened supply further in January 2026.",
+    stat: "67 Moz", statLabel: "2026 projected supply deficit"
+  },
+  {
+    icon: "🇰🇷", titleKo: "한국 접근 프리미엄", titleEn: "Korean Access Premium",
+    body: "Korean banks have repeatedly suspended silver bar sales due to chronic shortages. Physical silver in Korea often trades at substantial premiums. Aurum eliminates this via offshore allocation at international spot.",
+    stat: null, statLabel: null
+  },
+];
+
+export { API, FALLBACK_PRICES, FALLBACK_KRW, MARKET_FACTS, PRODUCTS, MOCK_HOLDINGS, MOCK_ORDERS_INIT, AUDIT_TRAIL_INIT, WHY_GOLD_REASONS, WHY_GOLD_STATS, WHY_SILVER_STATS, WHY_SILVER_REASONS, EDUCATION_ARTICLES, EDUCATION_CATEGORIES, STATIC_NEWS, RSS_FEEDS, calcPrice, fUSD, fKRW, fDate, fDateLong, useIsMobile, useInView, useLivePrices, useNewsData, useToast };
