@@ -520,23 +520,47 @@ function ProductPage({ product, lang, navigate, prices, krwRate, user, setShowLo
           <div style={{ fontSize: 12, color: "#8a7d6b", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{product.purity} · {product.weight}</div>
           {product.descKo && <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b", lineHeight: 1.7, marginBottom: 20 }}>{lang === "ko" ? product.descKo : product.name}</p>}
 
-          {/* Price Breakdown */}
+          {/* D-2: Restructured pricing table */}
           <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 16 : 22, marginBottom: 18 }}>
-            {[
-              { label: lang === "ko" ? "현물가" : "Spot Price", val: fUSD(unit / (1 + product.premium)), col: "#ddd" },
-              { label: `${lang === "ko" ? "프리미엄" : "Premium"} (${(product.premium * 100).toFixed(1)}%)`, val: `+${fUSD(unit - unit / (1 + product.premium))}`, col: "#c5a572" },
-              ...(storage === "korea" ? [{ label: lang === "ko" ? "한국 관세/VAT ~18%" : "Korea Duties ~18%", val: `+${fUSD(duty)}`, col: "#f87171" }] : []),
-            ].map((row, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{row.label}</span>
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: row.col }}>{row.val}</span>
-              </div>
-            ))}
-            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 14, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "단가" : "Unit Price"}</span>
+            {/* Row 1: Korea physical price (kimchi premium ~18% over Aurum) */}
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>한국 물리금 가격 (KRX 기준)</span>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 23, color: "#c5a572", fontWeight: 700 }}>{fUSD(unit + duty)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW((unit + duty) * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#f87171" }}>{fKRW(unit * 1.18 * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#555" }}>{fUSD(unit * 1.18)}</div>
+              </div>
+            </div>
+            {/* Row 2: Client savings (negative — what they save) */}
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "#4ade80", fontFamily: "'Outfit',sans-serif" }}>고객 절약액</span>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#4ade80" }}>−{fKRW((unit * 1.18 - unit) * krwRate)}</div>
+              </div>
+            </div>
+            {/* Row 3: Aurum price = spot + 8% */}
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>Aurum 가격 (현물 + 8%)</span>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#c5a572" }}>{fKRW(unit * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#555" }}>{fUSD(unit)}</div>
+              </div>
+            </div>
+            {/* Row 4: Storage/VAT if applicable */}
+            {storage === "korea" && (
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                <span style={{ fontSize: 13, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>한국 관세/VAT (~18%)</span>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "#f87171" }}>+{fKRW(duty * krwRate)}</div>
+                </div>
+              </div>
+            )}
+            {/* Row 5: Total */}
+            <div style={{ borderTop: "1px solid #2a2318", paddingTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 14, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>총 결제 금액</span>
+              <div style={{ textAlign: "right" }}>
+                {/* D-1: KRW primary */}
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 20 : 26, color: "#c5a572", fontWeight: 700 }}>{fKRW((unit + duty) * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fUSD(unit + duty)}</div>
               </div>
             </div>
           </div>
@@ -641,22 +665,39 @@ function CartPage({ lang, navigate, cart, removeFromCart, updateCartQty, prices,
           ))}
         </div>
         <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 18 : 24, height: "fit-content" }}>
-          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#f5f0e8", fontWeight: 600, margin: "0 0 20px" }}>{lang === "ko" ? "주문 요약" : "Order Summary"}</h3>
-          {[
-            { label: lang === "ko" ? "소계" : "Subtotal", val: fUSD(subtotal), col: "#ddd" },
-            { label: lang === "ko" ? "예상 연 보관료" : "Est. annual storage", val: fUSD(storageFee), col: "#8a7d6b" },
-          ].map((r, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{r.label}</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: r.col }}>{r.val}</span>
-            </div>
-          ))}
+          <h3 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, color: "#f5f0e8", fontWeight: 600, margin: "0 0 20px" }}>주문 요약</h3>
+          {/* E-3: Cart summary restructured — KRW primary */}
+          {(() => {
+            const koreaTotal = subtotal * 1.18;
+            const savings = koreaTotal - subtotal;
+            return (
+              <>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>한국 물리금 가격 총액</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#f87171" }}>{fKRW(koreaTotal * krwRate)}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, color: "#4ade80", fontFamily: "'Outfit',sans-serif" }}>고객 절약액</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#4ade80" }}>−{fKRW(savings * krwRate)}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>Aurum 가격</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#c5a572" }}>{fKRW(subtotal * krwRate)}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+                  <span style={{ fontSize: 12, color: "#a09080", fontFamily: "'Outfit',sans-serif" }}>보관/배송비 (연 예상)</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#8a7d6b" }}>{fKRW(storageFee * krwRate)}</span>
+                </div>
+              </>
+            );
+          })()}
           <div style={{ borderTop: "1px solid #2a2318", paddingTop: 14, marginBottom: 18 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "합계" : "Total"}</span>
+              <span style={{ fontSize: 15, color: "#f5f0e8", fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>총 결제금액</span>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(subtotal)}</div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fKRW(subtotal * krwRate)}</div>
+                {/* E-3: KRW primary, USD secondary */}
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 22, color: "#c5a572", fontWeight: 700 }}>{fKRW(subtotal * krwRate)}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "#666" }}>{fUSD(subtotal)}</div>
               </div>
             </div>
           </div>
