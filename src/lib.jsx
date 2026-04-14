@@ -207,11 +207,14 @@ function useInView(ref) {
   return inView;
 }
 
-// ─── A-1: localStorage-based daily close tracking (KST) ───────────────────────
+// ─── A-1: Day-open baseline tracking (KST) ────────────────────────────────────
+// Stores the first price fetched each KST day as "open".
+// All subsequent API calls that day compare against open → live intraday % change.
+// Shows "—" only for the first 60 seconds of the very first visit each day.
+// On day rollover, the new open resets automatically.
 function getDailyChangeData(currentPrices, currentKrw) {
   const KST_OFFSET = 9 * 60 * 60 * 1000;
-  const now = new Date();
-  const kstNow = new Date(now.getTime() + KST_OFFSET);
+  const kstNow = new Date(Date.now() + KST_OFFSET);
   const today = kstNow.toISOString().split('T')[0];
 
   const CACHE_KEY = 'aurum_price_daily';
@@ -219,33 +222,31 @@ function getDailyChangeData(currentPrices, currentKrw) {
   try { cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); } catch {}
 
   const changes = {};
-  // If stored date is a PREVIOUS day, roll to previousClose
-  if (cache.date && cache.date !== today && cache.prices) {
-    cache.previousClose = cache.prices;
-    cache.previousKrw = cache.krw;
+
+  if (cache.date !== today) {
+    // New KST day (or first ever load): record this as today's open baseline
+    cache = { date: today, open: currentPrices, openKrw: currentKrw };
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
+    return changes; // No baseline yet — Ticker shows "—" for first 60s only
   }
 
-  // Update today's prices
-  cache.date = today;
-  cache.prices = currentPrices;
-  cache.krw = currentKrw;
-
-  // Compute % change from previous close
-  if (cache.previousClose) {
+  // Same day: compute intraday % change vs the stored open
+  if (cache.open) {
     for (const metal of ['gold', 'silver', 'platinum']) {
-      const prev = cache.previousClose[metal];
+      const prev = cache.open[metal];
       const curr = currentPrices[metal];
       if (prev && curr) {
         changes[metal] = ((curr - prev) / prev * 100).toFixed(2);
       }
     }
-    if (cache.previousKrw && currentKrw) {
-      changes.krw = ((currentKrw - cache.previousKrw) / cache.previousKrw * 100).toFixed(2);
+    if (cache.openKrw && currentKrw) {
+      changes.krw = ((currentKrw - cache.openKrw) / cache.openKrw * 100).toFixed(2);
     }
   }
 
+  // Do NOT update cache.open — it stays fixed as the day's reference point
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
-  return changes; // { gold: '0.42', silver: '-1.15', ... } or {}
+  return changes;
 }
 
 function useLivePrices() {
