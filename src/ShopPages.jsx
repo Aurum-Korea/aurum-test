@@ -1,1 +1,485 @@
-aW1wb3J0IHsgdXNlU3RhdGUsIHVzZUVmZmVjdCwgdXNlQ2FsbGJhY2ssIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdXNlSXNNb2JpbGUsIGNhbGNQcmljZSwgZlVTRCwgZktSVywgUFJPRFVDVFMsIE1PQ0tfT1JERVJTX0lOSVQsIEFQSSB9IGZyb20gIi4vbGliLmpzeCI7CmltcG9ydCB7IE5ld3NTZWN0aW9uIH0gZnJvbSAiLi9CYXNlVUkuanN4IjsKCi8vIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkAovLyBIT01FCi8vIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkApmdW5jdGlvbiBIb21lKHsgbGFuZywgbmF2aWdhdGUsIHByaWNlcywga3J3UmF0ZSB9KSB7CiAgY29uc3QgaXNNb2JpbGUgPSB1c2VJc01vYmlsZSgpOwogIC8vIEgtMDQ6IEdvbGQgdHJhY2tlciDigJQgMeuPiCAoMy43NWcgPSAzLjc1LzMxLjEwMzUgb3opIHVuaXRzCiAgY29uc3QgRE9OX1JBVElPID0gMy43NSAvIDMxLjEwMzU7CiAgY29uc3QgZ29sZEtCID0gcHJpY2VzLmdvbGQgKiBrcndSYXRlICogRE9OX1JBVElPICogMS4xNTsgICAvLyBLQiBTdGFyIGFwcHJveAogIGNvbnN0IGdvbGRBdXJ1bSA9IHByaWNlcy5nb2xkICoga3J3UmF0ZSAqIERPTl9SQVRJTyAqIDEuMDU7IC8vIEF1cnVtIDUuNSUgY2FyZCBwcmVtaXVtCiAgY29uc3QgZ29sZFNhdmluZ3MgPSBnb2xkS0IgLSBnb2xkQXVydW07CiAgLy8gSC0wNTogU2lsdmVyIHRyYWNrZXIg4oCUIDFrZyAoMTAwMGcgPSAxMDAwLzMxLjEwMzUgb3opCiAgY29uc3QgS0dfUkFUSU8gPSAxMDAwIC8gMzEuMTAzNTsKICBjb25zdCBzaWx2ZXJLQiA9IChwcmljZXMuc2lsdmVyIHx8IDMyLjE1KSAqIGtyd1JhdGUgKiBLR19SQVRJTyAqIDEuMjA7CiAgY29uc3Qgc2lsdmVyQXVydW0gPSAocHJpY2VzLnNpbHZlciB8fCAzMi4xNSkgKiBrcndSYXRlICogS0dfUkFUSU8gKiAxLjEwOwogIGNvbnN0IHNpbHZlclNhdmluZ3MgPSBzaWx2ZXJLQiAtIHNpbHZlckF1cnVtOwogIHJldHVybiAoCiAgICA8ZGl2PgoKICAgICAgey8qIEhFUk8gKi99CiAgICAgIDxkaXYgc3R5bGU9e3sgcG9zaXRpb246ICJyZWxhdGl2ZSIsIG1pbkhlaWdodDogaXNNb2JpbGUgPyA0MjAgOiA1NDAsIGJhY2tncm91bmQ6ICJsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCMwYTBhMGEsIzFhMTUxMCA0MCUsIzBkMGIwOCkiLCBkaXNwbGF5OiAiZmxleCIsIGFsaWduSXRlbXM6ICJjZW50ZXIiLCBwYWRkaW5nOiBpc01vYmlsZSA/ICI0MHB4IDE2cHgiIDogIjAgODBweCIsIG92ZXJmbG93OiAiaGlkZGVuIiB9fT4KICAgICAgICA8ZGl2IHN0eWxlPXt7IHBvc2l0aW9uOiAiYWJzb2x1dGUiLCBpbnNldDogMCwgb3BhY2l0eTogMC4wMzUsIGJhY2tncm91bmRJbWFnZTogInJlcGVhdGluZy1saW5lYXItZ3JhZGllbnQoNDVkZWcsI2M1YTU3MiAwLCNjNWE1NzIgMXB4LHRyYW5zcGFyZW50IDFweCx0cmFuc3BhcmVudCA0MHB4KSIsIHBvaW50ZXJFdmVudHM6ICJub25lIiB9fSAvPgogICAgICAgIDxkaXYgc3R5bGU9e3sgcG9zaXRpb246ICJyZWxhdGl2ZSIsIHpJbmRleDogMSwgbWF4V2lkdGg6IGlzTW9iaWxlID8gIjEwMCUiIDogNjYwIH19PgogICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiBpc01vYmlsZSA/IDEwIDogMTIsIGNvbG9yOiAiI2M1YTU3MiIsIGxldHRlclNwYWNpbmc6IGlzTW9iaWxlID8gMiA6IDQsIHRleHRUcmFuc2Zvcm06ICJ1cHBlcmNhc2UiLCBtYXJnaW5Cb3R0b206IGlzTW9iaWxlID8gMTQgOiAyMCB9fT4KICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi67Cw67aEIO67tOq0gCDCtyDqta3soJwg7ZiE66y86rCAIMK3IO2VnOq1rSDtiKzsnpDsnpAg7IiE7JqpIiA6ICJBbGxvY2F0ZWQgVmF1bHQgU3RvcmFnZSDCtyBJbnRlcm5hdGlvbmFsIFNwb3QgUHJpY2luZyDCtyBLb3JlYW4gSW52ZXN0b3JzIn0KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGgxIHN0eWxlPXt7IGZvbnRGYW1pbHk6ICInQ29ybW9yYW50IEdhcmFtb25kJyxzZXJpZiIsIGZvbnRTaXplOiBpc01vYmlsZSA/IDM0IDogNTQsIGZvbnRXZWlnaHQ6IDMwMCwgY29sb3I6ICIjZjVmMGU4IiwgbGluZUhlaWdodDogMS4xMiwgbWFyZ2luOiAiMCAwIDIwcHgiIH19PgogICAgICAgICAgICB7bGFuZyA9PT0gImtvIgogICAgICAgICAgICAgID8gPD48c3BhbiBzdHlsZT17eyBjb2xvcjogIiNjNWE1NzIiLCBmb250V2VpZ2h0OiA2MDAgfX0+7KeE7KeHIOq4iC4g7KeE7KeHIOydgC48L3NwYW4+PGJyIC8+7KeE7KeHIOyGjOycqS48Lz4KICAgICAgICAgICAgICA6IDw+UmVhbCBHb2xkLiBSZWFsIFNpbHZlci48YnIgLz48c3BhbiBzdHlsZT17eyBjb2xvcjogIiNjNWE1NzIiLCBmb250V2VpZ2h0OiA2MDAgfX0+UmVhbCBPd25lcnNoaXAuPC9zcGFuPjwvPn0KICAgICAgICAgIDwvaDE+CiAgICAgICAgICA8cCBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiBpc01vYmlsZSA/IDE0IDogMTYsIGNvbG9yOiAiIzhhN2Q2YiIsIGxpbmVIZWlnaHQ6IDEuNzUsIG1hcmdpbjogIjAgMCAzMHB4IiB9fT4KICAgICAgICAgICAge2xhbmcgPT09ICJrbyIKICAgICAgICAgICAgICA/ICLsnYDtlonsha0g7Ya17J6l64+E6rCAIOylhOuKleuPkCwgS1JYIOqs4KSM7J6F64uI64ukLiDsi7HqsIDtj6zrpbQgTWFsY2EtQW1pdCDquIjqs6Dsl5Ag6reA7ZWY7J2YIOydtOumhOycvOuhnCDrk7HroZ3rkJwg7Iuk66y8IOq4iOyGjSDigJQg6rWt7KCcIO2YhOusvOqwgCDquLDspIAuIgogICAgICAgICAgICAgIDogIk5vdCBhIGJhbmsgcGFzc2Jvb2suIE5vdCBhIEtSWCBhY2NvdW50LiBBbGxvY2F0ZWQgcGh5c2ljYWwgbWV0YWwg4oCUIHJlZ2lzdGVyZWQgaW4geW91ciBuYW1lIGF0IE1hbGNhLUFtaXQgU2luZ2Fwb3JlIOKAlCBwcmljZWQgYXQgaW50ZXJuYXRpb25hbCBzcG90LiJ9CiAgICAgICAgICA8L3A+CiAgICAgICAgICB7LyogSDotMDI6IFR3byBidXR0b25zIG9ubHkgKGR1cGxpY2F0ZSByZW1vdmVkKSAqL30KICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBnYXA6IDEyLCBmbGV4RGlyZWN0aW9uOiBpc01vYmlsZSA/ICJjb2x1bW4iIDogInJvdyIgfX0+CiAgICAgICAgICAgIDxidXR0b24gb25DbGljaz17KCkgPT4gbmF2aWdhdGUoInNob3AiKX0gc3R5bGU9e3sgYmFja2dyb3VuZDogImxpbmVhci1ncmFkaWVudCgxMzVkZWcsI2M1YTU3MiwjOGE2OTE0KSIsIGNvbG9yOiAiI2ZmZmZmZiIsIGJvcmRlcjogIm5vbmUiLCBwYWRkaW5nOiBpc01vYmlsZSA/ICIxNHB4IiA6ICIxNHB4IDM2cHgiLCBmb250U2l6ZTogMTUsIGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFdlaWdodDogNzAwLCBib3JkZXJSYWRpdXM6IDYsIGN1cnNvcjogInBvaW50ZXIiLCBsZXR0ZXJTcGFjaW5nOiAwLjUgfX0+CiAgICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi7KeA6riIIO67tOq0gCDsi5zsnpEg4oaSIiA6ICJTdGFydCBBbGxvY2F0aW5nIOKGkiJ9CiAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICA8YnV0dG9uIG9uQ2xpY2s9eygpID0+IG5hdmlnYXRlKCJhZ3AiKX0gc3R5bGU9e3sgYmFja2dyb3VuZDogInRyYW5zcGFyZW50IiwgY29sb3I6ICIjOGE3ZDZiIiwgYm9yZGVyOiAiMXB4IHNvbGlkICMyYTIzMTgiLCBwYWRkaW5nOiBpc01vYmlsZSA/ICIxNHB4IiA6ICIxNHB4IDM2cHgiLCBmb250U2l6ZTogMTUsIGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFdlaWdodDogNjAwLCBib3JkZXJSYWRpdXM6IDYsIGN1cnNvcjogInBvaW50ZXIiIH19PgogICAgICAgICAgICAgIHtsYW5nID09PSAia28iID8gIkFHUCDigJQg7JuAIDIw7J6R7Jug67aA7YSwIiA6ICJBUEcg4oCUIEZyb20gS1JXIDIwMCwwMDAvbW9udGgifQogICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KCiAgICAgIHsvKiBQQVBFUiB2cyBQSFlTSUNBTCBzZWN0aW9uIC0gcHJlc2VydmVkIGZyb20gb3JpZ2luYWwgKi99CiAgICAgIDxkaXYgc3R5bGU9e3sgYmFja2dyb3VuZDogIiMxMTEwMDgiLCBwYWRkaW5nOiBpc01vYmlsZSA/ICIzNnB4IDE2cHgiIDogIjU2cHggODBweCIsIGJvcmRlclRvcDogIjFweCBzb2xpZCAjMWExNTEwIiwgYm9yZGVyQm90dG9tOiAiMXB4IHNvbGlkICMxYTE1MTAiIH19PgogICAgICAgIDxkaXYgc3R5bGU9e3sgdGV4dEFsaWduOiAiY2VudGVyIiwgbWFyZ2luQm90dG9tOiBpc01vYmlsZSA/IDI4IDogNDAgfX0+CiAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAxMCwgY29sb3I6ICIjYzVhNTcyIiwgbGV0dGVyU3BhY2luZzogMywgdGV4dFRyYW5zZm9ybTogInVwcGVyY2FzZSIsIG1hcmdpbkJvdHRvbTogOCwgZm9udEZhbWlseTogIidPdXRmaXQnLHNhbnMtc2VyaWYiIH19PgogICAgICAgICAgICB7bGFuZyA9PT0gImtvIiA/ICLqt7zrs7jsoIHsnbgg7LCo7J20IiA6ICJUSEUgRlVOREFNRU5UQUwgRElGRkVSRU5DRSJ9CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxoMiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ0Nvcm1vcmFudCBHYXJhbW9uZCcsc2VyaWYiLCBmb250U2l6ZTogaXNNb2JpbGUgPyAyNiA6IDMyLCBjb2xvcjogIiNmNWYwZTgiLCBmb250V2VpZ2h0OiAzMDAsIG1hcmdpbjogMCB9fT4KICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi6riI7J2EIOyGjOycoO2VmOuKlCDrkZAg6rCA7KeAIOuwqeuylS4g7KeE7Kec64qUIO2VmOuCmOyeheuLiOuLpC4iIDogIllvdSBDYW4gT3duIEdvbGQgVHdvIFdheXMuIE9ubHkgT25lIElzIFJlYWwuIn0KICAgICAgICAgIDwvaDI+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBzdHlsZT17eyBkaXNwbGF5OiAiZ3JpZCIsIGdyaWRUZW1wbGF0ZUNvbHVtbnM6IGlzTW9iaWxlID8gIjFmciIgOiAiMWZyIDFmciIsIGdhcDogaXNNb2JpbGUgPyAxNCA6IDI0IH19PgogICAgICAgICAgPGRpdiBzdHlsZT17eyBiYWNrZ3JvdW5kOiAiIzBhMGEwYSIsIGJvcmRlcjogIjFweCBzb2xpZCAjMmEyMzE4IiwgYm9yZGVyUmFkaXVzOiAxMCwgcGFkZGluZzogaXNNb2JpbGUgPyAiMjBweCAxOHB4IiA6ICIyOHB4IDI4cHgiIH19PgogICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGRpc3BsYXk6ICJmbGV4IiwgYWxpZ25JdGVtczogImNlbnRlciIsIGdhcDogMTAsIG1hcmdpbkJvdHRvbTogMTYgfX0+CiAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyB3aWR0aDogOCwgaGVpZ2h0OiA4LCBib3JkZXJSYWRpdXM6ICI1MCUiLCBiYWNrZ3JvdW5kOiAiI2Y4NzE3MSIsIGZsZXhTaHJpbms6IDAgfX0gLz4KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFNpemU6IDEyLCBjb2xvcjogIiNmODcxNzEiLCBmb250V2VpZ2h0OiA3MDAsIHRleHRUcmFuc2Zvcm06ICJ1cHBlcmNhc2UiLCBsZXR0ZXJTcGFjaW5nOiAxIH19PgogICAgICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi7Y6Y7J207Y28IOq4iMK37J2AIiA6ICJQYXBlciBHb2xkIC8gU2lsdmVyIn0KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDx1bCBzdHlsZT17eyBtYXJnaW46IDAsIHBhZGRpbmc6ICIwIDAgMCAxOHB4IiB9fT4KICAgICAgICAgICAgICB7KGxhbmcgPT09ICJrbyIgPyBbCiAgICAgICAgICAgICAgICAi7J2A7ZaJIOq4iO2GteyepSwgS1JYIOqzhOyijCwg7JmAIOy1nOq3uCDsnqXquLAiLAogICAgICAgICAgICAgICAgIuq3gO2VmOuKlCDqs6Dssq3qtazsgo0g6rCc7JWh6rCAIOKAlCDsi6TrrLwg6riI7J2AIOWgtOydtCDrsJztlonsnpDsnbQg7JWE64uZ64uI64ukIiwKICAgICAgICAgICAgICAgICLsg4HrjIDrsKkg66as7Iqk7YGsLiDrspXsoIEg7IaM7Jyg6raMLiDsnbzroKjrrIjsl4QiCiAgICAgICAgICAgICAgXSA6IFsKICAgICAgICAgICAgICAgICJCYW5rIHBhc3Nib29rLCBLUlggYWNjb3VudCwgb3IgZnVuZCIsCiAgICAgICAgICAgICAgICAiWW91IG93biBhIGNvbnRyYWN0dWFsIGNsYWltIOKAlCBub3QgdGhlIG1ldGFsIiwKICAgICAgICAgICAgICAgICJDb3VudGVycGFydHkgcmlzay4gTm8gbGVnYWwgdGl0bGUuIE5vIHNlcmlhbCBudW1iZXIuIgogICAgICAgICAgICAgIF0pLm1hcCgoYiwgaSkgPT4gKAogICAgICAgICAgICAgICAgPGxpIGtleT17aX0gc3R5bGU9e3sgZm9udFNpemU6IDEzLCBjb2xvcjogIiM4YTdkNmIiLCBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIG1hcmdpbkJvdHRvbTogOCwgbGluZUhlaWdodDogMS42IH19PntifTwvbGk+CiAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgc3R5bGU9e3sgYmFja2dyb3VuZDogIiMwYTBhMGEiLCBib3JkZXI6ICIxcHggc29saWQgcmdiYSg3NCwyMjIsMTI4LDAuMikiLCBib3JkZXJSYWRpdXM6IDEwLCBwYWRkaW5nOiBpc01vYmlsZSA/ICIyMHB4IDE4cHgiIDogIjI4cHggMjhweCIgfX0+CiAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBhbGlnbkl0ZW1zOiAiY2VudGVyIiwgZ2FwOiAxMCwgbWFyZ2luQm90dG9tOiAxNiB9fT4KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IHdpZHRoOiA4LCBoZWlnaHQ6IDgsIGJvcmRlclJhZGl1czogIjUwJSIsIGJhY2tncm91bmQ6ICIjNGFkZTgwIiwgZmxleFNocmluazogMCB9fSAvPgogICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidPdXRmaXQnLHNhbnMtc2VyaWYiLCBmb250U2l6ZTogMTIsIGNvbG9yOiAiIzRhZGU4MCIsIGZvbnRXZWlnaHQ6IDcwMCwgdGV4dFRyYW5zZm9ybTogInVwcGVyY2FzZSIsIGxldHRlclNwYWNpbmc6IDEgfX0+CiAgICAgICAgICAgICAgICB7bGFuZyA9PT0gImtvIiA/ICLsi6TrrLwg67Cw67aEIOq4iOyGjSIgOiAiUGh5c2ljYWwgQWxsb2NhdGVkIn0KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDx1bCBzdHlsZT17eyBtYXJnaW46IDAsIHBhZGRpbmc6ICIwIDAgMCAxOHB4IiB9fT4KICAgICAgICAgICAgICB7KGxhbmcgPT09ICJrbyIgPyBbCiAgICAgICAgICAgICAgICAi7Iuk66y8IOq4iOyGjS4g6reA7ZWY7J2YIOydtOumhC4g6reA7ZWY7J2YIOydvOugqOuyiO2YuCIsCiAgICAgICAgICAgICAgICAi7JmE7IiEIOuwqeuTnCDquIjqs6Ag4oCUIAbAnOyGjOycqOqyjCDsnbzroKjrsojtlZjqsowg7ZSM7J2YIOuKlCDrsJjsnoUiLAogICAgICAgICAgICAgICAgIuqysOygnCDsoIEg7IaM7Jyg6raM7J2AIOyyq+uCoO2EsCDqt4DtlZjsnZgg6rKDIgogICAgICAgICAgICAgIF0gOiBbCiAgICAgICAgICAgICAgICAiUmVhbCBtZXRhbC4gWW91ciBuYW1lLiBZb3VyIHNlcmlhbCBudW1iZXIuIiwKICAgICAgICAgICAgICAgICJTZWdyZWdhdGVkLCBuZXZlciBwb29sZWQsIG5ldmVyIG9uIGFueSBiYW5rJ3MgYmFsYW5jZSBzaGVldCIsCiAgICAgICAgICAgICAgICAiTGVnYWwgdGl0bGUgaXMgeW91cnMgZnJvbSBkYXkgb25lIgogICAgICAgICAgICAgIF0pLm1hcCgoYiwgaSkgPT4gKAogICAgICAgICAgICAgICAgPGxpIGtleT17aX0gc3R5bGU9e3sgZm9udFNpemU6IDEzLCBjb2xvcjogIiM4YTdkNmIiLCBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIG1hcmdpbkJvdHRvbTogOCwgbGluZUhlaWdodDogMS42IH19PntifTwvbGk+CiAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CgogICAgICB7LyogUHJlbWl1bSBDb21wYXJpc29uICsgU2F2aW5ncyBUcmFja2VycyAqL30KICAgICAgPGRpdiBzdHlsZT17eyBiYWNrZ3JvdW5kOiAiIzBhMGEwYSIsIHBhZGRpbmc6IGlzTW9iaWxlID8gIjI0cHggMTZweCIgOiAiMzJweCA4MHB4IiwgYm9yZGVyQm90dG9tOiAiMXB4IHNvbGlkICMxYTE1MTAiIH19PgogICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogImdyaWQiLCBncmlkVGVtcGxhdGVDb2x1bW5zOiBpc01vYmlsZSA/ICIxZnIiIDogIjFmciAxZnIiLCBnYXA6IGlzTW9iaWxlID8gMTQgOiAyNCB9fT4KICAgICAgICAgIHsvKiBMZWZ0IHBhbmVsIC0gcHJlbWl1bSBjb21wYXJpc29uICovfQogICAgICAgICAgPGRpdiBzdHlsZT17eyBiYWNrZ3JvdW5kOiAiIzExMTAwOCIsIGJvcmRlcjogIjFweCBzb2xpZCAjMWExNTEwIiwgYm9yZGVyUmFkaXVzOiAxMCwgcGFkZGluZzogaXNNb2JpbGUgPyAiMjBweCAxOHB4IiA6ICIyOHB4IDI4cHgiIH19PgogICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFNpemU6IDEwLCBjb2xvcjogIiM4YTdkNmIiLCBsZXR0ZXJTcGFjaW5nOiAyLCB0ZXh0VHJhbnNmb3JtOiAidXBwZXJjYXNlIiwgbWFyZ2luQm90dG9tOiAxMCB9fT4KICAgICAgICAgICAgICB7bGFuZyA9PT0gImtvIiA/ICLsi6TrrLwg7ZSE66as66+47JeEIOy5hOq1kCIgOiAiUGh5c2ljYWwgUHJlbWl1bSBDb21wYXJpc29uIn0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidDb3Jtb3JhbnQgR2FyYW1vbmQnLHNlcmlmIiwgZm9udFNpemU6IGlzTW9iaWxlID8gMjAgOiAyNiwgY29sb3I6ICIjZjVmMGU4IiwgbWFyZ2luQm90dG9tOiAyMiwgbGluZUhlaWdodDogMS4yIH19PgogICAgICAgICAgICAgIHtsYW5nID09PSAia28iID8gIuuYnCBBdXJ1bcydQA/IiA6ICJXaHkgQXVydW0/In0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBhbGlnbkl0ZW1zOiAiY2VudGVyIiB9fT4KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZsZXg6IDEsIHRleHRBbGlnbjogImNlbnRlciIsIHBhZGRpbmc6ICIxMnB4IDAiIH19PgogICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ0pldEJyYWlucyBNb25vJyxtb25vc3BhY2UiLCBmb250U2l6ZTogaXNNb2JpbGUgPyAzMCA6IDQwLCBjb2xvcjogIiNmODcxNzEiLCBmb250V2VpZ2h0OiA3MDAsIGxpbmVIZWlnaHQ6IDEgfX0+MTAlPC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFNpemU6IDEwLCBjb2xvcjogIiM4YTdkNmIiLCBtYXJnaW5Ub3A6IDYgfX0+e2xhbmcgPT09ICJrbyIgPyAiS1JYIOyLpOusvCDtlITrpqzrr7jsl4QiIDogIktSWCBQcmVtaXVtIn08L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRGYW1pbHk6ICInT3V0Zml0JyxzYW5zLXNlcmlmIiwgZm9udFNpemU6IDIwLCBjb2xvcjogIiMzMzMiLCBwYWRkaW5nOiAiMCA4cHgiIH19PnZzPC9kaXY+CiAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmbGV4OiAxLCB0ZXh0QWxpZ246ICJjZW50ZXIiLCBwYWRkaW5nOiAiMTJweCAwIiB9fT4KICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidKZXRCcmFpbnMgTW9ubycsbW9ub3NwYWNlIiwgZm9udFNpemU6IGlzTW9iaWxlID8gMzAgOiA0MCwgY29sb3I6ICIjNGFkZTgwIiwgZm9udFdlaWdodDogNzAwLCBsaW5lSGVpZ2h0OiAxIH19PjMuNSU8L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidPdXRmaXQnLHNhbnMtc2VyaWYiLCBmb250U2l6ZTogMTAsIGNvbG9yOiAiIzhhN2Q2YiIsIG1hcmdpblRvcDogNiB9fT57bGFuZyA9PT0gImtvIiA/ICJBdXJ1bSDtlITrpqzrr7jsl4QiIDogIkF1cnVtIFByZW1pdW0ifTwvZGl2PgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIHsvKiBILTA0OiBHb2xkIDHrj4ggdHJhY2tlciDigJQgc2F2aW5ncyBwYW5lbCAqL30KICAgICAgICAgIDxkaXYgc3R5bGU9e3sgYmFja2dyb3VuZDogIiMxMTEwMDgiLCBib3JkZXI6ICIxcHggc29saWQgIzFhMTUxMCIsIGJvcmRlclJhZGl1czogMTAsIHBhZGRpbmc6IGlzTW9iaWxlID8gIjIwcHggMThweCIgOiAiMjhweCAyOHB4IiB9fT4KICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiAxMSwgY29sb3I6ICIjOGE3ZDZiIiwgbGV0dGVyU3BhY2luZzogMiwgdGV4dFRyYW5zZm9ybTogInVwcGVyY2FzZSIsIG1hcmdpbkJvdHRvbTogMTAgfX0+CiAgICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi6riIIDHrj4gg6rWs66ek7IucIOygiOyVvSDquIjslaEiIDogIlNhdmluZ3Mgb24gMSBEb24gR29sZCAoMy43NWcpIn0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBmbGV4RGlyZWN0aW9uOiAiY29sdW1uIiwgZ2FwOiAxMiB9fT4KICAgICAgICAgICAgICB7WwogICAgICAgICAgICAgICAgeyBsYWJlbDogbGFuZyA9PT0gImtvIiA/ICLtlZzqta0g7Iuk66y8IOyLnOqwgCIgOiAiS29yZWFuIE1hcmtldCIsIHZhbDogZktSVyhnb2xkS0IpLCBjb2w6ICIjZjg3MTcxIiB9LAogICAgICAgICAgICAgICAgeyBsYWJlbDogbGFuZyA9PT0gImtvIiA/ICLslYTrpoQg7Iuk66y86rCAIiA6ICJBdXJ1bSBQcmljZSIsIHZhbDogZktSVyhnb2xkQXVydW0pLCBjb2w6ICIjNGFkZTgwIiB9LAogICAgICAgICAgICAgIF0ubWFwKCh4LCBpKSA9PiAoCiAgICAgICAgICAgICAgICA8ZGl2IGtleT17aX0gc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBqdXN0aWZ5Q29udGVudDogInNwYWNlLWJldHdlZW4iLCBhbGlnbkl0ZW1zOiAiY2VudGVyIiwgcGFkZGluZzogIjRweCAwIiB9fT4KICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiAxMiwgY29sb3I6ICIjOGE3ZDZiIiB9fT57eC5sYWJlbH08L2Rpdj4KICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ0pldEJyYWlucyBNb25vJyxtb25vc3BhY2UiLCBmb250U2l6ZTogaXNNb2JpbGUgPyAxNiA6IDIwLCBjb2xvcjogeC5jb2wsIGZvbnRXZWlnaHQ6IDYwMCB9fT57eC52YWx9PC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICApKX0KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGJhY2tncm91bmQ6ICJyZ2JhKDc0LDIyMiwxMjgsMC4wNykiLCBwYWRkaW5nOiAiMTJweCAxNnB4IiwgYm9yZGVyUmFkaXVzOiA4LCBib3JkZXI6ICIxcHggc29saWQgcmdiYSg3NCwyMjIsMTI4LDAuMikiLCBkaXNwbGF5OiAiZmxleCIsIGp1c3RpZnlDb250ZW50OiAic3BhY2UtYmV0d2VlbiIsIGFsaWduSXRlbXM6ICJjZW50ZXIiLCBtYXJnaW5Ub3A6IDQgfX0+CiAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAxMSwgY29sb3I6ICIjNGFkZTgwIiwgZm9udEZhbWlseTogIidPdXRmaXQnLHNhbnMtc2VyaWYiLCBmb250V2VpZ2h0OiA2MDAgfX0+e2xhbmcgPT09ICJrbyIgPyAi7KCI7JW9IiA6ICJTYXZlIn08L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidKZXRCcmFpbnMgTW9ubycsbW9ub3NwYWNlIiwgZm9udFNpemU6IGlzTW9iaWxlID8gMTggOiAyNCwgY29sb3I6ICIjNGFkZTgwIiwgZm9udFdlaWdodDogNzAwIH19PntmS1JXKGdvbGRTYXZpbmdzKX08L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICB7LyogSC0wNTogU2lsdmVyIDFrZyB0cmFja2VyIOKAlCBSSUdIVCAqL30KICAgICAgICAgIDxkaXYgc3R5bGU9e3sgYmFja2dyb3VuZDogIiMxMTEwMDgiLCBib3JkZXI6ICIxcHggc29saWQgcmdiYSgxOTcsMTY1LDExNCwwLjE1KSIsIGJvcmRlclJhZGl1czogMTAsIHBhZGRpbmc6IGlzTW9iaWxlID8gIjIwcHggMThweCIgOiAiMjhweCAyOHB4IiB9fT4KICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiAxMSwgY29sb3I6ICIjOGE3ZDZiIiwgbGV0dGVyU3BhY2luZzogMiwgdGV4dFRyYW5zZm9ybTogInVwcGVyY2FzZSIsIG1hcmdpbkJvdHRvbTogMTAgfX0+CiAgICAgICAgICAgICAge2xhbmcgPT09ICJrbyIgPyAi7J2AIDHtgqTroZwg6rWs66ek7IucIOygiOyVvSDquIjslaEiIDogIlNhdmluZ3Mgb24gMWtnIFNpbHZlciBCYXIifQogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBkaXNwbGF5OiAiZmxleCIsIGZsZXhEaXJlY3Rpb246ICJjb2x1bW4iLCBnYXA6IDEyIH19PgogICAgICAgICAgICAgIHtbCiAgICAgICAgICAgICAgICB7IGxhYmVsOiBsYW5nID09PSAia28iID8gIu2VnOq1rSDsi6TrrLwg7Iuc6rCAIiA6ICJLb3JlYW4gTWFya2V0IiwgdmFsOiBmS1JXKHNpbHZlcktCKSwgY29sOiAiI2Y4NzE3MSIgfSwKICAgICAgICAgICAgICAgIHsgbGFiZWw6IGxhbmcgPT09ICJrbyIgPyAi7JWE66aEIOyLpOusvOqwgCIgOiAiQXVydW0gUHJpY2UiLCB2YWw6IGZLUlcoc2lsdmVyQXVydW0pLCBjb2w6ICIjNGFkZTgwIiB9LAogICAgICAgICAgICAgIF0ubWFwKCh4LCBpKSA9PiAoCiAgICAgICAgICAgICAgICA8ZGl2IGtleT17aX0gc3R5bGU9e3sgZGlzcGxheTogImZsZXgiLCBqdXN0aWZ5Q29udGVudDogInNwYWNlLWJldHdlZW4iLCBhbGlnbkl0ZW1zOiAiY2VudGVyIiwgcGFkZGluZzogIjRweCAwIiB9fT4KICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiAxMiwgY29sb3I6ICIjOGE3ZDZiIiB9fT57eC5sYWJlbH08L2Rpdj4KICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ0pldEJyYWlucyBNb25vJyxtb25vc3BhY2UiLCBmb250U2l6ZTogaXNNb2JpbGUgPyAxNiA6IDIwLCBjb2xvcjogeC5jb2wsIGZvbnRXZWlnaHQ6IDYwMCB9fT57eC52YWx9PC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICApKX0KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGJhY2tncm91bmQ6ICJyZ2JhKDc0LDIyMiwxMjgsMC4wNykiLCBwYWRkaW5nOiAiMTJweCAxNnB4IiwgYm9yZGVyUmFkaXVzOiA4LCBib3JkZXI6ICIxcHggc29saWQgcmdiYSg3NCwyMjIsMTI4LDAuMikiLCBkaXNwbGF5OiAiZmxleCIsIGp1c3RpZnlDb250ZW50OiAic3BhY2UtYmV0d2VlbiIsIGFsaWduSXRlbXM6ICJjZW50ZXIiLCBtYXJnaW5Ub3A6IDQgfX0+CiAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGZvbnRTaXplOiAxMSwgY29sb3I6ICIjNGFkZTgwIiwgZm9udEZhbWlseTogIidPdXRmaXQnLHNhbnMtc2VyaWYiLCBmb250V2VpZ2h0OiA2MDAgfX0+e2xhbmcgPT09ICJrbyIgPyAi7KCI7JW9IiA6ICJTYXZlIn08L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9e3sgZm9udEZhbWlseTogIidKZXRCcmFpbnMgTW9ubycsbW9ub3NwYWNlIiwgZm9udFNpemU6IGlzTW9iaWxlID8gMTggOiAyNCwgY29sb3I6ICIjNGFkZTgwIiwgZm9udFdlaWdodDogNzAwIH19PntmS1JXKHNpbHZlclNhdmluZ3MpfTwvZGl2PgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgoKICAgICAgICB7LyogSC0wNjogUHJlbWl1bSBjYXB0aW9uIGJlbG93IGJvdGggcGFuZWxzICovfQogICAgICAgIDxkaXYgc3R5bGU9e3sgbWFyZ2luVG9wOiAxNiwgcGFkZGluZzogIjEycHggMTZweCIsIGJhY2tncm91bmQ6ICJyZ2JhKDE5NywxNjUsMTE0LDAuMDQpIiwgYm9yZGVyOiAiMXB4IHNvbGlkIHJnYmEoMTk3LDE2NSwxMTQsMC4xMikiLCBib3JkZXJSYWRpdXM6IDgsIHRleHRBbGlnbjogImNlbnRlciIgfX0+CiAgICAgICAgICA8c3BhbiBzdHlsZT17eyBmb250RmFtaWx5OiAiJ091dGZpdCcsc2Fucy1zZXJpZiIsIGZvbnRTaXplOiAxMiwgY29sb3I6ICIjOGE3ZDZiIiwgbGluZUhlaWdodDogMS42IH19PgogICAgICAgICAgICB7bGFuZyA9PT0gImtvIgogICAgICAgICAgICAgID8gIuKAuyDtlZzqta0g7Iuk66y8IOyLnOqwgOuKlCBLQiBTdGFyIOq4iMK37J2AIOyLnOyEuCDquLDspIAg7LaU7KCV6rCS7J6F64uI64ukLiDslYTrpoQg6rCA6rKp7J2AIOq1reygnCDtmITrrLzqsIAgKyDtlITrpqzrr7jsl4Qg6riw7KSA7J2066mwLCDsi6Tsi5zqsITsnLzroZwg67OA64+Z65Cp64uI64ukLiIKICAgICAgICAgICAgICA6ICLigLsgS29yZWFuIG1hcmtldCBwcmljZXMgYXJlIGVzdGltYXRlcyBiYXNlZCBvbiBLQiBTdGFyIGdvbGQgJiBzaWx2ZXIgcmF0ZXMuIEF1cnVtIHByaWNlcyBhcmUgaW50ZXJuYXRpb25hbCBzcG90ICsgcHJlbWl1bSBhbmQgdXBkYXRlIGluIHJlYWwgdGltZS4ifQogICAgICAgICAgPC9zcGFuPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KCiAgICAgIHsvKiBOZXdzU2VjdGlvbiAqL30KICAgICAgPE5ld3NTZWN0aW9uIGxhbmc9e2xhbmd9IC8+CiAgICA8L2Rpdj4KICApOwp9CgovLyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KZXhwb3J0IHsgSG9tZSB9OwoKLy8gU2hvcFBhZ2VzIHBhc3N0aHJvdWdoIC0ga2VlcCBvdGhlciBleHBvcnRzIGZyb20gb3JpZ2luYWwgdmlhIGxhenkgaW1wb3J0CmV4cG9ydCBkZWZhdWx0IHsgSG9tZSB9Ow==
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useIsMobile, calcPrice, fUSD, fKRW, PRODUCTS, MOCK_ORDERS_INIT, API } from "./lib.jsx";
+import { NewsSection } from "./BaseUI.jsx";
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════════════════════════════════════
+function Home({ lang, navigate, prices, krwRate }) {
+  const isMobile = useIsMobile();
+  // H-04: Gold tracker — 1돈 (3.75g = 3.75/31.1035 oz) units
+  const DON_RATIO = 3.75 / 31.1035;
+  const goldKB = prices.gold * krwRate * DON_RATIO * 1.15;   // KB Star approx (실물 시가 포함 ~15% premium)
+  const goldAurum = prices.gold * krwRate * DON_RATIO * 1.05; // Aurum 5.5% card premium
+  const goldSavings = goldKB - goldAurum;
+  // H-05: Silver tracker — 1kg (1000g = 1000/31.1035 oz)
+  const KG_RATIO = 1000 / 31.1035;
+  const silverKB = (prices.silver || 32.15) * krwRate * KG_RATIO * 1.20;   // KB Star silver approx
+  const silverAurum = (prices.silver || 32.15) * krwRate * KG_RATIO * 1.10; // Aurum 10% silver premium
+  const silverSavings = silverKB - silverAurum;
+  return (
+    <div>
+
+      {/* ── 1a. HERO ── */}
+      <div style={{ position: "relative", minHeight: isMobile ? 420 : 540, background: "linear-gradient(135deg,#0a0a0a,#1a1510 40%,#0d0b08)", display: "flex", alignItems: "center", padding: isMobile ? "40px 16px" : "0 80px", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, opacity: 0.035, backgroundImage: "repeating-linear-gradient(45deg,#c5a572 0,#c5a572 1px,transparent 1px,transparent 40px)", pointerEvents: "none" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: isMobile ? "100%" : 660 }}>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 10 : 12, color: "#c5a572", letterSpacing: isMobile ? 2 : 4, textTransform: "uppercase", marginBottom: isMobile ? 14 : 20 }}>
+            {lang === "ko" ? "배분 보관 · 국제 현물가 · 한국 투자자 전용" : "Allocated Vault Storage · International Spot Pricing · Korean Investors"}
+          </div>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 34 : 54, fontWeight: 300, color: "#f5f0e8", lineHeight: 1.12, margin: "0 0 20px" }}>
+            {lang === "ko"
+              ? <><span style={{ color: "#c5a572", fontWeight: 600 }}>진짜 금. 진짜 은.</span><br />진짜 소유.</>
+              : <>Real Gold. Real Silver.<br /><span style={{ color: "#c5a572", fontWeight: 600 }}>Real Ownership.</span></>}
+          </h1>
+          <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 14 : 16, color: "#8a7d6b", lineHeight: 1.75, margin: "0 0 30px" }}>
+            {lang === "ko"
+              ? "은행 통장도 아니고, KRX 계좌도 아닙니다. 싱가포르 Malca-Amit 금고에 귀하의 이름으로 등록된 실물 금속 — 국제 현물가 기준."
+              : "Not a bank passbook. Not a KRX account. Allocated physical metal — registered in your name at Malca-Amit Singapore — priced at international spot."}
+          </p>
+          {/* H-02: 2 buttons only — duplicate removed */}
+          <div style={{ display: "flex", gap: 12, flexDirection: isMobile ? "column" : "row" }}>
+            <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#ffffff", border: "none", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
+              {lang === "ko" ? "지금 배분 시작 →" : "Start Allocating →"}
+            </button>
+            <button onClick={() => navigate("agp")} style={{ background: "transparent", color: "#8a7d6b", border: "1px solid #2a2318", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
+              {lang === "ko" ? "AGP — 월 20만원부터" : "AGP — From KRW 200,000/month"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 1c. PAPER vs PHYSICAL ── */}
+      <div style={{ background: "#111008", padding: isMobile ? "36px 16px" : "56px 80px", borderTop: "1px solid #1a1510", borderBottom: "1px solid #1a1510" }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 28 : 40 }}>
+          <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>
+            {lang === "ko" ? "근본적인 차이" : "THE FUNDAMENTAL DIFFERENCE"}
+          </div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 32, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>
+            {lang === "ko" ? "금을 소유하는 두 가지 방법. 진짜는 하나입니다." : "You Can Own Gold Two Ways. Only One Is Real."}
+          </h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 24 }}>
+          <div style={{ background: "#0a0a0a", border: "1px solid #2a2318", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f87171", flexShrink: 0 }} />
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#f87171", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>
+                {lang === "ko" ? "페이퍼 금·은" : "Paper Gold / Silver"}
+              </div>
+            </div>
+            <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
+              {(lang === "ko" ? [
+                "은행 금통장, KRX 계좌, 또는 펀드",
+                "귀하는 계약상 청구권을 보유 — 실물 금속이 아닙니다",
+                "상대방 리스크. 법적 소유권 없음. 일련번호 없음."
+              ] : [
+                "Bank passbook, KRX account, or fund",
+                "You own a contractual claim — not the metal",
+                "Counterparty risk. No legal title. No serial number."
+              ]).map((b, i) => (
+                <li key={i} style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 8, lineHeight: 1.6 }}>{b}</li>
+              ))}
+            </ul>
+          </div>
+          <div style={{ background: "#0a0a0a", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0 }} />
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#4ade80", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>
+                {lang === "ko" ? "실물 배분 금·은" : "Physical Allocated"}
+              </div>
+            </div>
+            <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
+              {(lang === "ko" ? [
+                "실물 금·은. 귀하의 이름. 귀하의 일련번호.",
+                "분리 보관 — 절대 풀링되지 않음, 어떤 은행의 대차대조표에도 없음",
+                "법적 소유권은 첫 날부터 귀하의 것"
+              ] : [
+                "Real metal. Your name. Your serial number.",
+                "Segregated, never pooled, never on any bank's balance sheet",
+                "Legal title is yours from day one"
+              ]).map((b, i) => (
+                <li key={i} style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 8, lineHeight: 1.6 }}>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Premium Comparison + H-04/05/06 Savings Trackers ── */}
+      <div style={{ background: "#0a0a0a", padding: isMobile ? "24px 16px" : "32px 80px", borderBottom: "1px solid #1a1510" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 24 }}>
+          {/* Premium comparison left */}
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+              {lang === "ko" ? "실물 프리미엄 비교" : "Physical Premium Comparison"}
+            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 20 : 26, color: "#f5f0e8", marginBottom: 22, lineHeight: 1.2 }}>
+              {lang === "ko" ? "왜 Aurum?" : "Why Aurum?"}
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 30 : 40, color: "#f87171", fontWeight: 700, lineHeight: 1 }}>10%</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "KRX 실물 프리미엄" : "KRX Premium"}</div>
+              </div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 20, color: "#333", padding: "0 8px" }}>vs</div>
+              <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 30 : 40, color: "#4ade80", fontWeight: 700, lineHeight: 1 }}>3.5%</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "Aurum 프리미엄" : "Aurum Premium"}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* H-04: Gold 1돈 tracker — RIGHT */}
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+              {lang === "ko" ? "금 1돈 구매 시 절약 금액" : "Savings on 1 Don Gold (3.75g)"}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                { label: lang === "ko" ? "한국 실물 시가" : "Korean Market", val: fKRW(goldKB), col: "#f87171" },
+                { label: lang === "ko" ? "아름 실물가" : "Aurum Price", val: fKRW(goldAurum), col: "#4ade80" },
+              ].map((x, i) => (
+                <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 0" }}>
+                  <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>{x.label}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 16 : 20, color: x.col, fontWeight: 600 }}>{x.val}</div>
+                </div>
+              ))}
+              <div style={{ background: "rgba(74,222,128,0.07)", padding: "12px 16px", borderRadius: 8, border: "1px solid rgba(74,222,128,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+                <div style={{ fontSize: 11, color: "#4ade80", fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>{lang === "ko" ? "절약" : "Save"}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 24, color: "#4ade80", fontWeight: 700 }}>{fKRW(goldSavings)}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* H-05: Silver 1kg tracker */}
+          <div style={{ background: "#111008", border: "1px solid rgba(197,165,114,0.15)", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+              {lang === "ko" ? "은 1키로 구매시 절약 금액" : "Savings on 1kg Silver Bar"}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                { label: lang === "ko" ? "한국 실물 시가" : "Korean Market", val: fKRW(silverKB), col: "#f87171" },
+                { label: lang === "ko" ? "아름 실물가" : "Aurum Price", val: fKRW(silverAurum), col: "#4ade80" },
+              ].map((x, i) => (
+                <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 0" }}>
+                  <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>{x.label}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 16 : 20, color: x.col, fontWeight: 600 }}>{x.val}</div>
+                </div>
+              ))}
+              <div style={{ background: "rgba(74,222,128,0.07)", padding: "12px 16px", borderRadius: 8, border: "1px solid rgba(74,222,128,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
+                <div style={{ fontSize: 11, color: "#4ade80", fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>{lang === "ko" ? "절약" : "Save"}</div>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 24, color: "#4ade80", fontWeight: 700 }}>{fKRW(silverSavings)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* H-06: Premium caption below both panels */}
+        <div style={{ marginTop: 16, padding: "12px 16px", background: "rgba(197,165,114,0.04)", border: "1px solid rgba(197,165,114,0.12)", borderRadius: 8, textAlign: "center" }}>
+          <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b", lineHeight: 1.6 }}>
+            {lang === "ko"
+              ? "※ 한국 실물 시가는 KB Star 금·은 시세 기준 추정값입니다. 아름 가격은 국제 현물가 + 프리미엄 기준이며, 실시간으로 변동됩니다."
+              : "※ Korean market prices are estimates based on KB Star gold & silver rates. Aurum prices are international spot + premium and update in real time."}
+          </span>
+        </div>
+      </div>
+
+      {/* ── WHY SILVER section ── */}
+      <div style={{ background: "#111008", padding: isMobile ? "36px 16px" : "56px 80px", borderBottom: "1px solid #1a1510" }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 28 : 40 }}>
+          <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>
+            {lang === "ko" ? "🥈 2026년 은에 주목해야 하는 이유" : "🥈 WHY SILVER IN 2026"}
+          </div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: "0 0 8px" }}>
+            {lang === "ko"
+              ? "은: 공급이 부족하고 있습니다. 프리미엄이 상승하고 있습니다."
+              : "Silver: The Deficit Is Real. The Supply Is Tightening. The Premium Is Rising."}
+          </h2>
+        </div>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "stretch" : "center" }}>
+          <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#ffffff", border: "none", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
+            {lang === "ko" ? "실물 은 구매하기 →" : "Buy Physical Silver →"}
+          </button>
+          <button onClick={() => navigate("agp")} style={{ background: "transparent", color: "#c5a572", border: "1px solid #c5a572", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
+            {lang === "ko" ? "AGP로 은 저축 시작 →" : "Silver in AGP →"}
+          </button>
+        </div>
+      </div>
+
+      {/* Trust badges */}
+      <div style={{ background: "#0a0a0a", padding: isMobile ? "20px 16px" : "28px 80px", display: "flex", justifyContent: "center", gap: isMobile ? 14 : 36, flexWrap: "wrap" }}>
+        {[
+          ["🏛️", "Malca-Amit"],
+          ["📜", "LBMA"],
+          ["🛡️", lang === "ko" ? "보험 보장" : "Insured"],
+          ["🔐", lang === "ko" ? "배분 보관" : "Allocated"],
+          ["🇸🇬", "Singapore FTZ"],
+          ["💰", lang === "ko" ? "현물가 + 투명 프리미엄" : "Spot + Transparent Premium"],
+          ["🥇🥈", lang === "ko" ? "금·은" : "Gold & Silver"],
+        ].map(([icon, label], i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: isMobile ? 12 : 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>
+            <span style={{ fontSize: isMobile ? 18 : 20 }}>{icon}</span>{label}
+          </div>
+        ))}
+      </div>
+
+      <NewsSection lang={lang} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SHOP PAGE
+// ═══════════════════════════════════════════════════════════════════════════════
+function Shop({ lang, navigate, prices, krwRate, addToCart, toast }) {
+  const isMobile = useIsMobile();
+  const [filter, setFilter] = useState("all");
+  const filtered = filter === "all" ? PRODUCTS : PRODUCTS.filter(p => p.metal === filter);
+  const tabs = [{ k: "all", ko: "전체", en: "All" }, { k: "gold", ko: "금", en: "Gold" }, { k: "silver", ko: "은", en: "Silver" }];
+  return (
+    <div style={{ background: "#0a0a0a", minHeight: "80vh", padding: isMobile ? "24px 16px" : "40px 80px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", marginBottom: 28, flexWrap: "wrap", gap: 12 }}>
+        <div>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>{lang === "ko" ? "실물 금·은 구매" : "Physical Gold & Silver"}</div>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>{lang === "ko" ? "Malca-Amit 금고 직접 배분" : "Direct Allocation to Malca-Amit Vault"}</h1>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          {tabs.map(t => <button key={t.k} onClick={() => setFilter(t.k)} style={{ background: filter === t.k ? "#c5a572" : "transparent", color: filter === t.k ? "#0a0a0a" : "#8a7d6b", border: `1px solid ${filter === t.k ? "#c5a572" : "#2a2318"}`, padding: "6px 16px", borderRadius: 20, cursor: "pointer", fontSize: 12, fontFamily: "'Outfit',sans-serif", fontWeight: filter === t.k ? 600 : 400 }}>{lang === "ko" ? t.ko : t.en}</button>)}
+        </div>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: isMobile ? 12 : 20 }}>
+        {filtered.map(p => {
+          const price = calcPrice(p, prices);
+          return (
+            <div key={p.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, overflow: "hidden", cursor: "pointer", transition: "border-color 0.2s" }}
+              onClick={() => navigate("product", p)}
+              onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(197,165,114,0.35)"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#1a1510"}>
+              <div style={{ padding: isMobile ? "28px 20px 20px" : "36px 24px 24px" }}>
+                <div style={{ fontSize: isMobile ? 48 : 56, marginBottom: 16, textAlign: "center" }}>{p.image}</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>{p.metal.toUpperCase()} · {p.type.toUpperCase()}</div>
+                <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 18 : 20, color: "#f5f0e8", fontWeight: 500, margin: "0 0 6px", lineHeight: 1.3 }}>{lang === "ko" ? p.nameKo : p.name}</h3>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b", marginBottom: 14 }}>{p.purity} · {p.weight}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 18 : 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(price)}</div>
+                    <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#555", marginTop: 2 }}>{fKRW(price * krwRate)}</div>
+                  </div>
+                  <button onClick={e => { e.stopPropagation(); addToCart(p, 1, "singapore"); toast(lang === "ko" ? "장바구니에 담겼습니다" : "Added to cart"); }} style={{ background: "rgba(197,165,114,0.12)", border: "1px solid rgba(197,165,114,0.35)", color: "#c5a572", padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontSize: 12, fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>
+                    {lang === "ko" ? "담기" : "Add"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PRODUCT PAGE
+// ═══════════════════════════════════════════════════════════════════════════════
+function ProductPage({ lang, navigate, prices, krwRate, addToCart, toast, product }) {
+  const isMobile = useIsMobile();
+  const [qty, setQty] = useState(1);
+  const [storage, setStorage] = useState("singapore");
+  if (!product) return <div style={{ padding: 80, textAlign: "center", color: "#888", fontFamily: "'Outfit',sans-serif" }}>Product not found.</div>;
+  const price = calcPrice(product, prices);
+  const total = price * qty;
+  const buyNow = () => { addToCart(product, qty, storage); navigate("checkout"); };
+  const addCart = () => { addToCart(product, qty, storage); toast(lang === "ko" ? "장바구니에 담겼습니다" : "Added to cart"); };
+  return (
+    <div style={{ background: "#0a0a0a", minHeight: "80vh", padding: isMobile ? "24px 16px" : "40px 80px" }}>
+      <button onClick={() => navigate("shop")} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", fontSize: 13, fontFamily: "'Outfit',sans-serif", marginBottom: 24 }}>← {lang === "ko" ? "뒤로" : "Back"}</button>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 48 }}>
+        <div>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 12, padding: isMobile ? "48px 24px" : "64px 40px", textAlign: "center", marginBottom: 16 }}>
+            <div style={{ fontSize: 80 }}>{product.image}</div>
+          </div>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: "16px 20px" }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#c5a572", fontWeight: 600, marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "제품 사양" : "Specifications"}</div>
+            {[[lang === "ko" ? "금속" : "Metal", product.metal.toUpperCase()], [lang === "ko" ? "중량" : "Weight", product.weight], [lang === "ko" ? "순도" : "Purity", product.purity], [lang === "ko" ? "발행처" : "Mint", product.mint], [lang === "ko" ? "보관" : "Vault", "Malca-Amit Singapore"]].map(([l, v], i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? "1px solid #1a1510" : "none" }}>
+                <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{l}</span>
+                <span style={{ fontSize: 12, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif" }}>{v}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>{product.metal.toUpperCase()} · LBMA</div>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 24 : 30, color: "#f5f0e8", fontWeight: 400, margin: "0 0 8px" }}>{lang === "ko" ? product.nameKo : product.name}</h1>
+          <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#8a7d6b", lineHeight: 1.7, marginBottom: 20 }}>{lang === "ko" ? product.descKo : product.descKo}</p>
+          <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: "18px 20px", marginBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>{lang === "ko" ? "단가" : "Unit Price"}</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 20, color: "#c5a572", fontWeight: 700 }}>{fUSD(price)}</div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>KRW</div>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#666" }}>{fKRW(total * krwRate)}</div>
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+            <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>{lang === "ko" ? "수량" : "Qty"}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#111008", border: "1px solid #1a1510", borderRadius: 6, padding: "4px 8px" }}>
+              <button onClick={() => setQty(Math.max(1, qty - 1))} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", fontSize: 18, lineHeight: 1 }}>−</button>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#f5f0e8", minWidth: 24, textAlign: "center" }}>{qty}</span>
+              <button onClick={() => setQty(qty + 1)} style={{ background: "none", border: "none", color: "#8a7d6b", cursor: "pointer", fontSize: 18, lineHeight: 1 }}>+</button>
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <button onClick={buyNow} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#0a0a0a", border: "none", padding: "15px", fontSize: 16, fontWeight: 700, borderRadius: 8, cursor: "pointer", letterSpacing: 0.5, fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "지금 구매하기" : "Buy Now"}
+            </button>
+            <button onClick={addCart} style={{ width: "100%", background: "transparent", color: "#c5a572", border: "1px solid #c5a572", padding: "13px", fontSize: 14, fontWeight: 600, borderRadius: 8, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>
+              {lang === "ko" ? "장바구니 담기" : "Add to Cart"}
+            </button>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 14 }}>
+            {["💙 TossPay", "💛 카카오페이", "🏦 Wire", "💳 Card"].map((x, i) => <span key={i} style={{ fontSize: 11, color: "#555", fontFamily: "'Outfit',sans-serif" }}>{x}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CART PAGE
+// ═══════════════════════════════════════════════════════════════════════════════
+function CartPage({ lang, navigate, prices, krwRate, cart, setCart, toast }) {
+  const isMobile = useIsMobile();
+  const remove = (id) => setCart(cart.filter(i => i.id !== id));
+  const total = cart.reduce((s, i) => s + calcPrice(i, prices) * i.qty, 0);
+  if (cart.length === 0) return (
+    <div style={{ padding: isMobile ? "60px 16px" : 80, textAlign: "center", background: "#0a0a0a", minHeight: "60vh" }}>
+      <div style={{ fontSize: 48, marginBottom: 12 }}>🛒</div>
+      <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", marginBottom: 20 }}>{lang === "ko" ? "장바구니가 비어있습니다." : "Your cart is empty."}</p>
+      <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 28px", borderRadius: 6, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "상품 보기" : "Browse Products"}</button>
+    </div>
+  );
+  return (
+    <div style={{ background: "#0a0a0a", minHeight: "80vh", padding: isMobile ? "24px 16px" : "40px 80px" }}>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 32, color: "#f5f0e8", fontWeight: 300, marginBottom: 24 }}>{lang === "ko" ? "장바구니" : "Cart"}</h2>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {cart.map(item => (
+            <div key={item.id} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 14 : "16px 20px", display: "flex", gap: 14, alignItems: "center" }}>
+              <div style={{ fontSize: 32 }}>{item.image}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#f5f0e8", fontWeight: 500 }}>{lang === "ko" ? item.nameKo : item.name}</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", marginTop: 2 }}>{item.weight} · {item.purity}</div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "#c5a572", fontWeight: 600 }}>{fUSD(calcPrice(item, prices) * item.qty)}</div>
+                <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>×{item.qty}</div>
+              </div>
+              <button onClick={() => remove(item.id)} style={{ background: "none", border: "none", color: "#f87171", cursor: "pointer", fontSize: 16 }}>✕</button>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 16 : 24, height: "fit-content" }}>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#c5a572", fontWeight: 600, marginBottom: 16, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "주문 요약" : "Order Summary"}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+            <span style={{ fontSize: 13, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "소계" : "Subtotal"}</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 15, color: "#f5f0e8", fontWeight: 600 }}>{fUSD(total)}</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid #1a1510" }}>
+            <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>KRW</span>
+            <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{fKRW(total * krwRate)}</span>
+          </div>
+          <button onClick={() => navigate("checkout")} style={{ width: "100%", background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "14px", borderRadius: 8, fontWeight: 700, cursor: "pointer", fontSize: 15, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "결제하기" : "Checkout"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CHECKOUT
+// ═══════════════════════════════════════════════════════════════════════════════
+function Checkout({ lang, navigate, prices, krwRate, cart, setCart, setOrders, user, toast }) {
+  const isMobile = useIsMobile();
+  const [step, setStep] = useState(1);
+  const [payMethod, setPayMethod] = useState("toss");
+  const [loading, setLoading] = useState(false);
+  const [confirmed, setConfirmed] = useState(null);
+  const total = cart.reduce((s, i) => s + calcPrice(i, prices) * i.qty, 0);
+  const submit = async () => {
+    setLoading(true);
+    try {
+      const order = await API.orders.create({ items: cart, total, paymentMethod: payMethod, storageOption: "singapore", userId: user?.id });
+      let payResult;
+      if (payMethod === "toss") payResult = await API.payments.toss({ id: order.id, total });
+      else if (payMethod === "kakao") payResult = await API.payments.kakao({ id: order.id, total });
+      else if (payMethod === "wire") payResult = await API.payments.wire({ id: order.id, total });
+      else payResult = await API.payments.card({ id: order.id, total });
+      const fullOrder = { ...order, date: new Date().toISOString(), status: payMethod === "wire" ? "pending_payment" : "confirmed", items: cart, subtotal: total, total, paymentMethod: payMethod, storageOption: "singapore", paymentDetails: payResult };
+      setOrders(prev => [fullOrder, ...prev]);
+      setCart([]);
+      setConfirmed(fullOrder);
+      toast(lang === "ko" ? "주문이 확인되었습니다!" : "Order confirmed!");
+    } catch { toast(lang === "ko" ? "결제 오류. 다시 시도하세요." : "Payment error. Please retry.", "error"); }
+    finally { setLoading(false); }
+  };
+  if (confirmed) return (
+    <div style={{ padding: isMobile ? "60px 16px" : 80, textAlign: "center", background: "#0a0a0a", minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color: "#f5f0e8", fontWeight: 300, marginBottom: 10 }}>{lang === "ko" ? "주문 확인" : "Order Confirmed"}</h2>
+      <p style={{ color: "#8a7d6b", fontFamily: "'Outfit',sans-serif", maxWidth: 400, lineHeight: 1.6, marginBottom: 8 }}>{lang === "ko" ? `주문번호: ${confirmed.id}` : `Order: ${confirmed.id}`}</p>
+      {payMethod === "wire" && <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 8, padding: "16px 20px", maxWidth: 400, textAlign: "left", marginBottom: 20 }}>
+        <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#c5a572", fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{lang === "ko" ? "입금 계좌" : "Wire Details"}</div>
+        {Object.entries(confirmed.paymentDetails?.bankDetails || {}).map(([k, v]) => (
+          <div key={k} style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+            <span style={{ fontSize: 11, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{k}</span>
+            <span style={{ fontSize: 11, color: "#f5f0e8", fontFamily: "'JetBrains Mono',monospace" }}>{String(v)}</span>
+          </div>
+        ))}
+      </div>}
+      <button onClick={() => navigate("orders")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#0a0a0a", padding: "12px 28px", borderRadius: 6, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "주문 내역 보기" : "View Orders"}</button>
+    </div>
+  );
+  const methods = [{ k: "toss", icon: "💙", label: "TossPay", extra: lang === "ko" ? "5.5% 프리미엄" : "5.5% premium" }, { k: "kakao", icon: "💛", label: "KakaoPay", extra: lang === "ko" ? "5.5% 프리미엄" : "5.5% premium" }, { k: "wire", icon: "🏦", label: lang === "ko" ? "전신환" : "Wire Transfer", extra: lang === "ko" ? "2.5% 프리미엄" : "2.5% premium" }, { k: "card", icon: "💳", label: lang === "ko" ? "해외 카드" : "Int'l Card", extra: lang === "ko" ? "5.5% 프리미엄" : "5.5% premium" }];
+  return (
+    <div style={{ background: "#0a0a0a", minHeight: "80vh", padding: isMobile ? "24px 16px" : "40px 80px" }}>
+      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 32, color: "#f5f0e8", fontWeight: 300, marginBottom: 28 }}>{lang === "ko" ? "결제" : "Checkout"}</h2>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 24 }}>
+        <div>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#c5a572", fontWeight: 600, marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "결제 수단 선택" : "Payment Method"}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+            {methods.map(m => (
+              <button key={m.k} onClick={() => setPayMethod(m.k)} style={{ background: payMethod === m.k ? "#c5a572" : "transparent", color: payMethod === m.k ? "#0a0a0a" : "#8a7d6b", border: `1px solid ${payMethod === m.k ? "#c5a572" : "#2a2318"}`, padding: "12px 16px", borderRadius: 8, cursor: "pointer", textAlign: "left", display: "flex", alignItems: "center", gap: 10, fontFamily: "'Outfit',sans-serif" }}>
+                <span style={{ fontSize: 20 }}>{m.icon}</span>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: payMethod === m.k ? 700 : 500 }}>{m.label}</div>
+                  <div style={{ fontSize: 11, opacity: 0.7 }}>{m.extra}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? 16 : 24, height: "fit-content" }}>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#c5a572", fontWeight: 600, marginBottom: 14, textTransform: "uppercase", letterSpacing: 1 }}>{lang === "ko" ? "주문 요약" : "Summary"}</div>
+          {cart.map((item, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+              <span style={{ fontSize: 12, color: "#8a7d6b", fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? item.nameKo : item.name} ×{item.qty}</span>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#c5a572" }}>{fUSD(calcPrice(item, prices) * item.qty)}</span>
+            </div>
+          ))}
+          <div style={{ borderTop: "1px solid #1a1510", marginTop: 12, paddingTop: 12, display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
+            <span style={{ fontSize: 14, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif", fontWeight: 600 }}>{lang === "ko" ? "합계" : "Total"}</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 16, color: "#c5a572", fontWeight: 700 }}>{fUSD(total)}</span>
+          </div>
+          <button onClick={submit} disabled={loading} style={{ width: "100%", background: loading ? "#2a2318" : "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: loading ? "#8a7d6b" : "#0a0a0a", padding: "14px", borderRadius: 8, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", fontSize: 15, fontFamily: "'Outfit',sans-serif" }}>
+            {loading ? (lang === "ko" ? "처리 중..." : "Processing...") : (lang === "ko" ? "결제 확인" : "Confirm Payment")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export { Home, Shop, ProductPage, CartPage, Checkout };
