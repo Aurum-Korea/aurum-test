@@ -21,13 +21,13 @@ function Home({ lang, navigate, prices, krwRate }) {
           </div>
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 34 : 54, fontWeight: 300, color: "#f5f0e8", lineHeight: 1.12, margin: "0 0 20px" }}>
             {lang === "ko"
-              ? <><span style={{ color: "#c5a572", fontWeight: 600 }}>김치 프리미엄</span> 없이<br />금을 소유하세요</>
-              : <>Own Gold<br /><span style={{ color: "#c5a572", fontWeight: 600 }}>Without the</span><br />Kimchi Premium</>}
+              ? <><span style={{ color: "#c5a572", fontWeight: 600 }}>실물 프리미엄</span> 없이<br />진짜 금·은을 소유하세요</>
+              : <>Real Gold. Real Silver.<br /><span style={{ color: "#c5a572", fontWeight: 600 }}>No Physical Premium.</span></>}
           </h1>
           <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 14 : 16, color: "#8a7d6b", lineHeight: 1.75, margin: "0 0 30px" }}>
             {lang === "ko"
-              ? "글로벌 현물가에 실물 금·은을 구매하고 세계 최고 수준의 싱가포르 볼트에 안전하게 보관하세요. 한국 VAT·관세 면제."
-              : "Buy physical gold and silver at global spot prices. Stored securely in world-class Singapore vaults. No Korean VAT or customs duties."}
+              ? "대부분의 한국 금·은 상품은 종이입니다 — 은행 통장, KRX 계좌, ETF. Aurum은 다릅니다. 국제 현물가로 구매하고, 싱가포르 FTZ에서 고객님 명의로 일련번호 실물 보관. 한국 VAT·관세는 해외 보관 중 발생하지 않습니다."
+              : "Most Korean gold and silver products are paper — bank passbooks, KRX accounts, ETFs. Aurum is different. Buy at international spot, hold serial-numbered physical metal in your name at the Singapore FTZ vault. No Korean VAT or customs while the metal stays offshore."}
           </p>
           <div style={{ display: "flex", gap: 12, flexDirection: isMobile ? "column" : "row" }}>
             <button onClick={() => navigate("shop")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#0a0a0a", border: "none", padding: isMobile ? "14px" : "14px 36px", fontSize: 15, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
@@ -43,13 +43,13 @@ function Home({ lang, navigate, prices, krwRate }) {
         </div>
       </div>
 
-      {/* Kimchi Premium Comparison — 2-panel on desktop, stacked on mobile */}
+      {/* Physical Premium Comparison — 2-panel on desktop, stacked on mobile */}
       <div style={{ background: "#111008", padding: isMobile ? "24px 16px" : "32px 80px", borderTop: "1px solid #1a1510", borderBottom: "1px solid #1a1510" }}>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 24 }}>
-          {/* Left panel: Kimchi Premium sign */}
+          {/* Left panel: Physical Premium */}
           <div style={{ background: "#0a0a0a", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
             <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
-              {lang === "ko" ? "김치 프리미엄 비교" : "Kimchi Premium Comparison"}
+              {lang === "ko" ? "실물 프리미엄 비교" : "Physical Premium Comparison"}
             </div>
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 20 : 26, color: "#f5f0e8", marginBottom: 22, lineHeight: 1.2 }}>
               {lang === "ko" ? "왜 Aurum인가?" : "Why Aurum?"}
@@ -57,7 +57,7 @@ function Home({ lang, navigate, prices, krwRate }) {
             <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
               <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 30 : 40, color: "#f87171", fontWeight: 700, lineHeight: 1 }}>10%</div>
-                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "KRX 프리미엄" : "KRX Premium"}</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#8a7d6b", marginTop: 6 }}>{lang === "ko" ? "국내 프리미엄" : "Domestic Premium"}</div>
               </div>
               <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 20, color: "#333", padding: "0 8px" }}>vs</div>
               <div style={{ flex: 1, textAlign: "center", padding: "12px 0" }}>
@@ -104,34 +104,34 @@ function Home({ lang, navigate, prices, krwRate }) {
         <div style={{ textAlign: "center", marginBottom: isMobile ? 28 : 40 }}>
           <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "왜 싱가포르인가" : "Why Singapore"}</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 34, color: "#f5f0e8", fontWeight: 300, margin: 0 }}>
-            {lang === "ko" ? "Asia의 귀금속 허브" : "Asia's Precious Metals Hub"}
+            {lang === "ko" ? "아시아의 귀금속 허브" : "Asia's Precious Metals Hub"}
           </h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {[
             {
-              title: lang === "ko" ? "Asia의 귀금속 허브 / Asia's Precious Metals Hub" : "Asia's Precious Metals Hub",
+              title: lang === "ko" ? "아시아의 귀금속 허브" : "Asia's Precious Metals Hub",
               body: lang === "ko"
                 ? "싱가포르는 아시아 어느 관할권보다 많은 민간 금고 내 금을 보유합니다. Le Freeport와 기타 FTZ 금고에 추정 400톤 이상이 보관되어 있습니다."
                 : "Singapore holds more gold in private vaults than any other Asian jurisdiction. Le Freeport and other FTZ vaults together store an estimated 400+ tonnes."
             },
             {
-              title: lang === "ko" ? "국가 신용등급 AAA / AAA Sovereign Credit Rating" : "AAA Sovereign Credit Rating",
+              title: lang === "ko" ? "국가 신용등급 AAA" : "AAA Sovereign Credit Rating",
               body: lang === "ko"
                 ? "Moody's, S&P, Fitch 모두 싱가포르를 AAA로 평가. 한국은 AA (두 단계 낮음). 정치적 안정성이 현저히 높습니다."
                 : "Moody's, S&P, and Fitch all rate Singapore AAA. Korea is AA — two notches lower. Political stability is materially higher."
             },
             {
-              title: lang === "ko" ? "정부 정책 우호적 / Government Policy Tailwind" : "Government Policy Tailwind",
+              title: lang === "ko" ? "정부 정책의 장기 일관성" : "Government Policy Tailwind",
               body: lang === "ko"
                 ? "싱가포르는 2012년 투자용 금에 대한 GST를 완전 면제하여 금고 보관업을 적극 유치해왔습니다. 정책은 13년 이상 유지되고 있습니다."
                 : "Singapore exempted investment-grade gold from GST in 2012 specifically to attract vault storage business. The policy has held for 13+ years."
             },
             {
-              title: lang === "ko" ? "Aurum 맥락에서 / In the Aurum Context" : "In the Aurum Context",
+              title: lang === "ko" ? "Aurum 맥락에서" : "In the Aurum Context",
               body: lang === "ko"
-                ? "한국 원화 변동성 헤지와 국내 정책·과세·압수 리스크 분산 효과. 해외 보관은 도피가 아니라 분산입니다."
-                : "Hedge against Korean won volatility and diversification away from domestic policy, tax, or seizure risk. Storing abroad is not an escape — it is diversification."
+                ? "한국 원화 변동성 헤지와 국내 정책·과세·압수 리스크 분산 효과. 해외 보관은 도피가 아니라 지리적 분산입니다."
+                : "Hedge against Korean won volatility and diversification away from domestic policy, tax, or seizure risk. Storing abroad is not an escape — it is geographic diversification."
             },
           ].map((item, i) => (
             <div key={i} style={{ display: "flex", gap: 14, padding: "16px 18px", background: "#0a0a0a", border: "1px solid #1a1510", borderRadius: 8, borderLeft: "3px solid #c5a572" }}>
@@ -141,6 +141,81 @@ function Home({ lang, navigate, prices, krwRate }) {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Silver — Structural Deficit Story */}
+      <div style={{ background: "#0a0a0a", padding: isMobile ? "36px 16px" : "64px 80px", borderBottom: "1px solid #1a1510" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 48, alignItems: "center" }}>
+          <div>
+            <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 10, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "은의 구조적 기회" : "The Silver Thesis"}</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 28 : 38, color: "#f5f0e8", fontWeight: 300, margin: "0 0 16px", lineHeight: 1.2 }}>
+              {lang === "ko" ? "많은 이들이 금을 말합니다.\n소수만이 은을 이해합니다." : "Everyone talks about gold.\nFew understand silver."}
+            </h2>
+            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 15, color: "#8a7d6b", lineHeight: 1.8, margin: "0 0 18px" }}>
+              {lang === "ko"
+                ? "2026년 은의 수급 구조는 금보다 더 비대칭적입니다. 세계 은 시장은 6년 연속 구조적 공급 부족 상태이며, 2026년 부족분은 약 2억 온스로 전망됩니다. 세계 수요의 60% 이상이 산업용 — 태양광, 전기차, 5G, AI 데이터센터 — 입니다."
+                : "In 2026, the silver supply-demand picture is more asymmetric than gold's. The global silver market is in its sixth consecutive year of structural deficit, with the 2026 shortfall projected near 200 million ounces. More than 60% of global demand is industrial — solar, EV, 5G, AI data centres."}
+            </p>
+            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 15, color: "#8a7d6b", lineHeight: 1.8, margin: "0 0 22px" }}>
+              {lang === "ko"
+                ? "2026년 1월 중국의 은 수출 라이선스 규제는 글로벌 가용 공급을 더욱 축소시켰습니다. 한국 내 실물 은 접근성은 이미 극히 제한적이며, KRX에는 실질적인 은 현물 시장이 없습니다. Aurum의 싱가포르 구조는 이 모든 국내 제약을 우회합니다."
+                : "China's silver export-licensing controls — in force since January 2026 — further constrained globally available supply. Access to physical silver in Korea is already severely limited, with no meaningful silver spot market on the KRX. Aurum's Singapore structure bypasses every one of those domestic constraints."}
+            </p>
+            <button onClick={() => navigate("learn")} style={{ background: "transparent", color: "#c5a572", border: "1px solid #c5a572", padding: "10px 22px", fontSize: 13, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
+              {lang === "ko" ? "은 투자 논리 전체 읽기 →" : "Read the full silver thesis →"}
+            </button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            {[
+              { value: "~200M oz", labelKo: "2026 공급 부족 전망", labelEn: "2026 projected deficit" },
+              { value: "60%+", labelKo: "산업·군사용 수요", labelEn: "industrial demand share" },
+              { value: "Jan 2026", labelKo: "중국 수출 규제 시행", labelEn: "China export controls" },
+              { value: "6 yrs", labelKo: "연속 공급 부족", labelEn: "consecutive deficit" },
+            ].map((s, i) => (
+              <div key={i} style={{ background: "#111008", border: "1px solid #1a1510", borderRadius: 10, padding: isMobile ? "18px 16px" : "22px 20px" }}>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 22 : 28, color: "#c5a572", fontWeight: 600, marginBottom: 6 }}>{s.value}</div>
+                <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 11 : 12, color: "#8a7d6b", lineHeight: 1.45 }}>{lang === "ko" ? s.labelKo : s.labelEn}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* AGP Entry Card — invite to savings plan */}
+      <div style={{ background: "#111008", borderTop: "1px solid #1a1510", borderBottom: "1px solid #1a1510", padding: isMobile ? "36px 16px" : "48px 80px" }}>
+        <div style={{ background: "linear-gradient(135deg,rgba(197,165,114,0.06),rgba(197,165,114,0.02))", border: "1px solid rgba(197,165,114,0.25)", borderRadius: 14, padding: isMobile ? "28px 22px" : "40px 48px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.5fr 1fr", gap: isMobile ? 20 : 40, alignItems: "center" }}>
+          <div>
+            <div style={{ fontSize: 10, color: "#c5a572", letterSpacing: 3, textTransform: "uppercase", marginBottom: 10, fontFamily: "'Outfit',sans-serif" }}>{lang === "ko" ? "AURUM GOLD PLAN" : "AURUM GOLD PLAN"}</div>
+            <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 24 : 32, color: "#f5f0e8", fontWeight: 300, margin: "0 0 12px", lineHeight: 1.25 }}>
+              {lang === "ko" ? "월 10만원부터. 싱가포르 실물 금으로 적립하세요." : "From KRW 100,000/month. Save in real gold, vaulted in Singapore."}
+            </h3>
+            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: isMobile ? 13 : 14, color: "#8a7d6b", lineHeight: 1.75, margin: "0 0 20px" }}>
+              {lang === "ko"
+                ? "그램 단위로 꾸준히 적립. 100g 또는 1kg 도달 시 PAMP·Heraeus 실물 바로 무료 전환. 100% 실물 백업, 매일 공개 감사. 한국 VAT 없음 (싱가포르 보관 중)."
+                : "Accumulate gram by gram. Convert to a real PAMP or Heraeus bar for free at 100g or 1kg. 100% physically backed, publicly audited daily. No Korean VAT while vaulted offshore."}
+            </p>
+            <div style={{ display: "flex", gap: 12, flexDirection: isMobile ? "column" : "row" }}>
+              <button onClick={() => navigate("agp")} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", color: "#0a0a0a", border: "none", padding: "12px 28px", fontSize: 14, fontFamily: "'Outfit',sans-serif", fontWeight: 700, borderRadius: 6, cursor: "pointer", letterSpacing: 0.5 }}>
+                {lang === "ko" ? "AGP 시작하기 →" : "Start AGP →"}
+              </button>
+              <button onClick={() => navigate("agp-report")} style={{ background: "transparent", color: "#c5a572", border: "1px solid rgba(197,165,114,0.4)", padding: "12px 22px", fontSize: 13, fontFamily: "'Outfit',sans-serif", fontWeight: 600, borderRadius: 6, cursor: "pointer" }}>
+                {lang === "ko" ? "📊 오늘의 백업 리포트" : "📊 Today's backing report"}
+              </button>
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              { icon: "💯", labelKo: "100% 실물 백업, 매일 공개 감사", labelEn: "100% physical backing, audited daily" },
+              { icon: "🥇", labelKo: "100g·1kg 도달 시 실물 바 무료 전환", labelEn: "Free conversion to bars at 100g or 1kg" },
+              { icon: "🇰🇷", labelKo: "한국어 서비스, 토스뱅크 자동이체", labelEn: "Korean-language service, Toss auto-debit" },
+            ].map((chip, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 20, flexShrink: 0 }}>{chip.icon}</span>
+                <span style={{ fontSize: isMobile ? 12 : 13, color: "#f5f0e8", fontFamily: "'Outfit',sans-serif", lineHeight: 1.55 }}>{lang === "ko" ? chip.labelKo : chip.labelEn}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -181,21 +256,21 @@ function Home({ lang, navigate, prices, krwRate }) {
           {[
             {
               icon: "🏛️",
-              title: lang === "ko" ? "싱가포르 현장 수령 / Vault Pickup" : "Vault Pickup",
+              title: lang === "ko" ? "싱가포르 현장 수령" : "Vault Pickup",
               bullets: lang === "ko"
                 ? ["싱가포르 Malca-Amit 금고에서 직접 수령", "온라인 예약 필수, 여권·구매 증명서 지참", "싱가포르 반출 VAT·관세 없음", "싱가포르 또는 동남아 방문객에게 적합"]
-                : ["Collect in person at the Malca-Amit Singapore vault", "Online appointment required with passport and invoice", "No VAT or export restriction from Singapore", "Ideal for customers traveling to Singapore or Southeast Asia"]
+                : ["Collect in person at the Malca-Amit Singapore vault", "Online appointment required with passport and invoice", "No VAT or export restriction from Singapore", "Ideal for customers travelling to Singapore or Southeast Asia"]
             },
             {
               icon: "📦",
-              title: lang === "ko" ? "국제 택배 / International Courier" : "International Courier",
+              title: lang === "ko" ? "국제 택배" : "International Courier",
               bullets: lang === "ko"
                 ? ["보험 적용 전문 운송 (Brinks, Ferrari Group, Malca-Amit 물류)", "한국 또는 전 세계 배송", "한국 수입 시 관세·VAT 합계 13% (VAT 10% + 관세 3%)", "통관 서류는 Aurum이 전담 처리"]
                 : ["Insured specialty courier (Brinks, Ferrari Group, or Malca-Amit logistics)", "Ship to Korea or any destination worldwide", "13% Korean import duties (10% VAT + 3% customs)", "Customs documentation handled end-to-end by Aurum"]
             },
             {
               icon: "💰",
-              title: lang === "ko" ? "매도 / Sell-Back" : "Sell-Back",
+              title: lang === "ko" ? "매도 (Sell-Back)" : "Sell-Back",
               bullets: lang === "ko"
                 ? ["실시간 매수호가로 Aurum에 매도, 실물 이동 불필요", "KRW, USD, SGD 수취 가능", "연결된 은행 계좌로 2영업일 내 정산", "최소 보유기간 없음, 위약금 없음"]
                 : ["Sell to Aurum at live bid price, no physical handling", "Payout in KRW, USD, or SGD", "2 business day settlement to linked bank account", "No minimum holding period, no exit fee"]
