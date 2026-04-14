@@ -22,12 +22,12 @@ const T = {
 };
 
 const SECTIONS = [
-  { num: '01', kr: '본인 정보', en: 'Identity' },
-  { num: '02', kr: '투자자 프로필', en: 'Profile' },
-  { num: '03', kr: 'AGP 플랜 설계', en: 'Plan' },
-  { num: '04', kr: '결제 수단', en: 'Payment' },
-  { num: '05', kr: '약관 동의', en: 'Consent' },
-  { num: '06', kr: '검토 및 제출', en: 'Review' },
+  { num: '01', kr: '본인 정보' },
+  { num: '02', kr: '투자자 프로필' },
+  { num: '03', kr: 'AGP 플랜 설계' },
+  { num: '04', kr: '결제 수단' },
+  { num: '05', kr: '약관 동의' },
+  { num: '06', kr: '검토 및 제출' },
 ];
 
 const fieldStyle = {
@@ -59,7 +59,7 @@ function FieldGroup({ label, enLabel, required, children, hint, twoCol, style })
         <div style={{ gridColumn: twoCol ? '1/-1' : undefined }}>
           <label style={labelStyle}>
             {label}
-            {enLabel && <span style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.textMuted, fontWeight: 400, marginLeft: 8 }}>{enLabel}</span>}
+            
             {required && <span style={{ color: T.gold, fontSize: 11, marginLeft: 4 }}>필수</span>}
           </label>
         </div>
@@ -118,7 +118,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
           <div style={{ width: 80, height: 80, border: `1px solid ${T.gold}`, borderRadius: '50%', margin: '0 auto 28px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.gold, fontSize: 32, position: 'relative' }}>✓</div>
           
           <h3 style={{ fontFamily: T.krDisplay, fontSize: 32, fontWeight: 600, color: T.textPrimary, marginBottom: 6, position: 'relative' }}>신청이 접수되었습니다</h3>
-          <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 18, marginBottom: 28, position: 'relative' }}>Your AGP enrollment has been received.</div>
+          
           
           <p style={{ color: T.textSecondary, maxWidth: 440, margin: '0 auto 24px', lineHeight: 1.75, fontSize: 14.5, position: 'relative' }}>
             {ko ? '확인 이메일을 다음 주소로 발송했습니다. 이메일 내 확인 링크를 클릭하면 KYC 심사가 시작됩니다. 영업일 기준 24시간 내에 결과를 알려드립니다.' : 'We have sent a confirmation email to the address below. Click the link to begin KYC review. Results within 24 business hours.'}
@@ -154,10 +154,10 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
   return (
     <div style={{ background: T.bg, minHeight: '90vh', padding: '80px 20px' }}>
-      <div style={{ maxWidth: 980, margin: '0 auto', display: 'grid', gridTemplateColumns: 'clamp(200px, 25%, 280px) 1fr', gap: 48 }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', display: window.innerWidth < 768 ? 'block' : 'grid', gridTemplateColumns: 'clamp(200px, 25%, 280px) 1fr', gap: 48 }}>
 
         {/* Sidebar */}
-        <aside style={{ position: 'sticky', top: 80, alignSelf: 'start' }}>
+        <aside style={{ position: 'sticky', top: 80, alignSelf: 'start', overflow: 'hidden' }}>
           <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.28em', color: T.gold, textTransform: 'uppercase', marginBottom: 16 }}>AGP 가입 신청</div>
           <h2 style={{ fontFamily: T.krDisplay, fontSize: 24, color: T.textPrimary, marginBottom: 6, fontWeight: 600 }}>신규 가입</h2>
           <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 15, marginBottom: 32 }}>New Enrollment</div>
@@ -192,7 +192,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
                     transition: 'all 0.3s',
                   }} />
                   <span style={{ fontFamily: T.mono, fontSize: 11, color: isActive ? T.gold : T.goldDim, fontWeight: 500 }}>{s.num}</span>
-                  <span>{s.kr} · {s.en}</span>
+                  <span>{s.kr}</span>
                 </div>
               );
             })}
@@ -205,7 +205,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
           {/* SECTION 1: 본인 정보 */}
           <FormStep active={section === 1}>
             <h3 style={{ fontFamily: T.krDisplay, fontSize: 26, fontWeight: 600, color: T.textPrimary, marginBottom: 4 }}>본인 정보</h3>
-            <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 15, marginBottom: 8 }}>Identity &amp; Contact Verification</div>
+            
             <p style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.7, marginBottom: 36, paddingBottom: 24, borderBottom: `1px solid ${T.border}` }}>
               {ko ? '한국 금융실명법에 따라 실명 확인이 필요합니다. 모든 정보는 암호화 전송·저장되며 KYC 심사에만 사용됩니다.' : 'Real-name verification required under Korean Financial Real-Name Act. All data is encrypted and used for KYC review only.'}
             </p>
@@ -277,14 +277,14 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
             <div style={{ marginTop: 40, paddingTop: 28, borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <button style={btnSecondary} onClick={() => navigate('agp-intro')}>← 이전 단계</button>
-              <button style={btnPrimary} onClick={next}>다음 · Continue →</button>
+              <button style={btnPrimary} onClick={next}>다음 →</button>
             </div>
           </FormStep>
 
           {/* SECTION 2: 투자자 프로필 */}
           <FormStep active={section === 2}>
             <h3 style={{ fontFamily: T.krDisplay, fontSize: 26, fontWeight: 600, color: T.textPrimary, marginBottom: 4 }}>투자자 프로필</h3>
-            <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 15, marginBottom: 8 }}>Investor Profile</div>
+            
             <p style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.7, marginBottom: 36, paddingBottom: 24, borderBottom: `1px solid ${T.border}` }}>
               {ko ? 'AML(자금세탁방지) 및 FATCA 규정 준수를 위한 기본 정보입니다. 답변은 계정 한도 설정에 사용됩니다.' : 'Required for AML compliance and FATCA declaration. Responses are used for account limit classification.'}
             </p>
@@ -358,14 +358,14 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
             <div style={{ marginTop: 40, paddingTop: 28, borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <button style={btnSecondary} onClick={prev}>← 이전</button>
-              <button style={btnPrimary} onClick={next}>다음 · Continue →</button>
+              <button style={btnPrimary} onClick={next}>다음 →</button>
             </div>
           </FormStep>
 
           {/* SECTION 3: AGP 플랜 설계 */}
           <FormStep active={section === 3}>
             <h3 style={{ fontFamily: T.krDisplay, fontSize: 26, fontWeight: 600, color: T.textPrimary, marginBottom: 4 }}>AGP 플랜 설계</h3>
-            <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 15, marginBottom: 8 }}>Design Your Accumulation Plan</div>
+            
             <p style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.7, marginBottom: 36, paddingBottom: 24, borderBottom: `1px solid ${T.border}` }}>
               {ko ? '자산 구성, 적립액, 주기, 전환 목표를 설정하세요. 모든 설정은 가입 후 대시보드에서 언제든 변경 가능합니다.' : 'Set your asset mix, contribution amount, frequency, and conversion target. All settings are adjustable from your dashboard at any time.'}
             </p>
@@ -425,13 +425,13 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
             <div style={{ marginTop: 40, paddingTop: 28, borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <button style={btnSecondary} onClick={prev}>← 이전</button>
-              <button style={btnPrimary} onClick={next}>다음 · Continue →</button>
+              <button style={btnPrimary} onClick={next}>다음 →</button>
             </div>
           </FormStep>
 
           {/* SECTION 4: 결제 수단 */}
           <FormStep active={section === 4}>
-            <h3 style={{ fontFamily: T.krDisplay, fontSize: 26, fontWeight: 600, color: T.textPrimary, marginBottom: 4 }}>결제 수단</h3>
+            <h3 style={{ fontFamily: T.krDisplay, fontSize: 26, fontWeight: 600, color: T.textPrimary, marginBottom: 4 }}>결제 수단 선택</h3>
             <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.gold, fontSize: 15, marginBottom: 8 }}>Funding Method</div>
             <p style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.7, marginBottom: 36, paddingBottom: 24, borderBottom: `1px solid ${T.border}` }}>
               {ko ? '세 가지 방식으로 AGP에 자금을 입금할 수 있습니다. 토스뱅크 자동이체가 수수료 가장 낮고 권장 방식입니다.' : 'Fund your AGP in three ways. Toss Bank auto-debit has the lowest fee and is the recommended method.'}
@@ -508,7 +508,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
             <div style={{ marginTop: 40, paddingTop: 28, borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <button style={btnSecondary} onClick={prev}>← 이전</button>
-              <button style={btnPrimary} onClick={next}>다음 · Continue →</button>
+              <button style={btnPrimary} onClick={next}>다음 →</button>
             </div>
           </FormStep>
 
@@ -564,7 +564,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
 
             <div style={{ marginTop: 40, paddingTop: 28, borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <button style={btnSecondary} onClick={prev}>← 이전</button>
-              <button style={btnPrimary} onClick={next}>다음 · Continue →</button>
+              <button style={btnPrimary} onClick={next}>다음 →</button>
             </div>
           </FormStep>
 
@@ -611,7 +611,7 @@ export default function AGPEnrollPage({ lang, navigate }) {
                   <span style={{ fontFamily: T.sans, fontWeight: 500, fontSize: 14, color: T.textPrimary }}>결제 수단 · Payment</span>
                   <button onClick={() => gotoSection(4)} style={{ fontFamily: T.mono, fontSize: 10, color: T.gold, letterSpacing: '0.1em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer' }}>편집</button>
                 </div>
-                {[['방식', form.payMethod === 'toss' ? '토스뱅크 자동이체' : form.payMethod === 'card' ? '신용·체크카드' : '암호화폐 USDT·USDC'], ['수수료', form.payMethod === 'toss' ? '~0.3% (wire 2.5%)' : form.payMethod === 'card' ? '~5.5%' : '~2.0%']].map(([l, v]) => (
+                {[['방식', form.payMethod === 'toss' ? '토스뱅크 자동이체' : form.payMethod === 'card' ? '신용·체크카드' : '암호화폐 USDT·USDC'], ['수수료', form.payMethod === 'toss' ? '~0.3% (wire 2.5%)' : form.payMethod === 'card' ? '5.5%' : '~2.0%']].map(([l, v]) => (
                   <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontSize: 13 }}>
                     <span style={{ color: T.textMuted }}>{l}</span>
                     <span style={{ color: T.textPrimary, fontFamily: T.mono, fontSize: 12 }}>{v}</span>
