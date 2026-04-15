@@ -813,7 +813,7 @@ function Storage({ lang, navigate }) {
         {/* 5중 감사 체계 */}
         <h3 style={{ fontFamily: T.serif, fontSize: isMobile ? 22 : 28, color: T.textPrimary, fontWeight: 300, margin: "0 0 16px" }}>{ko ? "5중 감사 체계" : "5 Layers of Audit Verification"}</h3>
         <p style={{ fontSize: isMobile ? 13 : 14, color: T.textSecondary, fontFamily: T.sans, lineHeight: 1.8, margin: "0 0 20px" }}>{ko ? "신뢰를 부탁드리지 않습니다. 다섯 가지 방법으로 증명합니다." : "We don't ask you to trust us. We prove it, five different ways."}</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 14 }}>
           {[
             { num: "1", title: ko ? "제3자 감사 (Bureau Veritas)" : "Third-Party Audit (Bureau Veritas)", bullets: ko ? ["LBMA 승인 독립 감사기관", "연 2회 실물 카운트 및 중량 검증", "무작위 샘플 일련번호 대조", "고객 대시보드에서 감사 보고서 다운로드"] : ["LBMA-approved independent auditor", "Bi-annual physical counts and weight verification", "Random-sample serial number matching", "Audit reports downloadable from the customer dashboard"] },
             { num: "2", title: ko ? "실시간 감사 리포트" : "Live Audit Report", bullets: ko ? ["전체 고객 자산 목록 실시간 공개 (익명 처리)", "고객은 본인 보유 내역이 실시간 목록에 포함되어 있는지 직접 확인 가능", "입고·출고 발생 시 즉시 업데이트"] : ["Anonymized real-time vault inventory visible to all customers", "Customers verify their own holdings appear in the live list", "Updated in real time with every deposit and withdrawal"] },
@@ -898,22 +898,6 @@ function Storage({ lang, navigate }) {
             ko ? "AGP 그램 보관료 별도 — Aurum Gold Plan 섹션 참고 " : "No fees for AGP grams — see Aurum Gold Plan section",
           ].map((line, i) => (
             <div key={i} style={{ fontSize: 12, color: T.textSecondary, fontFamily: T.sans, marginBottom: 6, lineHeight: 1.6 }}>• {line}</div>
-          ))}
-        </div>
-        <div style={{ background: "rgba(197,165,114,0.05)", border: `1px solid rgba(197,165,114,0.2)`, borderRadius: 8, padding: "16px 20px", marginBottom: 24 }}>
-          <div style={{ fontFamily: T.sans, fontSize: 13, color: T.accent, fontWeight: 600, marginBottom: 8 }}>{ko ? "예시 계산" : "Example Calculation"}</div>
-          <p style={{ margin: "0 0 8px", fontSize: 12, color: T.textSecondary, fontFamily: T.sans, lineHeight: 1.6 }}>
-            {ko ? "1 kg 금바(2026년 4월 기준 ~USD 153,000)를 싱가포르 금고에 보관하는 경우:" : "Customer holds a 1 kg gold bar (~USD 153,000 at April 2026 spot) in the Singapore vault:"}
-          </p>
-          {[
-            [ko ? "연간 보관료 " : "Annual fee", "0.65% × USD 153,000 = USD 994.50/yr"],
-            [ko ? "일일 환산 " : "Daily", "~USD 2.72/day"],
-            [ko ? "월간 환산 " : "Monthly", ko ? "~0.054% — 6자릿수 금 보유 기준 세계 최저 수준" : "~0.054% — one of the lowest safe-keeping rates worldwide for six-figure gold holdings"],
-          ].map(([l, v], i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", borderBottom: i < 2 ? `1px solid ${T.border}` : "none", padding: "6px 0" }}>
-              <span style={{ fontSize: 12, color: T.textSecondary, fontFamily: T.sans }}>{l}</span>
-              <span style={{ fontSize: 12, color: T.textPrimary, fontFamily: T.mono }}>{v}</span>
-            </div>
           ))}
         </div>
         <div style={{ fontFamily: T.sans, fontSize: 14, color: T.textPrimary, fontWeight: 600, marginBottom: 12 }}>{ko ? "비교 분석" : "Fee Comparison"}</div>
@@ -1160,8 +1144,8 @@ function AGP({ lang, navigate }) {
             { icon: "🥇", label: ko ? "100g 또는 1kg 도달 시 PAMP·Heraeus 바로 무료 전환" : "Free conversion to PAMP or Heraeus bars at 100g or 1kg" },
             { icon: <FlagKR size={18} />, label: ko ? "한국어 서비스 + 토스뱅크 자동이체 지원" : "Korean-language service, Toss Bank auto-debit" },
           ].map((chip, i) => (
-            <div key={i} style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 8, padding: "14px 16px", display: "flex", alignItems: "center", gap: 8, flex: 1, minWidth: isMobile ? "100%" : 280, boxSizing: "border-box" }}>
-              <span style={{ fontSize: 18, flexShrink: 0 }}>{chip.icon}</span>
+            <div key={i} style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 8, padding: "14px 16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, flex: 1, minWidth: isMobile ? "100%" : 280, boxSizing: "border-box", textAlign: "center" }}>
+              <span style={{ fontSize: 22, flexShrink: 0 }}>{chip.icon}</span>
               <span style={{ fontSize: 11, color: T.textSecondary, fontFamily: T.sans, lineHeight: 1.5 }}>{chip.label}</span>
             </div>
           ))}
