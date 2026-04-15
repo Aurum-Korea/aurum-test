@@ -207,44 +207,64 @@ function useInView(ref) {
   return inView;
 }
 
-// ─── Stooq price fetching with true day-over-day % change ────────────────────
-// Source: Stooq daily history CSV — https://stooq.com/q/d/l/?s={symbol}&i=d
-// Returns rows: Date,Open,High,Low,Close,Volume
-// We take last two rows: today_close and prev_close → real % change
-// Cache: store prev_close per metal per calendar day (ET close ~18:00 ET)
-// Refresh: every 10 minutes. Falls back to FALLBACK_PRICES if all fail.
+// ─── A-1: Cross-day % change tracking (KST) — CEO original spec ──────────────
+// previousClose = the last stored price from a PREVIOUS KST day.
+// Shows "—" only on the very first ever load (no prior data).
+// From the second KST day onward, shows real cross-day % change.
+// Seed: on first load, stores FALLBACK_PRICES as a synthetic previous close
+// so that from the very second API call (60s later), % change is meaningful.
+function getDailyChangeData(currentPrices, currentKrw) {
+  const KST_OFFSET = 9 * 60 * 60 * 1000;
+  const kstNow = new Date(Date.now() + KST_OFFSET);
+  const today = kstNow.toISOString().split('T')[0];
+  // Use yesterday's string to seed the cache so the FIRST real API call
+  // already has a previousClose to compute % change against.
+  const yesterday = new Date(Date.now() + KST_OFFSET - 86400000).toISOString().split('T')[0];
 
-const STOOQ_SYMBOLS = { gold: 'xauusd', silver: 'xagusd', platinum: 'xptusd' };
-const STOOQ_CACHE_KEY = 'aurum_stooq_v2';
-const STOOQ_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
-const STOOQ_PROXY = 'https://api.allorigins.win/raw?url=';
+  const CACHE_KEY = 'aurum_price_daily';
+  let cache = {};
+  try { cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); } catch {}
 
-function parseStooqCsv(csv) {
-  // Returns { close, prevClose } or null on error
-  try {
-    const lines = csv.trim().split('\n').filter(l => l.trim() && !l.startsWith('Date'));
-    if (lines.length < 2) return null;
-    const parse = (line) => {
-      const cols = line.split(',');
-      const close = parseFloat(cols[4]);
-      return isNaN(close) || cols[4] === 'N/D' ? null : close;
+  const changes = {};
+
+  if (!cache.date) {
+    // Absolute first ever load — seed previousClose with FALLBACK_PRICES
+    // so next fetch (60s later) can compute a real % change vs reference.
+    cache = {
+      date: yesterday,
+      prices: FALLBACK_PRICES,
+      krw: FALLBACK_KRW,
     };
-    const today = parse(lines[lines.length - 1]);
-    const prev  = parse(lines[lines.length - 2]);
-    if (!today || !prev) return null;
-    return { close: today, prevClose: prev };
-  } catch { return null; }
-}
+    // Fall through — this will immediately roll to previousClose below
+  }
 
-async function fetchStooqMetal(symbol) {
-  const url = `https://stooq.com/q/d/l/?s=${symbol}&i=d`;
-  const proxyUrl = STOOQ_PROXY + encodeURIComponent(url);
-  try {
-    const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-    if (!r.ok) throw new Error('stooq http ' + r.status);
-    const csv = await r.text();
-    return parseStooqCsv(csv);
-  } catch { return null; }
+  // If stored date is a PREVIOUS day, roll current to previousClose
+  if (cache.date !== today && cache.prices) {
+    cache.previousClose = cache.prices;
+    cache.previousKrw = cache.krw;
+  }
+
+  // Update today's rolling price
+  cache.date = today;
+  cache.prices = currentPrices;
+  cache.krw = currentKrw;
+
+  // Compute % change from previous close
+  if (cache.previousClose) {
+    for (const metal of ['gold', 'silver', 'platinum']) {
+      const prev = cache.previousClose[metal];
+      const curr = currentPrices[metal];
+      if (prev && curr) {
+        changes[metal] = ((curr - prev) / prev * 100).toFixed(2);
+      }
+    }
+    if (cache.previousKrw && currentKrw) {
+      changes.krw = ((currentKrw - cache.previousKrw) / cache.previousKrw * 100).toFixed(2);
+    }
+  }
+
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
+  return changes; // { gold: '+0.42', silver: '-1.15', ... } or {} on very first load
 }
 
 function useLivePrices() {
@@ -254,96 +274,27 @@ function useLivePrices() {
   const [dailyChanges, setDailyChanges] = useState({});
 
   const fetch_ = useCallback(async () => {
-    // ── 1. KRW rate (always from er-api, reliable) ────────────────────────
-    let newKrw = FALLBACK_KRW;
     try {
-      const fxR = await fetch('https://open.er-api.com/v6/latest/USD');
-      const fxD = await fxR.json();
-      if (fxD.rates?.KRW) newKrw = fxD.rates.KRW;
-    } catch {}
-
-    // ── 2. Check localStorage cache (TTL = 10 min) ────────────────────────
-    let cache = {};
-    try { cache = JSON.parse(localStorage.getItem(STOOQ_CACHE_KEY) || '{}'); } catch {}
-    const now = Date.now();
-    const cacheAge = now - (cache.ts || 0);
-    const cacheValid = cacheAge < STOOQ_CACHE_TTL && cache.prices;
-
-    let newPrices, newChanges;
-
-    if (cacheValid) {
-      newPrices  = cache.prices;
-      newChanges = cache.changes || {};
-    } else {
-      // ── 3. Fetch all three metals from Stooq in parallel ─────────────
-      const [gd, sd, pd] = await Promise.all([
-        fetchStooqMetal(STOOQ_SYMBOLS.gold),
-        fetchStooqMetal(STOOQ_SYMBOLS.silver),
-        fetchStooqMetal(STOOQ_SYMBOLS.platinum),
+      const [g, s, p, fx] = await Promise.all([
+        fetch("https://api.gold-api.com/price/XAU"),
+        fetch("https://api.gold-api.com/price/XAG"),
+        fetch("https://api.gold-api.com/price/XPT"),
+        fetch("https://open.er-api.com/v6/latest/USD"),
       ]);
-
-      newPrices = {
-        gold:     gd  ? gd.close  : (cache.prices?.gold     || FALLBACK_PRICES.gold),
-        silver:   sd  ? sd.close  : (cache.prices?.silver   || FALLBACK_PRICES.silver),
-        platinum: pd  ? pd.close  : (cache.prices?.platinum || FALLBACK_PRICES.platinum),
-      };
-
-      // ── 4. Compute day-over-day % change from prev close ─────────────
-      newChanges = {};
-      const stale = !gd && !sd && !pd;
-      if (!stale) {
-        const pairs = [
-          ['gold',     gd ],
-          ['silver',   sd ],
-          ['platinum', pd ],
-        ];
-        for (const [metal, data] of pairs) {
-          if (data && data.prevClose && data.close) {
-            const pct = ((data.close - data.prevClose) / data.prevClose * 100);
-            newChanges[metal] = pct.toFixed(2);
-          } else if (cache.changes?.[metal]) {
-            // Fallback: keep last known change, mark as stale
-            newChanges[metal] = cache.changes[metal];
-          }
-        }
-      } else {
-        // All requests failed — reuse cached changes if available
-        newChanges = cache.changes || {};
-      }
-
-      // ── 5. KRW % change (still via er-api, no prev-close available) ──
-      if (cache.krw && newKrw) {
-        const krwPct = ((newKrw - cache.krw) / cache.krw * 100);
-        if (Math.abs(krwPct) < 5) { // sanity check: ignore >5% swings (stale cache)
-          newChanges.krw = krwPct.toFixed(2);
-        }
-      }
-
-      // ── 6. Persist to cache ────────────────────────────────────────────
-      try {
-        localStorage.setItem(STOOQ_CACHE_KEY, JSON.stringify({
-          ts: now, prices: newPrices, changes: newChanges, krw: newKrw,
-        }));
-      } catch {}
+      const [gd, sd, pd, fxd] = await Promise.all([g.json(), s.json(), p.json(), fx.json()]);
+      const newPrices = { gold: gd.price, silver: sd.price, platinum: pd.price };
+      const newKrw = fxd.rates?.KRW || FALLBACK_KRW;
+      setPrices(newPrices);
+      setKrwRate(newKrw);
+      setDailyChanges(getDailyChangeData(newPrices, newKrw));
+      setPriceError(null);
+    } catch {
+      setPriceError("가격 로딩 실패 — 최근 데이터 표시 중");
     }
-
-    setPrices(newPrices);
-    setKrwRate(newKrw);
-    setDailyChanges(newChanges);
-    setPriceError(null);
   }, []);
-
-  useEffect(() => {
-    fetch_();
-    const t = setInterval(fetch_, 10 * 60 * 1000); // 10-minute refresh
-    return () => clearInterval(t);
-  }, [fetch_]);
-
+  useEffect(() => { fetch_(); const t = setInterval(fetch_, 60_000); return () => clearInterval(t); }, [fetch_]);
   return { prices, krwRate, priceError, dailyChanges };
 }
-
-// Keep getDailyChangeData exported for any legacy import (no-op stub)
-function getDailyChangeData() { return {}; }
 
 // A-2: News hook with deduplication + new reliable feeds
 function useNewsData() {
