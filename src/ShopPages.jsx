@@ -193,8 +193,7 @@ function Home({ lang, navigate, prices, krwRate, currency, setCurrency }) {
             </div>
           </div>
 
-
-          </div>          {/* RIGHT panel — Silver 1kg tracker */}
+          {/* RIGHT panel — Silver 1kg tracker */}
           <div className="lift-card" style={{ background: "#111008", border: "1px solid rgba(197,165,114,0.15)", borderRadius: 10, padding: isMobile ? "20px 18px" : "28px 28px" }}>
             <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 11, color: "#8a7d6b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
               {lang === "ko" ? "은 1키로 구매시 절약 금액" : "Savings on 1kg Silver Bar"}
@@ -224,6 +223,7 @@ function Home({ lang, navigate, prices, krwRate, currency, setCurrency }) {
                 </div>
               </div>
             </div>
+          </div>
         </div>
 
         {/* H-06: Horizontal premium comparison caption — A-1 ── */}
