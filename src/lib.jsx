@@ -72,40 +72,40 @@ const FALLBACK_KRW = 1395.00;
 // premium field = 0.08 for all items
 // ═══════════════════════════════════════════════════════════════════════════════
 const PRODUCTS = [
-  { id: 1, name: "1oz Gold Bar — PAMP Suisse", nameKo: "1온스 금바 — PAMP 스위스", metal: "gold", type: "bar", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥇", inStock: true, descKo: "세계에서 가장 인지도 높은 금바. LBMA 인증 PAMP Suisse 제조. Lady Fortuna 디자인." },
-  { id: 2, name: "1kg Gold Bar — Heraeus", nameKo: "1kg 금바 — 헤레우스", metal: "gold", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥇", inStock: true, descKo: "기관 및 고액 투자자 선호. 최저 프리미엄으로 최대 효율. 독일 헤레우스 제조." },
-  { id: 3, name: "1oz Gold Maple Leaf", nameKo: "1온스 골드 메이플리프", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "캐나다 왕립 조폐국 발행. 세계적으로 가장 많이 거래되는 금화 중 하나." },
-  { id: 4, name: "1oz Gold Krugerrand", nameKo: "1온스 골드 크루거랜드", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "91.67%", mint: "South African Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "세계 최초 투자용 금화(1967년 발행). 남아프리카 공화국 조폐국 제조." },
-  { id: 5, name: "100oz Silver Bar — PAMP", nameKo: "100온스 은바 — PAMP", metal: "silver", type: "bar", weight: "100 oz", weightOz: 100, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥈", inStock: true, descKo: "대규모 은 투자에 최적. PAMP 스위스 제조, LBMA 인증 순은 바." },
-  { id: 6, name: "1oz Silver Maple Leaf", nameKo: "1온스 실버 메이플리프", metal: "silver", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🥈", inStock: true, descKo: "캐나다 왕립 조폐국 발행 순은 동전. 컬렉터와 투자자 모두 선호." },
-  { id: 7, name: "1kg Silver Bar — Heraeus", nameKo: "1kg 은바 — 헤레우스", metal: "silver", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥈", inStock: true, descKo: "독일 헤레우스 제조 순은 바. 산업용·투자 수요 모두 높은 표준 규격." },
-  { id: 8, name: "10oz Gold Bar — Valcambi", nameKo: "10온스 금바 — 발캄비", metal: "gold", type: "bar", weight: "10 oz", weightOz: 10, purity: "99.99%", mint: "Valcambi", premium: 0.08, image: "🥇", inStock: true, descKo: "스위스 발캄비 제조 10온스 금바. 개인 고액 투자자에게 적합한 크기." },
+  { id: 1, name: "1 oz Gold Bar — PAMP Suisse", nameKo: "1 온스 금바 — PAMP 스위스", metal: "gold", type: "bar", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥇", inStock: true, descKo: "세계에서 가장 인지도 높은 금바. LBMA 인증 PAMP Suisse 제조. Lady Fortuna 디자인." },
+  { id: 2, name: "1 kg Gold Bar — Heraeus", nameKo: "1 kg 금바 — 헤레우스", metal: "gold", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥇", inStock: true, descKo: "기관 및 고액 투자자 선호. 최저 프리미엄으로 최대 효율. 독일 헤레우스 제조." },
+  { id: 3, name: "1 oz Gold Maple Leaf", nameKo: "1 온스 골드 메이플리프", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "캐나다 왕립 조폐국 발행. 세계적으로 가장 많이 거래되는 금화 중 하나." },
+  { id: 4, name: "1 oz Gold Krugerrand", nameKo: "1 온스 골드 크루거랜드", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "91.67%", mint: "South African Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "세계 최초 투자용 금화(1967년 발행). 남아프리카 공화국 조폐국 제조." },
+  { id: 5, name: "100 oz Silver Bar — PAMP", nameKo: "100 온스 은바 — PAMP", metal: "silver", type: "bar", weight: "100 oz", weightOz: 100, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥈", inStock: true, descKo: "대규모 은 투자에 최적. PAMP 스위스 제조, LBMA 인증 순은 바." },
+  { id: 6, name: "1 oz Silver Maple Leaf", nameKo: "1 온스 실버 메이플리프", metal: "silver", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🥈", inStock: true, descKo: "캐나다 왕립 조폐국 발행 순은 동전. 컬렉터와 투자자 모두 선호." },
+  { id: 7, name: "1 kg Silver Bar — Heraeus", nameKo: "1 kg 은바 — 헤레우스", metal: "silver", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥈", inStock: true, descKo: "독일 헤레우스 제조 순은 바. 산업용·투자 수요 모두 높은 표준 규격." },
+  { id: 8, name: "10 oz Gold Bar — Valcambi", nameKo: "10 온스 금바 — 발캄비", metal: "gold", type: "bar", weight: "10 oz", weightOz: 10, purity: "99.99%", mint: "Valcambi", premium: 0.08, image: "🥇", inStock: true, descKo: "스위스 발캄비 제조 10온스 금바. 개인 고액 투자자에게 적합한 크기." },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MOCK HOLDINGS
 // ═══════════════════════════════════════════════════════════════════════════════
 const MOCK_HOLDINGS = [
-  { id: 1, product: "1oz Gold Bar — PAMP Suisse", nameKo: "1온스 금바 — PAMP 스위스", serial: "PAMP-2026-44891", purchasePrice: 4892.50, purchaseDate: "2026-03-15", weightOz: 1, metal: "gold", vault: "Singapore — Malca-Amit FTZ", zone: "Zone A, Bay 204", image: "🥇", assayCert: true, insurance: "Lloyd's of London" },
-  { id: 2, product: "100oz Silver Bar — PAMP", nameKo: "100온스 은바 — PAMP", serial: "PAMP-AG-77234", purchasePrice: 2920.00, purchaseDate: "2026-03-20", weightOz: 100, metal: "silver", vault: "Singapore — Malca-Amit FTZ", zone: "Zone B, Bay 118", image: "🥈", assayCert: true, insurance: "Lloyd's of London" },
-  { id: 3, product: "1oz Gold Maple Leaf", nameKo: "1온스 골드 메이플리프", serial: "RCM-ML-88123", purchasePrice: 4945.20, purchaseDate: "2026-04-01", weightOz: 1, metal: "gold", vault: "Singapore — Malca-Amit FTZ", zone: "Zone A, Bay 204", image: "🪙", assayCert: true, insurance: "Lloyd's of London" },
+  { id: 1, product: "1 oz Gold Bar — PAMP Suisse", nameKo: "1 온스 금바 — PAMP 스위스", serial: "PAMP-2026-44891", purchasePrice: 4892.50, purchaseDate: "2026-03-15", weightOz: 1, metal: "gold", vault: "Singapore — Malca-Amit FTZ", zone: "Zone A, Bay 204", image: "🥇", assayCert: true, insurance: "Lloyd's of London" },
+  { id: 2, product: "100 oz Silver Bar — PAMP", nameKo: "100 온스 은바 — PAMP", serial: "PAMP-AG-77234", purchasePrice: 2920.00, purchaseDate: "2026-03-20", weightOz: 100, metal: "silver", vault: "Singapore — Malca-Amit FTZ", zone: "Zone B, Bay 118", image: "🥈", assayCert: true, insurance: "Lloyd's of London" },
+  { id: 3, product: "1 oz Gold Maple Leaf", nameKo: "1 온스 골드 메이플리프", serial: "RCM-ML-88123", purchasePrice: 4945.20, purchaseDate: "2026-04-01", weightOz: 1, metal: "gold", vault: "Singapore — Malca-Amit FTZ", zone: "Zone A, Bay 204", image: "🪙", assayCert: true, insurance: "Lloyd's of London" },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MOCK ORDERS
 // ═══════════════════════════════════════════════════════════════════════════════
 const MOCK_ORDERS_INIT = [
-  { id: "AK-2026-001847", date: "2026-04-01T14:30:00Z", status: "vaulted", items: [{ nameKo: "1온스 골드 메이플리프", name: "1oz Gold Maple Leaf", qty: 1, unitPrice: 4945.20, metal: "gold", image: "🪙" }], subtotal: 4945.20, total: 4945.20, paymentMethod: "toss", storageOption: "singapore" },
-  { id: "AK-2026-001612", date: "2026-03-20T09:15:00Z", status: "vaulted", items: [{ nameKo: "100온스 은바 — PAMP", name: "100oz Silver Bar — PAMP", qty: 1, unitPrice: 2920.00, metal: "silver", image: "🥈" }], subtotal: 2920.00, total: 2920.00, paymentMethod: "wire", storageOption: "singapore" },
-  { id: "AK-2026-001344", date: "2026-03-15T11:45:00Z", status: "vaulted", items: [{ nameKo: "1온스 금바 — PAMP 스위스", name: "1oz Gold Bar — PAMP Suisse", qty: 2, unitPrice: 4892.50, metal: "gold", image: "🥇" }], subtotal: 9785.00, total: 9785.00, paymentMethod: "toss", storageOption: "singapore" },
+  { id: "AK-2026-001847", date: "2026-04-01T14:30:00Z", status: "vaulted", items: [{ nameKo: "1 온스 골드 메이플리프", name: "1 oz Gold Maple Leaf", qty: 1, unitPrice: 4945.20, metal: "gold", image: "🪙" }], subtotal: 4945.20, total: 4945.20, paymentMethod: "toss", storageOption: "singapore" },
+  { id: "AK-2026-001612", date: "2026-03-20T09:15:00Z", status: "vaulted", items: [{ nameKo: "100 온스 은바 — PAMP", name: "100 oz Silver Bar — PAMP", qty: 1, unitPrice: 2920.00, metal: "silver", image: "🥈" }], subtotal: 2920.00, total: 2920.00, paymentMethod: "wire", storageOption: "singapore" },
+  { id: "AK-2026-001344", date: "2026-03-15T11:45:00Z", status: "vaulted", items: [{ nameKo: "1 온스 금바 — PAMP 스위스", name: "1 oz Gold Bar — PAMP Suisse", qty: 2, unitPrice: 4892.50, metal: "gold", image: "🥇" }], subtotal: 9785.00, total: 9785.00, paymentMethod: "toss", storageOption: "singapore" },
 ];
 
 const AUDIT_TRAIL_INIT = [
-  { date: "2026-04-01", event: "보관 배정", detail: "1온스 골드 메이플리프 → Malca-Amit SG FTZ (Zone A, Bay 204)", type: "vault" },
+  { date: "2026-04-01", event: "보관 배정", detail: "1 온스 골드 메이플리프 → Malca-Amit SG FTZ (Zone A, Bay 204)", type: "vault" },
   { date: "2026-04-01", event: "결제 완료", detail: "주문 AK-2026-001847 · TossPay · $4,945.20", type: "payment" },
-  { date: "2026-03-20", event: "보관 배정", detail: "100온스 은바 PAMP → Malca-Amit SG FTZ (Zone B, Bay 118)", type: "vault" },
+  { date: "2026-03-20", event: "보관 배정", detail: "100 온스 은바 PAMP → Malca-Amit SG FTZ (Zone B, Bay 118)", type: "vault" },
   { date: "2026-03-20", event: "결제 완료", detail: "주문 AK-2026-001612 · Wire Transfer · $2,920.00", type: "payment" },
-  { date: "2026-03-15", event: "보관 배정", detail: "1온스 금바 PAMP (×2) → Malca-Amit SG FTZ (Zone A, Bay 191)", type: "vault" },
+  { date: "2026-03-15", event: "보관 배정", detail: "1 온스 금바 PAMP (×2) → Malca-Amit SG FTZ (Zone A, Bay 191)", type: "vault" },
   { date: "2026-03-15", event: "결제 완료", detail: "주문 AK-2026-001344 · TossPay · $9,785.00", type: "payment" },
 ];
 
