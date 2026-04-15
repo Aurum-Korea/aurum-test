@@ -75,7 +75,7 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
         noChange: true
       },
       {
-        label: lang === "ko" ? "한국금거래소 매도가" : "KR Gold",
+        label: lang === "ko" ? "한국금거래소 1돈 매도가" : "KR Gold",
         // Uses KR_GOLD_PREMIUM (single source of truth — same constant flows into Home savings panel)
         price: Math.round(prices.gold * krwRate * (1 + KR_GOLD_PREMIUM) / 31.1035 * 3.75),
         change: '—',
