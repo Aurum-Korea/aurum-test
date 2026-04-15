@@ -456,6 +456,7 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currency, setCurrency] = useState("KRW");
+  const [cartPayMethod, setCartPayMethod] = useState("toss");
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState(MOCK_ORDERS_INIT);
   const [holdings] = useState(MOCK_HOLDINGS);
@@ -515,8 +516,8 @@ export default function App() {
         {page === "shop" && <ShopSelectorPage lang={lang} navigate={navigate} />}
         {page === "shop-physical" && <Shop lang={lang} navigate={navigate} setProduct={setSelectedProduct} prices={prices} krwRate={krwRate} addToCart={addToCart} toast={toast} currency={currency} setCurrency={setCurrency} />}
         {page === "product" && <ProductPage product={selectedProduct} lang={lang} navigate={navigate} prices={prices} krwRate={krwRate} user={user} setShowLogin={setShowLogin} addToCart={addToCart} toast={toast} currency={currency} setCurrency={setCurrency} />}
-        {page === "cart" && <CartPage lang={lang} navigate={navigate} cart={cart} removeFromCart={removeFromCart} updateCartQty={updateCartQty} prices={prices} krwRate={krwRate} currency={currency} setCurrency={setCurrency} setProduct={setSelectedProduct} />}
-        {page === "checkout" && <Checkout lang={lang} navigate={navigate} cart={cart} clearCart={clearCart} prices={prices} krwRate={krwRate} user={user} addOrder={addOrder} toast={toast} currency={currency} setCurrency={setCurrency} />}
+        {page === "cart" && <CartPage lang={lang} navigate={navigate} cart={cart} removeFromCart={removeFromCart} updateCartQty={updateCartQty} prices={prices} krwRate={krwRate} currency={currency} setCurrency={setCurrency} setProduct={setSelectedProduct} cartPayMethod={cartPayMethod} setCartPayMethod={setCartPayMethod} />}
+        {page === "checkout" && <Checkout lang={lang} navigate={navigate} cart={cart} clearCart={clearCart} prices={prices} krwRate={krwRate} user={user} addOrder={addOrder} toast={toast} currency={currency} setCurrency={setCurrency} initialPayMethod={cartPayMethod} />}
         {page === "orders" && <OrderHistoryPage lang={lang} navigate={navigate} orders={orders} krwRate={krwRate} />}
         {page === "account" && <AccountPage lang={lang} navigate={navigate} user={user} setUser={setUser} toast={toast} />}
         {page === "kyc" && <KYCFlowPage lang={lang} navigate={navigate} user={user} setUser={setUser} toast={toast} />}
