@@ -8,8 +8,8 @@ import { useIsMobile, useNewsData, fDate, STATIC_NEWS } from "./lib.jsx";
 // ═══════════════════════════════════════════════════════════════════════════════
 export const KR_GOLD_PREMIUM = 0.20;     // 20% — 한국금거래소 매도가 (부가세 + 유통 마진 포함)
 export const KR_SILVER_PREMIUM = 0.30;   // 30% — 한국 시중 은 실물 프리미엄 (부가세 + 공급 부족 반영)
-export const AURUM_GOLD_PREMIUM = 0.06;  // Aurum gold spot premium (display reference)
-export const AURUM_SILVER_PREMIUM = 0.06; // Aurum silver spot premium (display reference)
+export const AURUM_GOLD_PREMIUM = 0.08;  // Aurum gold spot premium (display reference)
+export const AURUM_SILVER_PREMIUM = 0.15; // Aurum silver spot premium (display reference)
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TOAST
