@@ -65,8 +65,8 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
         noChange: true
       },
       {
-        label: lang === "ko" ? "한국금거래소 매도가 (1돈 / 부가세 포함)" : "KR Gold/돈",
-        price: Math.round(prices.gold * krwRate * 1.10 / 31.1035 * 3.75),
+        label: lang === "ko" ? "한국금거래소 매도가 (부가세 포함)" : "KR Gold/돈",
+        price: Math.round(prices.gold * krwRate * 1.22 / 31.1035 * 3.75),
         change: '—',
         up: true,
         isKrGold: true,
