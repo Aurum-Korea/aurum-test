@@ -273,20 +273,17 @@ function useLivePrices() {
   const [priceError, setPriceError] = useState(null);
   const [dailyChanges, setDailyChanges] = useState({});
 
+  // Calls Vercel serverless function — Yahoo Finance + er-api, no API key needed.
+  // Returns { prices, changes, krwRate, ts, sources }
+  // changes.gold/silver/platinum = day-over-day % from Yahoo prevClose (string)
   const fetch_ = useCallback(async () => {
     try {
-      const [g, s, p, fx] = await Promise.all([
-        fetch("https://api.gold-api.com/price/XAU"),
-        fetch("https://api.gold-api.com/price/XAG"),
-        fetch("https://api.gold-api.com/price/XPT"),
-        fetch("https://open.er-api.com/v6/latest/USD"),
-      ]);
-      const [gd, sd, pd, fxd] = await Promise.all([g.json(), s.json(), p.json(), fx.json()]);
-      const newPrices = { gold: gd.price, silver: sd.price, platinum: pd.price };
-      const newKrw = fxd.rates?.KRW || FALLBACK_KRW;
-      setPrices(newPrices);
-      setKrwRate(newKrw);
-      setDailyChanges(getDailyChangeData(newPrices, newKrw));
+      const res = await fetch("/api/prices");
+      if (!res.ok) throw new Error(`prices API: HTTP ${res.status}`);
+      const data = await res.json();
+      setPrices(data.prices);
+      setKrwRate(data.krwRate);
+      setDailyChanges(data.changes || {});
       setPriceError(null);
     } catch {
       setPriceError("가격 로딩 실패 — 최근 데이터 표시 중");
