@@ -68,18 +68,18 @@ const FALLBACK_PRICES = { gold: 4750.00, silver: 32.15, platinum: 1020.00 };
 const FALLBACK_KRW = 1395.00;
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PRODUCTS — spot + 8% as Aurum Price (temporary per founder directive)
-// premium field = 0.08 for all items
+// PRODUCTS — spot + 6% as Aurum Price
+// premium field = 0.06 for all items
 // ═══════════════════════════════════════════════════════════════════════════════
 const PRODUCTS = [
-  { id: 1, name: "1 oz Gold Bar — PAMP Suisse", nameKo: "1 온스 금바 — PAMP 스위스", metal: "gold", type: "bar", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥇", inStock: true, descKo: "세계에서 가장 인지도 높은 금바. LBMA 인증 PAMP Suisse 제조. Lady Fortuna 디자인." },
-  { id: 2, name: "1 kg Gold Bar — Heraeus", nameKo: "1 kg 금바 — 헤레우스", metal: "gold", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥇", inStock: true, descKo: "기관 및 고액 투자자 선호. 최저 프리미엄으로 최대 효율. 독일 헤레우스 제조." },
-  { id: 3, name: "1 oz Gold Maple Leaf", nameKo: "1 온스 골드 메이플리프", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "캐나다 왕립 조폐국 발행. 세계적으로 가장 많이 거래되는 금화 중 하나." },
-  { id: 4, name: "1 oz Gold Krugerrand", nameKo: "1 온스 골드 크루거랜드", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "91.67%", mint: "South African Mint", premium: 0.08, image: "🪙", inStock: true, descKo: "세계 최초 투자용 금화(1967년 발행). 남아프리카 공화국 조폐국 제조." },
-  { id: 5, name: "100 oz Silver Bar — PAMP", nameKo: "100 온스 은바 — PAMP", metal: "silver", type: "bar", weight: "100 oz", weightOz: 100, purity: "99.99%", mint: "PAMP Suisse", premium: 0.08, image: "🥈", inStock: true, descKo: "대규모 은 투자에 최적. PAMP 스위스 제조, LBMA 인증 순은 바." },
-  { id: 6, name: "1 oz Silver Maple Leaf", nameKo: "1 온스 실버 메이플리프", metal: "silver", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.08, image: "🥈", inStock: true, descKo: "캐나다 왕립 조폐국 발행 순은 동전. 컬렉터와 투자자 모두 선호." },
-  { id: 7, name: "1 kg Silver Bar — Heraeus", nameKo: "1 kg 은바 — 헤레우스", metal: "silver", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.08, image: "🥈", inStock: true, descKo: "독일 헤레우스 제조 순은 바. 산업용·투자 수요 모두 높은 표준 규격." },
-  { id: 8, name: "10 oz Gold Bar — Valcambi", nameKo: "10 온스 금바 — 발캄비", metal: "gold", type: "bar", weight: "10 oz", weightOz: 10, purity: "99.99%", mint: "Valcambi", premium: 0.08, image: "🥇", inStock: true, descKo: "스위스 발캄비 제조 10온스 금바. 개인 고액 투자자에게 적합한 크기." },
+  { id: 1, name: "1 oz Gold Bar — PAMP Suisse", nameKo: "1 온스 금바 — PAMP 스위스", metal: "gold", type: "bar", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "PAMP Suisse", premium: 0.06, image: "🥇", inStock: true, descKo: "세계에서 가장 인지도 높은 금바. LBMA 인증 PAMP Suisse 제조. Lady Fortuna 디자인." },
+  { id: 2, name: "1 kg Gold Bar — Heraeus", nameKo: "1 kg 금바 — 헤레우스", metal: "gold", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.06, image: "🥇", inStock: true, descKo: "기관 및 고액 투자자 선호. 최저 프리미엄으로 최대 효율. 독일 헤레우스 제조." },
+  { id: 3, name: "1 oz Gold Maple Leaf", nameKo: "1 온스 골드 메이플리프", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.06, image: "🪙", inStock: true, descKo: "캐나다 왕립 조폐국 발행. 세계적으로 가장 많이 거래되는 금화 중 하나." },
+  { id: 4, name: "1 oz Gold Krugerrand", nameKo: "1 온스 골드 크루거랜드", metal: "gold", type: "coin", weight: "1 oz", weightOz: 1, purity: "91.67%", mint: "South African Mint", premium: 0.06, image: "🪙", inStock: true, descKo: "세계 최초 투자용 금화(1967년 발행). 남아프리카 공화국 조폐국 제조." },
+  { id: 5, name: "100 oz Silver Bar — PAMP", nameKo: "100 온스 은바 — PAMP", metal: "silver", type: "bar", weight: "100 oz", weightOz: 100, purity: "99.99%", mint: "PAMP Suisse", premium: 0.06, image: "🥈", inStock: true, descKo: "대규모 은 투자에 최적. PAMP 스위스 제조, LBMA 인증 순은 바." },
+  { id: 6, name: "1 oz Silver Maple Leaf", nameKo: "1 온스 실버 메이플리프", metal: "silver", type: "coin", weight: "1 oz", weightOz: 1, purity: "99.99%", mint: "Royal Canadian Mint", premium: 0.06, image: "🥈", inStock: true, descKo: "캐나다 왕립 조폐국 발행 순은 동전. 컬렉터와 투자자 모두 선호." },
+  { id: 7, name: "1 kg Silver Bar — Heraeus", nameKo: "1 kg 은바 — 헤레우스", metal: "silver", type: "bar", weight: "1 kg", weightOz: 32.1507, purity: "99.99%", mint: "Heraeus", premium: 0.06, image: "🥈", inStock: true, descKo: "독일 헤레우스 제조 순은 바. 산업용·투자 수요 모두 높은 표준 규격." },
+  { id: 8, name: "10 oz Gold Bar — Valcambi", nameKo: "10 온스 금바 — 발캄비", metal: "gold", type: "bar", weight: "10 oz", weightOz: 10, purity: "99.99%", mint: "Valcambi", premium: 0.06, image: "🥇", inStock: true, descKo: "스위스 발캄비 제조 10온스 금바. 개인 고액 투자자에게 적합한 크기." },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
