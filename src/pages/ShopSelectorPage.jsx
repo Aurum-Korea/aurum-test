@@ -45,14 +45,14 @@ export default function ShopSelectorPage({ lang, navigate }) {
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 72 }}>
           <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.28em', color: T.gold, textTransform: 'uppercase', marginBottom: 20 }}>
-            매장 · Shop
+            {ko ? '매장' : 'Shop'}
           </div>
           <h1 style={{ fontFamily: T.krDisplay, fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 500, color: T.textPrimary, lineHeight: 1.2, marginBottom: 14 }}>
             {ko ? '어떻게 시작하시겠습니까' : 'How Would You Like to Begin?'}
           </h1>
-          <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 'clamp(16px, 2vw, 22px)', color: T.gold, marginBottom: 22 }}>
+          {!ko && <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 'clamp(16px, 2vw, 22px)', color: T.gold, marginBottom: 22 }}>
             Choose how you begin.
-          </div>
+          </div>}
           <p style={{ maxWidth: 620, margin: '0 auto', color: T.textSecondary, fontSize: 15, lineHeight: 1.75, fontFamily: T.sans }}>
             {ko
               ? 'Aurum은 두 가지 방식으로 실물 금·은을 제공합니다. 한 번에 구매하는 실물 바·코인 또는 월 20만원부터 시작하는 자동 적립 저축 플랜 (AGP).'
@@ -97,9 +97,9 @@ export default function ShopSelectorPage({ lang, navigate }) {
             <h2 style={{ fontFamily: T.krDisplay, fontSize: 30, fontWeight: 600, color: T.textPrimary, marginBottom: 6, lineHeight: 1.25 }}>
               실물 금·은 매매
             </h2>
-            <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 17, color: T.gold, fontWeight: 400, marginBottom: 24 }}>
+            {!ko && <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 17, color: T.gold, fontWeight: 400, marginBottom: 24 }}>
               Physical Gold &amp; Silver — Direct Purchase
-            </div>
+            </div>}
             <p style={{ color: T.textSecondary, fontSize: 14.5, lineHeight: 1.75, marginBottom: 28, fontFamily: T.sans }}>
               {ko
                 ? 'LBMA 승인 골드·실버 바, sovereign-issued 코인을 일회성으로 구매합니다. 국제 현물가 + 투명한 프리미엄으로 고객님 명의 금고에 즉시 배분 보관됩니다.'
@@ -115,15 +115,15 @@ export default function ShopSelectorPage({ lang, navigate }) {
                 <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, paddingBottom: 12, borderBottom: i < 2 ? '1px dashed rgba(197, 165, 114, 0.15)' : 'none', fontSize: 14, color: T.textPrimary, fontFamily: T.sans }}>
                   <span style={{ color: T.gold, fontFamily: T.mono, flexShrink: 0 }}>—</span>
                   <div>
-                    <div>{item.ko}</div>
-                    <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.textMuted, fontSize: 13, marginTop: 2 }}>{item.en}</div>
+                    <div>{ko ? item.ko : item.en}</div>
+                    {!ko && <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.textMuted, fontSize: 13, marginTop: 2 }}>{item.ko}</div>}
                   </div>
                 </li>
               ))}
             </ul>
 
             <div style={{ marginTop: 'auto', borderTop: `1px solid ${T.border}`, paddingTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 12, letterSpacing: '0.15em', color: T.gold, textTransform: 'uppercase' }}>
-              <span>제품 둘러보기 · Browse Products</span>
+              <span>{ko ? '제품 둘러보기' : 'Browse Products'}</span>
               <span style={{ transition: 'transform 0.3s' }}>→</span>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function ShopSelectorPage({ lang, navigate }) {
               border: `1px solid ${T.borderStrong}`,
               textTransform: 'uppercase',
             }}>
-              Featured · 추천
+              {ko ? '추천' : 'Featured'}
             </div>
 
             {/* Icon */}
@@ -171,9 +171,9 @@ export default function ShopSelectorPage({ lang, navigate }) {
             <h2 style={{ fontFamily: T.krDisplay, fontSize: 30, fontWeight: 600, color: T.textPrimary, marginBottom: 6, lineHeight: 1.25 }}>
               Aurum 골드 플랜
             </h2>
-            <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 17, color: T.gold, fontWeight: 400, marginBottom: 24 }}>
+            {!ko && <div style={{ fontFamily: T.serif, fontStyle: 'italic', fontSize: 17, color: T.gold, fontWeight: 400, marginBottom: 24 }}>
               Aurum Gold Plan — Automated Accumulation
-            </div>
+            </div>}
             <p style={{ color: T.textSecondary, fontSize: 14.5, lineHeight: 1.75, marginBottom: 28, fontFamily: T.sans }}>
               {ko
                 ? '월 20만원부터 시작하는 그램 단위 자동 적립. 토스뱅크 자동이체, 신용카드, 암호화폐로 입금하고 100g 도달 시 실물 바로 무료 전환합니다.'
@@ -189,15 +189,15 @@ export default function ShopSelectorPage({ lang, navigate }) {
                 <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, paddingBottom: 12, borderBottom: i < 2 ? '1px dashed rgba(197, 165, 114, 0.15)' : 'none', fontSize: 14, color: T.textPrimary, fontFamily: T.sans }}>
                   <span style={{ color: T.gold, fontFamily: T.mono, flexShrink: 0 }}>—</span>
                   <div>
-                    <div>{item.ko}</div>
-                    <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.textMuted, fontSize: 13, marginTop: 2 }}>{item.en}</div>
+                    <div>{ko ? item.ko : item.en}</div>
+                    {!ko && <div style={{ fontFamily: T.serif, fontStyle: 'italic', color: T.textMuted, fontSize: 13, marginTop: 2 }}>{item.ko}</div>}
                   </div>
                 </li>
               ))}
             </ul>
 
             <div style={{ marginTop: 'auto', borderTop: `1px solid rgba(197, 165, 114, 0.3)`, paddingTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: T.mono, fontSize: 12, letterSpacing: '0.15em', color: T.gold, textTransform: 'uppercase' }}>
-              <span>AGP 시작하기 · Begin Enrollment</span>
+              <span>{ko ? 'AGP 시작하기' : 'Begin Enrollment'}</span>
               <span>→</span>
             </div>
           </div>
