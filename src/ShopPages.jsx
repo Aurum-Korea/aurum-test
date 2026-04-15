@@ -55,7 +55,7 @@ function Home({ lang, navigate, prices, krwRate, currency, setCurrency }) {
   // Aurum prices remain USD-native and respect the currency toggle for display.
 
   // GOLD (1 oz unit)
-  const goldKR_krwPerOz = prices.gold * krwRate * (1 + KR_GOLD_PREMIUM);     // KRW per oz, 22% premium (matches ticker)
+  const goldKR_krwPerOz = prices.gold * krwRate * (1 + KR_GOLD_PREMIUM);     // KRW per oz, 20% premium (matches ticker)
   const goldAurum_usd = prices.gold * 1 * (1 + AURUM_GOLD_PREMIUM);          // USD per oz at Aurum
   const goldAurum_krw = goldAurum_usd * krwRate;
   const goldSavings_krw = goldKR_krwPerOz - goldAurum_krw;
@@ -64,7 +64,7 @@ function Home({ lang, navigate, prices, krwRate, currency, setCurrency }) {
 
   // SILVER (1 kg unit)
   const KG_RATIO = 1000 / 31.1035;
-  const silverKR_krwPerKg = (prices.silver || 32.15) * KG_RATIO * krwRate * (1 + KR_SILVER_PREMIUM);  // KRW per kg, 32% premium
+  const silverKR_krwPerKg = (prices.silver || 32.15) * KG_RATIO * krwRate * (1 + KR_SILVER_PREMIUM);  // KRW per kg, 30% premium
   const silverAurum_usd = (prices.silver || 32.15) * KG_RATIO * (1 + AURUM_SILVER_PREMIUM);
   const silverAurum_krw = silverAurum_usd * krwRate;
   const silverSavings_krw = silverKR_krwPerKg - silverAurum_krw;
