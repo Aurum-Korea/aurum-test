@@ -63,6 +63,13 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
           : '—',
         up: parseFloat(dailyChanges.krw || 0) >= 0
       },
+      {
+        label: lang === "ko" ? "한국금거래소 금/g" : "KR Gold/g",
+        price: Math.round(prices.gold * krwRate * 1.10 / 31.1035),
+        change: '—',
+        up: true,
+        isKrGold: true
+      },
     ];
     setItems(build());
     // No 3-second jitter — prices only update on 60s API refresh cycle
@@ -76,7 +83,7 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
             <span style={{ color: "#a09080", fontSize: isMobile ? 9 : 11 }}>{item.label}</span>
             {/* A-4: ₩ prefix for KRW */}
             <span style={{ color: "#c5a572", fontWeight: 600 }}>
-              {item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
+              {item.isKrGold ? `₩${item.price.toLocaleString('ko-KR')}/g` : item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
             </span>
             <span style={{ color: item.up ? "#4ade80" : "#f87171", fontSize: isMobile ? 8 : 10 }}>{item.change}</span>
           </div>
