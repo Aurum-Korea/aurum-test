@@ -96,7 +96,7 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
             <span style={{ color: "#a09080", fontSize: isMobile ? 9 : 11 }}>{item.label}</span>
             {/* A-4: ₩ prefix for KRW */}
             <span style={{ color: "#c5a572", fontWeight: 600 }}>
-              {item.isKrGold ? `₩${item.price.toLocaleString('ko-KR')}/돈` : item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
+              {item.isKrGold ? `₩${item.price.toLocaleString('ko-KR')}` : item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
             </span>
             {!item.noChange && <span style={{ color: item.up ? "#4ade80" : "#f87171", fontSize: isMobile ? 8 : 10 }}>{item.change}</span>}
           </div>
