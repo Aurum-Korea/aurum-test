@@ -182,7 +182,7 @@ function Home({ lang, navigate, prices, krwRate, currency, setCurrency }) {
               {/* Row 1: KOREAN PRICE — always shown in KRW/oz, mirrors ticker premium */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 0" }}>
                 <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: "#8a7d6b" }}>
-                  {lang === "ko" ? "한국금거래소 매도가 (부가세 포함)" : "한국실물금 1 돈 "}
+                  {lang === "ko" ? "한국금거래소 매도가 (부가세 포함)" : "한국금거래소 (VAT incl.)"}
                 </div>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 16 : 20, color: "#f87171", fontWeight: 600 }}>
                   {fKoreanKRW(goldKR_krwPerOz, "oz")}
