@@ -426,6 +426,70 @@ function WhyGold({ lang, navigate }) {
             ))}
           </div>
         </div>
+        {/* Task 8.1: Competition table */}
+        <div className="reveal" style={{ marginBottom: 48 }}>
+          <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#c5a572", letterSpacing: 4, textTransform: "uppercase", marginBottom: 8 }}>
+            {lang === "ko" ? "비교 분석" : "How We Compare"}
+          </div>
+          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 26 : 32, color: "#f5f0e8", fontWeight: 300, margin: "0 0 24px" }}>
+            {lang === "ko" ? "Aurum Korea vs 한국 금 투자 대안" : "Aurum Korea vs Korean Gold Alternatives"}
+          </h3>
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, minWidth: 560 }}>
+              <thead>
+                <tr style={{ background: "#141414" }}>
+                  {[
+                    { label: lang === "ko" ? "기능" : "Feature", align: "left", gold: false },
+                    { label: "Aurum Korea", align: "center", gold: true },
+                    { label: lang === "ko" ? "한국 금거래소" : "Korean Dealer", align: "center", gold: false },
+                    { label: "KRX 금 ETF", align: "center", gold: false },
+                    { label: lang === "ko" ? "일반 은행 예금" : "Bank Deposit", align: "center", gold: false },
+                  ].map((h, i) => (
+                    <th key={i} style={{ padding: "14px 18px", textAlign: h.align, fontFamily: "'Outfit',sans-serif", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", color: h.gold ? "#c5a572" : "#a09080", borderBottom: h.gold ? "2px solid #c5a572" : "1px solid #1e1e1e", background: h.gold ? "rgba(197,165,114,0.06)" : "transparent" }}>
+                      {h.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  [lang === "ko" ? "실물 소유" : "Physical ownership",     true,  true,  false, false],
+                  [lang === "ko" ? "국제 현물가" : "International spot price", true, false, false, false],
+                  [lang === "ko" ? "배분 보관 (혼장 없음)" : "Allocated (no commingling)", true, false, false, false],
+                  [lang === "ko" ? "월 적립 (₩20만~)" : "Monthly savings (₩200k+)", true, false, false, true],
+                  [lang === "ko" ? "부가세 없음" : "No VAT",               true,  false, false, true],
+                  [lang === "ko" ? "해외 FTZ 보관" : "Offshore FTZ storage", true, false, false, false],
+                  [lang === "ko" ? "실물 배송 가능" : "Physical delivery",  true,  true,  false, false],
+                  [lang === "ko" ? "금속 가격 연동" : "Metal price linked", true,  true,  true,  false],
+                ].map((row, ri) => {
+                  const label = row[0];
+                  const vals = row.slice(1);
+                  return (
+                    <tr key={ri}
+                      style={{ background: ri % 2 === 0 ? "#0a0a0a" : "#0d0d0d" }}
+                      onMouseEnter={e => e.currentTarget.style.background = "rgba(197,165,114,0.03)"}
+                      onMouseLeave={e => e.currentTarget.style.background = ri % 2 === 0 ? "#0a0a0a" : "#0d0d0d"}
+                    >
+                      <td style={{ padding: "13px 18px", fontFamily: "'Outfit',sans-serif", fontSize: 13, color: "#f5f0e8", borderBottom: "1px solid #1e1e1e" }}>{label}</td>
+                      {vals.map((val, ci) => (
+                        <td key={ci} style={{ padding: "13px 18px", textAlign: "center", borderBottom: "1px solid #1e1e1e", background: ci === 0 ? "rgba(197,165,114,0.03)" : "transparent" }}>
+                          {val ? (
+                            /* CSS checkmark — no emoji (Task 9.1) */
+                            <span style={{ display: "inline-block", width: 8, height: 14, borderRight: "2px solid #4ade80", borderBottom: "2px solid #4ade80", transform: "rotate(45deg)", marginTop: -4 }} />
+                          ) : (
+                            /* CSS dash */
+                            <span style={{ display: "inline-block", width: 16, height: 1.5, background: "rgba(100,100,100,0.3)", verticalAlign: "middle" }} />
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div style={{ ...fade(0.55), textAlign: "center" }}>
           <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 14, color: "#8a7d6b", marginBottom: 22 }}>{lang === "ko" ? "지금 바로 국제 현물가 기준으로 실물 금·은을 구매하세요" : "Buy physical gold and silver at international spot price today"}</p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexDirection: isMobile ? "column" : "row", maxWidth: 440, margin: "0 auto" }}>
@@ -679,6 +743,72 @@ function Storage({ lang, navigate }) {
         </div>
       </div>
 
+      {/* ── Task 7.1: SVG WORLD MAP with Singapore pulse + Korea route ── */}
+      <div className="reveal" style={{ padding: isMobile ? "40px 16px 0" : "56px 80px 0" }}>
+        <svg viewBox="0 0 900 420" width="100%" style={{ display: "block", maxWidth: 900, margin: "0 auto" }}>
+          {/* Background grid lines */}
+          <line x1="0" y1="105" x2="900" y2="105" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+          <line x1="0" y1="210" x2="900" y2="210" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+          <line x1="0" y1="315" x2="900" y2="315" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+          <line x1="225" y1="0" x2="225" y2="420" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+          <line x1="450" y1="0" x2="450" y2="420" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+          <line x1="675" y1="0" x2="675" y2="420" stroke="rgba(197,165,114,0.05)" strokeWidth="1"/>
+
+          {/* Simplified continent outlines (rough polygons) */}
+          {/* North America */}
+          <polygon points="60,60 180,50 220,80 210,160 160,200 100,180 60,130" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+          {/* South America */}
+          <polygon points="150,210 200,200 230,240 220,320 190,360 155,340 140,280" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+          {/* Europe */}
+          <polygon points="360,60 430,55 450,80 440,120 400,130 360,110" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+          {/* Africa */}
+          <polygon points="380,140 440,135 460,160 460,260 430,300 390,290 365,240 370,170" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+          {/* Asia (broad) */}
+          <polygon points="450,60 650,50 700,80 720,140 680,180 620,190 560,170 500,160 460,130" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+          {/* Australia */}
+          <polygon points="680,280 760,270 790,300 780,350 730,360 690,340 675,310" fill="rgba(197,165,114,0.07)" stroke="rgba(197,165,114,0.18)" strokeWidth="0.8"/>
+
+          {/* Korea region dot */}
+          <circle cx="720" cy="135" r="10" fill="rgba(197,165,114,0.12)" stroke="#c5a572" strokeWidth="1.5"/>
+          <text x="720" y="118" textAnchor="middle" fill="#c5a572" fontSize="10" fontFamily="'Outfit',sans-serif">대한민국</text>
+
+          {/* Singapore main dot */}
+          <circle cx="640" cy="248" r="7" fill="#c5a572" opacity="0.9"/>
+          {/* Singapore SMIL pulse ring 1 */}
+          <circle cx="640" cy="248" r="7" fill="none" stroke="#c5a572" strokeWidth="1.5" opacity="0.9">
+            <animate attributeName="r" values="7;22;7" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.9;0;0.9" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          {/* Singapore SMIL pulse ring 2 (offset) */}
+          <circle cx="640" cy="248" r="7" fill="none" stroke="#c5a572" strokeWidth="1" opacity="0.5">
+            <animate attributeName="r" values="7;30;7" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="640" y="268" textAnchor="middle" fill="#c5a572" fontSize="10" fontFamily="'Outfit',sans-serif">Singapore FTZ</text>
+          <text x="640" y="280" textAnchor="middle" fill="#a09080" fontSize="9" fontFamily="'Outfit',sans-serif">Malca-Amit</text>
+
+          {/* Route line Singapore → Korea (dashed, animated) */}
+          <path d="M 640 248 Q 685 190 720 135" fill="none" stroke="rgba(197,165,114,0.35)" strokeWidth="1.5" strokeDasharray="4 4" style={{ animation: "dash-travel 3s linear infinite" }}/>
+          {/* Arrow at Korea end */}
+          <circle cx="720" cy="135" r="3" fill="#c5a572" opacity="0.7"/>
+        </svg>
+
+        {/* Task 7.2: Stats strip below map */}
+        <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", gap: 0, padding: isMobile ? "24px 0 40px" : "28px 0 48px", borderBottom: "1px solid #1e1e1e", maxWidth: 900, margin: "0 auto" }}>
+          {[
+            { label: ko ? "보험 적용" : "Insurance", value: "Lloyd's of London" },
+            { label: ko ? "감사 주기" : "Audit Cycle", value: ko ? "매일" : "Daily" },
+            { label: ko ? "보관 방식" : "Storage Type", value: ko ? "배분 보관 (혼장 없음)" : "Allocated (no commingling)" },
+            { label: ko ? "출입 통제" : "Security", value: ko ? "24/7 보안" : "24/7 Armed" },
+          ].map((stat, i) => (
+            <div key={i} style={{ textAlign: "center", padding: isMobile ? "16px 10px" : "0 20px", flex: "1 1 140px" }}>
+              <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 9, color: "#c5a572", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>{stat.label}</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 11 : 13, color: "#f5f0e8", fontWeight: 600 }}>{stat.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ── LANDING: 고객님이 보유한 금, 고객님이 통제합니다 ── */}
       {section(
         <>
@@ -724,7 +854,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 보관 프로세스 ── */}
-      <div id="process" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="process" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("보관 프로세스", "How Storage Works")}
         {lead("주문 즉시 Malca-Amit 금고에 배정됩니다. 5단계, 5분 소요.", "Assigned to the Malca-Amit vault the moment you order. 5 steps, 5 minutes.")}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 20 }}>
@@ -744,7 +874,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 보관 혜택 ── */}
-      <div id="benefits" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="benefits" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("보관 혜택", "Storage Benefits")}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 16 }}>
           <BenefitTile icon="🔐" title={ko ? "완전 배분" : "완전 배분"} bullets={[
@@ -791,7 +921,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 금고 보안 체계 ── */}
-      <div id="security" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="security" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("금고 보안 체계", "Vault Security Architecture")}
         {lead("싱가포르 Le Freeport는 금융 언론에서 \"아시아의 포트 녹스(Fort Knox)\"로 불립니다.", "Singapore's Le Freeport has been called \"Asia's Fort Knox\" by the financial press.")}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: 14, marginBottom: 32 }}>
@@ -839,7 +969,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 소유권과 분리 보관 원칙 ── */}
-      <div id="ownership" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="ownership" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("소유권과 분리 보관 원칙", "Your Bullion Is Yours — Legally and Physically")}
         {[
           {
@@ -863,7 +993,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 보관 수수료 ── */}
-      <div id="fees" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="fees" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("보관 수수료", "Storage Fee Schedule")}
         <div style={{ overflowX: "auto", marginBottom: 24 }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 400 }}>
@@ -929,7 +1059,7 @@ function Storage({ lang, navigate }) {
       </div>
 
       {/* ── SUB-SECTION: 규제 및 컴플라이언스 ── */}
-      <div id="compliance" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
+      <div id="compliance" className="reveal" style={{ padding: isMobile ? "48px 20px" : "72px 80px", borderBottom: `1px solid ${T.border}` }}>
         {h2("규제 및 컴플라이언스", "Compliance & Regulation")}
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {[
