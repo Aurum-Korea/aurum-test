@@ -289,7 +289,7 @@ function useLivePrices() {
       setPriceError("가격 로딩 실패 — 최근 데이터 표시 중");
     }
   }, []);
-  useEffect(() => { fetch_(); const t = setInterval(fetch_, 60_000); return () => clearInterval(t); }, [fetch_]);
+  useEffect(() => { fetch_(); const t = setInterval(fetch_, 10_000); return () => clearInterval(t); }, [fetch_]);
   return { prices, krwRate, priceError, dailyChanges };
 }
 
