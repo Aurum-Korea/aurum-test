@@ -1,92 +1,156 @@
 import { useState, useEffect } from 'react';
 
-// G-3: 2x3 grid layout for how AGP works (5 items)
+// ─── Inline FAQ Accordion (Task 6.3) ──────────────────────────────────────────
+function FaqAccordion({ items }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <div>
+      {items.map((item, i) => (
+        <div key={i} style={{ borderBottom: '1px solid rgba(197,165,114,0.15)' }}>
+          <button
+            onClick={() => setOpen(open === i ? null : i)}
+            style={{
+              width: '100%', textAlign: 'left', background: 'none', border: 'none',
+              padding: '20px 0', cursor: 'pointer', display: 'flex',
+              justifyContent: 'space-between', alignItems: 'center', gap: 16,
+            }}
+          >
+            <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 15, color: open === i ? '#c5a572' : '#f5f0e8', fontWeight: open === i ? 600 : 400 }}>
+              {item.q}
+            </span>
+            <span style={{ color: '#c5a572', fontSize: 20, flexShrink: 0, transform: open === i ? 'rotate(45deg)' : 'none', transition: 'transform 0.3s ease', lineHeight: 1 }}>+</span>
+          </button>
+          <div style={{ maxHeight: open === i ? '400px' : '0', overflow: 'hidden', transition: 'max-height 0.35s ease' }}>
+            <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 15, color: '#a09080', lineHeight: 1.75, paddingBottom: 20, margin: 0 }}>
+              {item.a}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Step data with meta key/value grids ──────────────────────────────────────
 const STEPS = [
   {
-    icon: '✍️',
-    krTitle: '가입',
-    desc: '10분 내 온라인으로 가입하고 한국 표준 KYC (실명 확인, 휴대폰 인증)를 완료합니다. 모든 절차는 국내 금융기관 방식에 맞춰 설계되었습니다.',
+    num: '01',
+    title: '월 적립 설정',
+    subtitle: '매월 자동 이체로 시작',
+    body: '매달 지정한 날짜에 설정 금액이 자동 이체됩니다. 최소 월 20만원부터 시작할 수 있습니다.',
+    meta: [
+      { key: '최소 금액', value: '₩200,000/월' },
+      { key: '이체일', value: '월 1~28일 선택' },
+      { key: '결제', value: 'TossPay/KakaoPay/이체' },
+    ],
   },
   {
-    icon: '💰',
-    krTitle: '입금',
-    desc: '토스뱅크·한국 주요 은행에서 일회 또는 월간 자동이체. 신용카드 및 암호화폐 (USDT·USDC) 입금도 지원합니다. 최소 월 20만원부터.',
+    num: '02',
+    title: '실물 금 매입',
+    subtitle: '국제 현물가 기준 즉시 매입',
+    body: '이체 완료 후 당일 국제 현물가 기준으로 실물 금 또는 은을 매입합니다.',
+    meta: [
+      { key: '매입 기준', value: '국제 현물가 + 8%' },
+      { key: '매입 시점', value: '이체 당일' },
+      { key: '최소 단위', value: '0.01g' },
+    ],
   },
   {
-    icon: '⚖️',
-    krTitle: '그램 적립',
-    desc: '입금액이 실시간 국제 현물가 + 2.0% 프리미엄으로 AGP 그램으로 전환됩니다. 국내 실물 프리미엄을 피하고 깔끔한 국제 시세에 접근하세요.',
+    num: '03',
+    title: '싱가포르 금고 배분 보관',
+    subtitle: 'Malca-Amit FTZ 귀하 명의 등록',
+    body: '매입된 금속은 싱가포르 자유무역지대 Malca-Amit 금고에 고객 명의로 배분 보관됩니다.',
+    meta: [
+      { key: '금고', value: 'Malca-Amit Singapore' },
+      { key: '지역', value: '싱가포르 FTZ' },
+      { key: '보험', value: "Lloyd's of London" },
+    ],
   },
   {
-    icon: '📊',
-    krTitle: '관리',
-    desc: '대시보드에서 보유 그램, KRW 가치, 손익, 보관료, 전환 기준 진행률을 실시간으로 확인하세요. 매일 백킹 리포트 공개.',
+    num: '04',
+    title: '보고서 & 투명성',
+    subtitle: '매일 업데이트되는 적립 현황',
+    body: '대시보드에서 매일 적립량, 현재 시세 기준 자산 가치, 보관 증빙을 확인할 수 있습니다.',
+    meta: [
+      { key: '업데이트', value: '매일' },
+      { key: '증빙', value: '감사 추적 제공' },
+      { key: '접근', value: '웹/앱 대시보드' },
+    ],
   },
   {
-    icon: '🥇',
-    krTitle: '전환',
-    desc: '100g (또는 1,000g 기준) 도달 시 LBMA 승인 실물 바로 무료 전환. 또는 언제든 국제 현물가로 매도 후 KRW를 한국 은행 계좌로 수령.',
+    num: '05',
+    title: '인출 또는 배송',
+    subtitle: '언제든 실물로 출금 가능',
+    body: '보관 중인 실물 금속은 언제든 한국으로 배송 신청하거나 현금화할 수 있습니다.',
+    meta: [
+      { key: '배송', value: '한국 문 앞까지' },
+      { key: '처리', value: '영업일 5~7일' },
+      { key: '출금', value: '시세 기준 현금화 가능' },
+    ],
   },
 ];
 
-export default function AGPIntroPage({ lang, navigate }) {
-  const ko = lang === 'ko';
-  const [step, setStep] = useState(0);
+// ─── FAQ items for bottom of intro page ───────────────────────────────────────
+const FAQ_ITEMS = [
+  { q: '월 납입 금액을 변경하거나 해지할 수 있나요?', a: '네. 언제든지 대시보드에서 월 납입 금액을 변경하거나 플랜을 일시 중지, 해지할 수 있습니다. 해지 시 보관 중인 실물 금속은 그대로 귀하의 소유입니다.' },
+  { q: '최소 가입 금액과 최대 납입 한도는 어떻게 되나요?', a: '최소 월 20만원부터 시작하며, 최대 한도는 없습니다. 티어별 혜택이 달라지며, 월 100만원 이상은 프리미엄 티어로 분류됩니다.' },
+  { q: '적립한 금은 실제로 존재하는 실물인가요?', a: '네. 귀하의 AGP 잔고는 싱가포르 Malca-Amit 금고에 실물로 보관된 금속에 1:1 연동됩니다. 혼장이 없으며, 매일 감사 보고서를 제공합니다.' },
+  { q: '한국에서 세금 신고가 필요한가요?', a: '현재 해외 실물 귀금속 보유는 한국 내 과세 대상이 아닙니다. 다만 인출 또는 매도 시점에 따라 양도소득세가 적용될 수 있으므로, 세무사와 상담을 권장합니다.' },
+  { q: '실물 배송을 요청하면 얼마나 걸리나요?', a: '배송 요청 후 영업일 기준 5~7일 내에 한국 주소로 배송됩니다. 배송비 및 보험료는 주문 시 안내됩니다.' },
+];
 
+const T = {
+  bg: '#0a0a0a',
+  panel: '#141414',
+  gold: '#C5A572',
+  goldBright: '#E3C187',
+  textPrimary: '#f5f0e8',
+  textSecondary: '#a09080',
+  textMuted: '#6b6b6b',
+  border: 'rgba(197,165,114,0.2)',
+  borderStrong: 'rgba(197,165,114,0.5)',
+  serif: "'Cormorant Garamond', serif",
+  sans: "'Outfit', 'Noto Sans KR', sans-serif",
+  mono: "'JetBrains Mono', monospace",
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// AGP INTRO PAGE — Task 6.1: Vertical expand-collapse step panel
+// ═══════════════════════════════════════════════════════════════════════════════
+export default function AGPIntroPage({ lang, navigate }) {
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Task 6.4: Preserve keyboard navigation
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'ArrowLeft') handlePrev();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        setActiveStep(s => Math.min(s + 1, STEPS.length - 1));
+      }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        setActiveStep(s => Math.max(s - 1, 0));
+      }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [step]);
-
-  const handleNext = () => {
-    if (step < STEPS.length - 1) {
-      setStep(s => s + 1);
-    } else {
-      navigate('agp-enroll');
-    }
-  };
-  const handlePrev = () => {
-    if (step > 0) setStep(s => s - 1);
-  };
-
-  const T = {
-    bg: '#0a0a0a',
-    panel: '#141414',
-    gold: '#C5A572',
-    goldBright: '#E3C187',
-    goldDim: '#8a7d6b',
-    textPrimary: '#f5f0e8',
-    textSecondary: '#a09080',
-    textMuted: '#6b6b6b',
-    border: 'rgba(197, 165, 114, 0.2)',
-    borderStrong: 'rgba(197, 165, 114, 0.5)',
-    serif: "'Cormorant Garamond', serif",
-    sans: "'Outfit', 'Noto Sans KR', sans-serif",
-    mono: "'JetBrains Mono', monospace",
-  };
-
-  const current = STEPS[step];
-  const isLast = step === STEPS.length - 1;
+  }, []);
 
   return (
-    <div style={{ background: T.bg, minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 20px' }}>
-      <div style={{ maxWidth: 880, width: '100%' }}>
+    <div style={{ background: T.bg, minHeight: '90vh', padding: '60px 20px 80px' }}>
+      <div style={{ maxWidth: 780, margin: '0 auto' }}>
 
-        {/* Top row: step counter + SKIP */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
-          <span style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '0.2em', color: T.goldDim }}>
-            <span style={{ color: T.gold, fontWeight: 500 }}>{String(step + 1).padStart(2, '0')}</span>
-            {' / '}
-            <span>05</span>
-          </span>
-          {/* G-1/G-2: Korean only, no English */}
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 48 }}>
+          <div>
+            <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '0.25em', color: T.gold, textTransform: 'uppercase', marginBottom: 8 }}>
+              AGP는 이렇게 작동합니다
+            </div>
+            <h1 style={{ fontFamily: T.serif, fontSize: 'clamp(28px,4vw,40px)', fontWeight: 300, color: T.textPrimary, margin: 0 }}>
+              5단계 가입 안내
+            </h1>
+          </div>
           <button
             onClick={() => navigate('agp-enroll')}
-            style={{ background: 'none', border: 'none', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.15em', color: T.textMuted, textTransform: 'uppercase', cursor: 'pointer', transition: 'color 0.3s' }}
+            style={{ background: 'none', border: 'none', fontFamily: T.mono, fontSize: 11, letterSpacing: '0.12em', color: T.textMuted, textTransform: 'uppercase', cursor: 'pointer', transition: 'color 0.2s', whiteSpace: 'nowrap' }}
             onMouseEnter={e => e.currentTarget.style.color = T.gold}
             onMouseLeave={e => e.currentTarget.style.color = T.textMuted}
           >
@@ -94,199 +158,114 @@ export default function AGPIntroPage({ lang, navigate }) {
           </button>
         </div>
 
-        {/* Main card */}
-        <div style={{
-          background: 'linear-gradient(180deg, #141414 0%, #0a0a0a 100%)',
-          border: `1px solid ${T.border}`,
-          padding: 'clamp(40px, 8vw, 80px) clamp(24px, 6vw, 60px)',
-          minHeight: 480,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          {/* Ambient glow */}
-          <div style={{
-            position: 'absolute', top: -200, left: '50%', transform: 'translateX(-50%)',
-            width: 600, height: 400,
-            background: 'radial-gradient(ellipse at center, rgba(197, 165, 114, 0.08), transparent 60%)',
-            pointerEvents: 'none',
-          }} />
+        {/* Task 6.1: Vertical step panels */}
+        <div style={{ marginBottom: 56 }}>
+          {STEPS.map((step, i) => {
+            const isActive = activeStep === i;
+            return (
+              <div key={i} style={{ borderBottom: `1px solid ${T.border}` }}>
+                {/* Step header row — always visible, clickable */}
+                <div
+                  onClick={() => setActiveStep(isActive ? -1 : i)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '22px 0', cursor: 'pointer' }}
+                >
+                  {/* Step number circle */}
+                  <div style={{
+                    width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
+                    background: isActive ? T.gold : 'transparent',
+                    border: isActive ? `2px solid ${T.gold}` : '1px solid #282828',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: T.mono, fontSize: 11, fontWeight: 700,
+                    color: isActive ? '#0a0a0a' : '#555',
+                    transition: 'all 0.3s ease',
+                  }}>
+                    {step.num}
+                  </div>
+                  {/* Title + subtitle */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: T.serif, fontSize: 20, color: isActive ? T.textPrimary : '#8a8070', fontWeight: 400, lineHeight: 1.2, transition: 'color 0.3s' }}>
+                      {step.title}
+                    </div>
+                    {!isActive && (
+                      <div style={{ fontFamily: T.sans, fontSize: 12, color: T.textMuted, marginTop: 2 }}>
+                        {step.subtitle}
+                      </div>
+                    )}
+                  </div>
+                  {/* Chevron */}
+                  <div style={{ color: T.gold, fontSize: 16, transform: isActive ? 'rotate(90deg)' : 'none', transition: 'transform 0.3s ease', flexShrink: 0 }}>
+                    ›
+                  </div>
+                </div>
 
-          {/* Eyebrow — G: Korean only */}
-          <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.28em', color: T.gold, textTransform: 'uppercase', marginBottom: 32, position: 'relative' }}>
-            AGP는 이렇게 작동합니다
-          </div>
-
-          {/* Icon */}
-          <div style={{ fontSize: 52, marginBottom: 32, filter: 'drop-shadow(0 0 40px rgba(197, 165, 114, 0.3))', position: 'relative' }}>
-            {current.icon}
-          </div>
-
-          {/* Korean title only — G: Remove English subtitle */}
-          <h2 style={{
-            fontFamily: T.serif,
-            fontSize: 'clamp(36px, 4.5vw, 52px)',
-            fontWeight: 400,
-            color: T.textPrimary,
-            marginBottom: 32,
-            letterSpacing: '-0.01em',
-            position: 'relative',
-          }}>
-            {current.krTitle}
-          </h2>
-
-          {/* Description */}
-          <p style={{ maxWidth: 560, color: T.textSecondary, fontSize: 16, lineHeight: 1.75, fontFamily: T.sans, position: 'relative' }}>
-            {current.desc}
-          </p>
+                {/* Task 6.1: Detail panel — animated max-height */}
+                <div style={{ maxHeight: isActive ? '400px' : '0', overflow: 'hidden', transition: 'max-height 0.4s ease' }}>
+                  <div style={{ padding: '0 0 28px 52px' }}>
+                    {/* Subtitle when active */}
+                    <div style={{ fontFamily: T.sans, fontSize: 12, color: T.gold, letterSpacing: '0.08em', marginBottom: 12, textTransform: 'uppercase' }}>
+                      {step.subtitle}
+                    </div>
+                    {/* Body text */}
+                    <p style={{ fontFamily: T.sans, fontSize: 15, color: T.textSecondary, lineHeight: 1.75, margin: '0 0 20px' }}>
+                      {step.body}
+                    </p>
+                    {/* Meta grid */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+                      {step.meta.map((m, j) => (
+                        <div key={j} style={{ background: 'rgba(197,165,114,0.04)', border: '1px solid rgba(197,165,114,0.12)', borderRadius: 6, padding: '10px 12px' }}>
+                          <div style={{ fontFamily: T.sans, fontSize: 9, color: T.gold, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>{m.key}</div>
+                          <div style={{ fontFamily: T.mono, fontSize: 12, color: T.textPrimary }}>{m.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Navigation row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 32, gap: 16 }}>
-          {/* Previous — Korean only */}
-          <button
-            onClick={handlePrev}
-            disabled={step === 0}
-            style={{
-              background: 'transparent',
-              border: `1px solid ${T.borderStrong}`,
-              color: step === 0 ? T.textMuted : T.textPrimary,
-              padding: '14px 28px',
-              fontFamily: T.sans,
-              fontSize: 14,
-              letterSpacing: '0.04em',
-              cursor: step === 0 ? 'not-allowed' : 'pointer',
-              opacity: step === 0 ? 0.35 : 1,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              transition: 'all 0.3s',
-            }}
-          >
-            ← 이전
-          </button>
+        {/* Task 6.2: Navigation dots (circular, replaces progress bars) */}
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', alignItems: 'center', marginBottom: 48 }}>
+          {STEPS.map((_, i) => (
+            <div
+              key={i}
+              onClick={() => setActiveStep(i)}
+              style={{
+                width: 8, height: 8, borderRadius: '50%',
+                background: activeStep === i ? T.gold : '#282828',
+                border: activeStep === i ? `1px solid ${T.gold}` : '1px solid #333',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                transform: activeStep === i ? 'scale(1.3)' : 'scale(1)',
+              }}
+            />
+          ))}
+        </div>
 
-          {/* Progress dots */}
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            {STEPS.map((_, i) => (
-              <div
-                key={i}
-                onClick={() => setStep(i)}
-                style={{
-                  width: 32,
-                  height: 2,
-                  background: i === step ? T.gold : i < step ? T.goldDim : T.border,
-                  transition: 'all 0.4s',
-                  cursor: 'pointer',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Next — Korean only */}
+        {/* Task 6.4: Preserve original CTA buttons */}
+        <div style={{ display: 'flex', gap: 12, flexDirection: 'column', alignItems: 'stretch', marginBottom: 64 }}>
           <button
-            onClick={handleNext}
-            style={{
-              background: T.gold,
-              color: '#0a0a0a',
-              border: `1px solid ${T.gold}`,
-              padding: '14px 28px',
-              fontFamily: T.sans,
-              fontSize: 14,
-              fontWeight: 500,
-              letterSpacing: '0.04em',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              transition: 'all 0.3s',
-            }}
+            onClick={() => navigate('agp-enroll')}
+            style={{ background: T.gold, color: '#0a0a0a', border: `1px solid ${T.gold}`, padding: '16px', fontFamily: T.sans, fontSize: 16, fontWeight: 700, cursor: 'pointer', width: '100%', borderRadius: 4, transition: 'all 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.background = T.goldBright}
             onMouseLeave={e => e.currentTarget.style.background = T.gold}
           >
-            {isLast ? '가입 신청 시작' : '다음'}
-          </button>
-        </div>
-
-        {/* G-3: 2x3 grid showing all 5 steps at a glance */}
-        <div style={{ marginTop: 56, borderTop: `1px solid ${T.border}`, paddingTop: 40 }}>
-          <div style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '0.28em', color: T.gold, textTransform: 'uppercase', marginBottom: 24, textAlign: 'center' }}>
-            AGP 전체 단계
-          </div>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 16,
-          }}>
-            {STEPS.map((s, i) => (
-              <div
-                key={i}
-                onClick={() => setStep(i)}
-                style={{
-                  background: step === i ? 'rgba(197, 165, 114, 0.08)' : '#141414',
-                  border: `1px solid ${step === i ? T.borderStrong : T.border}`,
-                  padding: '18px 20px',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  ...(i === 4 ? { gridColumn: '1 / -1', maxWidth: '50%', margin: '0 auto', width: '100%' } : {}),
-                }}
-              >
-                <span style={{ fontSize: 24, flexShrink: 0 }}>{s.icon}</span>
-                <div>
-                  <div style={{ fontFamily: T.mono, fontSize: 10, color: T.gold, marginBottom: 4 }}>{String(i + 1).padStart(2, '0')}</div>
-                  <div style={{ fontFamily: T.sans, fontSize: 14, color: step === i ? T.textPrimary : T.textSecondary, fontWeight: step === i ? 600 : 400 }}>{s.krTitle}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* G-1: CTA bars - equal width, Korean only */}
-        <div style={{ marginTop: 40, display: 'flex', gap: 14, flexDirection: 'column', alignItems: 'stretch' }}>
-          {/* F-8: AGP 가입하기 Gold bar - links to AGP Sign Up Page */}
-          <button
-            onClick={() => navigate('agp-enroll')}
-            style={{
-              background: T.gold,
-              color: '#0a0a0a',
-              border: `1px solid ${T.gold}`,
-              padding: '16px',
-              fontFamily: T.sans,
-              fontSize: 16,
-              fontWeight: 700,
-              letterSpacing: '0.03em',
-              cursor: 'pointer',
-              width: '100%',
-              transition: 'all 0.3s',
-            }}
-          >
-            🚀 AGP 가입하기
+            AGP 가입하기
           </button>
           <button
             onClick={() => navigate('agp-report')}
-            style={{
-              background: 'transparent',
-              color: T.textPrimary,
-              border: `1px solid ${T.borderStrong}`,
-              padding: '16px',
-              fontFamily: T.sans,
-              fontSize: 16,
-              fontWeight: 500,
-              letterSpacing: '0.03em',
-              cursor: 'pointer',
-              width: '100%',
-              transition: 'all 0.3s',
-            }}
+            style={{ background: 'transparent', color: T.textPrimary, border: `1px solid ${T.borderStrong}`, padding: '16px', fontFamily: T.sans, fontSize: 16, fontWeight: 500, cursor: 'pointer', width: '100%', borderRadius: 4, transition: 'all 0.2s' }}
           >
-            📊 오늘의 백업 리포트
+            오늘의 백업 리포트
           </button>
+        </div>
+
+        {/* Task 6.3: AGP FAQ at bottom */}
+        <div>
+          <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '0.25em', color: T.gold, textTransform: 'uppercase', marginBottom: 6 }}>자주 묻는 질문</div>
+          <h2 style={{ fontFamily: T.serif, fontSize: 'clamp(24px,3vw,32px)', fontWeight: 300, color: T.textPrimary, margin: '0 0 28px' }}>AGP FAQ</h2>
+          <FaqAccordion items={FAQ_ITEMS} />
         </div>
       </div>
     </div>
