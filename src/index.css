@@ -450,3 +450,224 @@ div[style*="display: flex"][style*="gap: 14px"][style*="flexWrap: wrap"] {
 
 /* ─── Keep desktop zoom from Phase 4 ─── */
 /* (zoom: 1.15 already set in Phase 4 above) */
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PHASE 7 — REDESIGN PASS (2026-04-16): Reveal, Typography, Components, Motion
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Task 1.1: Reveal entrance animation ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Task 1.2: Ticker marquee animation ─── */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  display: flex;
+  animation: ticker-scroll 40s linear infinite;
+  width: max-content;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Task 1.3: Typography utility classes ─── */
+.eyebrow {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 10px !important;
+  color: #c5a572 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 12px !important;
+  display: block !important;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: clamp(32px, 5vw, 52px) !important;
+  font-weight: 300 !important;
+  color: #f5f0e8 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 12px !important;
+}
+
+.body-text {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 15px !important;
+  color: #a09080 !important;
+  line-height: 1.75 !important;
+  max-width: 640px;
+}
+
+/* data-value: override the 18px JetBrains floor from Phase 6 for intentionally small labels */
+.data-value {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px !important;
+  color: #f5f0e8 !important;
+  /* Override Phase 6 H-01 JetBrains floor specifically for these utility labels */
+}
+.data-value-sm {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  color: #f5f0e8 !important;
+}
+
+/* ─── Task 1.4: Button component classes ─── */
+.btn-gold {
+  background: linear-gradient(135deg, #c5a572, #8a6914) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 14px 28px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.btn-gold:hover:not(:disabled) {
+  opacity: 0.88 !important;
+}
+
+.btn-ghost {
+  background: transparent !important;
+  color: #a09080;
+  border: 1px solid #282828;
+  padding: 14px 28px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.btn-ghost:hover:not(:disabled) {
+  border-color: rgba(197,165,114,0.4) !important;
+  color: #c5a572 !important;
+}
+
+/* ─── Task 1.5: Card base class ─── */
+.card {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.card:hover {
+  border-color: rgba(197,165,114,0.35) !important;
+  transform: translateY(-3px);
+}
+
+/* ─── Task 1.6: Pillar card hover underline ─── */
+.pillar-card {
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 28px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+.pillar-card:hover {
+  border-color: rgba(197,165,114,0.4) !important;
+  transform: translateY(-4px);
+}
+.pillar-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #f5f0e8;
+  margin: 12px 0 8px;
+  display: inline-block;
+}
+.pillar-title::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px;
+  background: #c5a572;
+  transition: width 0.3s ease;
+  margin-top: 4px;
+}
+.pillar-card:hover .pillar-title::after {
+  width: 100%;
+}
+
+/* ─── Task 1.7: Grain overlay ─── */
+/* NOTE: If aurum-motion.css already defines body::before grain, remove duplicate there */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ─── Task 1.8: Pulse-dot (renamed to avoid collision with existing @keyframes pulse) ─── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(1.8); }
+}
+
+/* Route line dash travel animation */
+@keyframes dash-travel {
+  to { stroke-dashoffset: -24; }
+}
+
+/* ─── Task 1.9: Section padding rhythm ─── */
+.page-section {
+  padding: 80px 80px;
+}
+@media (max-width: 768px) {
+  .page-section {
+    padding: 40px 16px;
+  }
+}
+
+/* ─── Task 1.10: Range input accent ─── */
+input[type="range"] {
+  accent-color: #c5a572;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* ─── Savings calculator output ─── */
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+.calc-row:last-child {
+  border-bottom: none;
+}
+
+/* ─── Metrics strip counter ─── */
+.metric-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 300;
+  color: #c5a572;
+  line-height: 1;
+}
+.metric-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a09080;
+  margin-top: 8px;
+}
