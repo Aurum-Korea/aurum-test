@@ -88,19 +88,45 @@ function Ticker({ lang, prices, krwRate, dailyChanges }) {
     // No 3-second jitter — prices only update on 60s API refresh cycle
   }, [lang, prices, krwRate, dailyChanges]);
 
-  return (
-    <div style={{ background: "linear-gradient(90deg,#0d0d0d,#141414,#0d0d0d)", borderBottom: "1px solid #1e1e1e", padding: isMobile ? "7px 12px" : "9px 0" }}>
-      <div style={{ display: "flex", justifyContent: isMobile ? "space-between" : "center", gap: isMobile ? 6 : 52, fontFamily: "'JetBrains Mono',monospace", fontSize: isMobile ? 10 : 12, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+  const TickerItem = ({ item }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 32px", borderRight: "1px solid rgba(197,165,114,0.12)", whiteSpace: "nowrap", height: 36 }}>
+      <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 10, color: "#a09080", letterSpacing: 2, textTransform: "uppercase" }}>{item.label}</span>
+      <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: "#f5f0e8", fontWeight: 600 }}>
+        {item.isKrGold ? `₩${item.price.toLocaleString('ko-KR')}` : item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
+      </span>
+      {!item.noChange && item.change !== '—' && (
+        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: item.up ? "#4ade80" : "#f87171" }}>{item.change}</span>
+      )}
+    </div>
+  );
+
+  // Mobile: static flex row (marquee impractical at small widths with few items)
+  if (isMobile) return (
+    <div style={{ background: "#0d0d0d", borderBottom: "1px solid #1e1e1e", padding: "7px 12px", overflow: "hidden" }}>
+      <div style={{ display: "flex", gap: 6, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         {items.map((item, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
-            <span style={{ color: "#a09080", fontSize: isMobile ? 9 : 11 }}>{item.label}</span>
-            {/* A-4: ₩ prefix for KRW */}
-            <span style={{ color: "#c5a572", fontWeight: 600 }}>
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap", flexShrink: 0 }}>
+            <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: 9, color: "#a09080", textTransform: "uppercase", letterSpacing: 1 }}>{item.label}</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: "#c5a572", fontWeight: 600 }}>
               {item.isKrGold ? `₩${item.price.toLocaleString('ko-KR')}` : item.label === "USD/KRW" ? `₩${item.price.toFixed(1)}` : `$${item.price.toFixed(2)}`}
             </span>
-            {!item.noChange && <span style={{ color: item.up ? "#4ade80" : "#f87171", fontSize: isMobile ? 8 : 10 }}>{item.change}</span>}
+            {!item.noChange && item.change !== '—' && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 8, color: item.up ? "#4ade80" : "#f87171" }}>{item.change}</span>}
           </div>
         ))}
+      </div>
+    </div>
+  );
+
+  // Desktop: CSS marquee with duplicated items for seamless loop
+  return (
+    <div style={{ background: "#0d0d0d", borderBottom: "1px solid #1e1e1e", height: 36, overflow: "hidden", position: "relative" }}>
+      {/* Gold accent left border */}
+      <div style={{ position: "absolute", left: 0, top: 0, width: 2, height: "100%", background: "linear-gradient(180deg,#c5a572,#8a6914)", zIndex: 1 }} />
+      <div className="ticker-track">
+        {/* First set */}
+        {items.map((item, i) => <TickerItem key={`a-${i}`} item={item} />)}
+        {/* Duplicate set for seamless loop */}
+        {items.map((item, i) => <TickerItem key={`b-${i}`} item={item} />)}
       </div>
     </div>
   );
@@ -113,6 +139,8 @@ function Nav({ page, navigate, lang, setLang, user, setUser, setShowLogin, cart 
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [isNarrow, setIsNarrow] = useState(false);
+  // Task 3.2: scroll-aware backdrop
+  const [scrolled, setScrolled] = useState(false);
 
   // B-1: Detect intermediate width (tablet zone 768–1100px)
   useEffect(() => {
@@ -123,6 +151,13 @@ function Nav({ page, navigate, lang, setLang, user, setUser, setShowLogin, cart 
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Task 3.2: scroll listener for backdrop deepening
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
@@ -165,7 +200,7 @@ function Nav({ page, navigate, lang, setLang, user, setUser, setShowLogin, cart 
 
   if (isMobile) return (
     <>
-      <nav style={{ background: "#0a0a0a", borderBottom: "1px solid #1e1e1e", padding: "0 16px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 56, position: "sticky", top: 0, zIndex: 200 }}>
+      <nav style={{ background: scrolled ? "rgba(10,10,10,0.97)" : "rgba(10,10,10,0.85)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderBottom: scrolled ? "1px solid rgba(197,165,114,0.2)" : "1px solid #1e1e1e", padding: "0 16px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 56, position: "sticky", top: 0, zIndex: 200, transition: "all 0.3s ease" }}>
         <Logo />
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <CartBtn />
@@ -196,7 +231,8 @@ function Nav({ page, navigate, lang, setLang, user, setUser, setShowLogin, cart 
   const navGap = isNarrow ? 12 : 22;
 
   return (
-    <nav style={{ background: "#0a0a0a", borderBottom: "1px solid #1e1e1e", padding: isNarrow ? "0 20px" : "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 62, position: "sticky", top: 0, zIndex: 200, overflow: "hidden" }}>
+    // Task 3.2: scroll-aware backdrop blur on desktop nav
+    <nav style={{ background: scrolled ? "rgba(10,10,10,0.95)" : "rgba(10,10,10,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderBottom: scrolled ? "1px solid rgba(197,165,114,0.2)" : "1px solid transparent", padding: isNarrow ? "0 20px" : "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 62, position: "sticky", top: 0, zIndex: 200, overflow: "hidden", transition: "all 0.3s ease" }}>
       <Logo />
       <div style={{ display: "flex", gap: navGap, alignItems: "center", flexWrap: "nowrap", overflow: "hidden" }}>
         {links.map(x => (
@@ -209,7 +245,23 @@ function Nav({ page, navigate, lang, setLang, user, setUser, setShowLogin, cart 
           <button onClick={() => navigate("orders")} style={{ background: "none", border: "none", color: "#a09080", cursor: "pointer", fontSize: isNarrow ? 11 : 12, fontFamily: "'Outfit',sans-serif", whiteSpace: "nowrap" }}>{lang === "ko" ? "주문내역" : "Orders"}</button>
           <button onClick={() => navigate("account")} style={{ background: "#141414", border: "1px solid #282828", color: "#c5a572", padding: isNarrow ? "5px 8px" : "5px 12px", borderRadius: 4, fontSize: isNarrow ? 11 : 12, cursor: "pointer", fontFamily: "'Outfit',sans-serif", whiteSpace: "nowrap" }}>{user.name ? user.name.slice(0, 8) : user.email.split("@")[0]}</button>
         </>}
-        {!user && <button onClick={() => setShowLogin(true)} style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#ffffff", padding: isNarrow ? "7px 14px" : "7px 20px", borderRadius: 4, fontSize: isNarrow ? 12 : 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>{lang === "ko" ? "로그인" : "Login"}</button>}
+        {/* Task 3.3: Always-visible 지금 시작 CTA (navigates to shop-selector) */}
+        {!user && (
+          <>
+            <button
+              onClick={() => navigate("shop-selector")}
+              style={{ background: "linear-gradient(135deg,#c5a572,#8a6914)", border: "none", color: "#ffffff", padding: isNarrow ? "7px 12px" : "7px 18px", borderRadius: 4, fontSize: isNarrow ? 11 : 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", letterSpacing: 0.5, fontFamily: "'Outfit',sans-serif" }}
+            >
+              {lang === "ko" ? "지금 시작" : "Get Started"}
+            </button>
+            <button
+              onClick={() => setShowLogin(true)}
+              style={{ background: "transparent", border: "1px solid #282828", color: "#a09080", padding: isNarrow ? "7px 10px" : "7px 16px", borderRadius: 4, fontSize: isNarrow ? 11 : 12, cursor: "pointer", whiteSpace: "nowrap", fontFamily: "'Outfit',sans-serif" }}
+            >
+              {lang === "ko" ? "로그인" : "Login"}
+            </button>
+          </>
+        )}
         <button onClick={() => setLang(lang === "en" ? "ko" : "en")} style={{ background: "none", border: "1px solid #282828", color: "#a09080", padding: "4px 10px", borderRadius: 4, fontSize: 12, cursor: "pointer", flexShrink: 0 }}>{lang === "en" ? "한국어" : "EN"}</button>
       </div>
     </nav>
