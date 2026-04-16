@@ -474,6 +474,42 @@ export default function App() {
     return cleanup;
   }, [page]);
 
+  // Task 2.1: Scroll progress bar
+  useEffect(() => {
+    const bar = document.createElement('div');
+    bar.id = 'scroll-progress';
+    bar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#c5a572,#8a6914);z-index:10000;width:0%;transition:width 0.1s;pointer-events:none;';
+    document.body.appendChild(bar);
+    const update = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    return () => { window.removeEventListener('scroll', update); bar.remove(); };
+  }, []);
+
+  // Task 2.2: IntersectionObserver for .reveal class (re-runs on page change to catch new sections)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      return () => observer.disconnect();
+    }, 80); // slight delay to let React render new page content
+    return () => clearTimeout(timer);
+  }, [page]);
+
+  // Task 2.3: Back-to-top state
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const fn = () => setShowTop(window.scrollY > 400);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
   // E-1: Composite cart key = ${productId}_${storageOption}
   const addToCart = useCallback((product, qty = 1, storageOption = "singapore") => {
     const price = calcPrice(product, { gold: prices.gold, silver: prices.silver, platinum: prices.platinum });
@@ -535,6 +571,29 @@ export default function App() {
       </main>
 
       <Footer lang={lang} navigate={navigate} />
+
+      {/* Task 2.4: Back-to-top button */}
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="맨 위로"
+          style={{
+            position: 'fixed', bottom: 32, right: 24, zIndex: 999,
+            width: 44, height: 44, borderRadius: '50%',
+            background: 'rgba(197,165,114,0.12)',
+            border: '1px solid rgba(197,165,114,0.4)',
+            color: '#c5a572', fontSize: 18, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(8px)',
+            transition: 'opacity 0.3s ease, transform 0.2s ease',
+            fontFamily: 'inherit',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(197,165,114,0.22)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(197,165,114,0.12)'; e.currentTarget.style.transform = 'none'; }}
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }
